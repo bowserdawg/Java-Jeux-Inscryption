@@ -1,0 +1,59 @@
+@startuml
+
+class Display{
+}
+class Score{
+}
+
+
+package cards{
+package interfaces{
+    interface Attacker {
+        -m_attackPoints : Double
+        +attack() : void
+    }
+}
+    class Card{
+        -m_life : double
+    }
+
+
+
+    package obstacles{
+        abstract class ObstacleCard extends cards.Card{}
+        class Rock extends ObstacleCard{}
+        class Pine extends ObstacleCard{}
+    }
+    package animals{
+
+        abstract class AnimalCard extends cards.Card implements cards.interfaces.Attacker{
+            -m_bloodDrops : Integer
+            -m_bones : Integer
+        }
+
+        class Chat extends AnimalCard{}
+        class Grizzly extends AnimalCard{}
+        class Coyote extends AnimalCard{}
+        class Moineau extends AnimalCard implements Flyable{}
+        class Corbeau extends AnimalCard implements Flyable{}
+        class Ecureuil extends AnimalCard{}
+        class Hermine extends AnimalCard{}
+        class Louveteau extends AnimalCard{}
+        class Loup extends AnimalCard{}
+        class Punaise extends AnimalCard{}
+    }
+
+class Board{
+}
+class Input{
+}
+class Draw{
+}
+package players{
+class Player{
+}
+class Rival{
+}
+}
+
+@enduml
