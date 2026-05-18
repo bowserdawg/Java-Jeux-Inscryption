@@ -1,6 +1,8 @@
 package cards.animals;
 
-public class Corbeau  extends AnimalCard{
+import cards.interfaces.Flyable;
+
+public class Corbeau  extends AnimalCard implements Flyable {
     public Corbeau(){
         super(2, 3, 2, 0);
     }

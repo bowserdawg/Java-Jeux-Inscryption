@@ -1,15 +1,16 @@
 package cards.animals;
 
-public abstract class AnimalCard {
+import cards.Card;
+
+public abstract class AnimalCard extends Card {
+    private int m_attackDamage;
     private int m_bloodDrops;
     private int m_bones;
-    private double m_attackDamage;
-    private int m_lifePoints;
-    
-    public AnimalCard(double attackDamage, int lifePoints, int bloodDrops, int bones){
+
+    public AnimalCard(int attackDamage, int lifePoints, int bloodDrops, int bones){
+        super(lifePoints);
         m_bloodDrops = bloodDrops;
         m_bones = bones;
         m_attackDamage = attackDamage;
-        m_lifePoints = lifePoints;
     }
 }

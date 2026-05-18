@@ -10,8 +10,8 @@ package logic{
         class Rival extends Player{
         }
         class CardStack{
-        +drawCard() : Card
-        +drawCard(nbCards : Integer) : Card[nbCards]
+            +drawCard() : Card
+            +drawCard(nbCards : Integer) : Card[nbCards]
         }
     }
 }
