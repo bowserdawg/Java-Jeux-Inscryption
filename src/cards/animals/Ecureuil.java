@@ -1,4 +1,4 @@
 package cards.animals;
 
-public class Chat {
+public class Ecureuil extends AnimalCard{
 }

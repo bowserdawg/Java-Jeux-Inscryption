@@ -1,4 +1,4 @@
 package cards.animals;
 
-public class Hermine {
+public class Loup extends AnimalCard {
 }
