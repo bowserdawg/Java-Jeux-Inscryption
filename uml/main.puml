@@ -1,9 +1,20 @@
 @startuml
 
+package logic{
+    package players{
+    abstract class Player{
 
-
-
-
+    }
+        class User extends Player{
+        }
+        class Rival extends Player{
+        }
+        class CardStack{
+        +drawCard() : Card
+        +drawCard(nbCards : Integer) : Card[nbCards]
+        }
+    }
+}
 package cards{
     package interfaces{
         interface Attacker {
@@ -12,15 +23,10 @@ package cards{
         }
 
         interface Flyable{
-
-        }
-
-        interface Drawable{
-
         }
     }
 
-    class Card{
+    abstract class Card{
         -m_life : double
     }
 
@@ -50,33 +56,34 @@ package cards{
         class Punaise extends AnimalCard{}
     }
 
+'    class Input{
+'    }
 
 
-
-    class Input{
-    }
-
-    package players{
-        class Player{
-        }
-        class Rival{
-        }
-
-    }
-
-
-    package display{
-
-        class Score implements display.interfaces.Drawable{
-        }
-        class Draw{
-        }
-
-        class Display{
-        }
-
-        class Board implements display.interfaces.Drawable{
-        }
-    }
 }
+package display{
+
+        class Score implements interfaces.Drawable{
+        }
+
+        class Display implements interfaces.Drawable{
+        }
+
+        class Board{
+            -m_round : Integer
+            +getCard() : Card
+        }
+    }
+
+Display *--> "1\n -m_board" Board
+
+Board *--> "4\n -m_rowPlayer" Card
+Board *--> "4\n -m_rowEnnemyCurrent" Card
+Board *--> "4\n -m_rowEnnemyNext" Card
+
+Player *-up-> "*\n -m_deck" Card
+Player *--> "4\n -m_hand\n" Card
+
+Player ..> CardStack
+
 @enduml
