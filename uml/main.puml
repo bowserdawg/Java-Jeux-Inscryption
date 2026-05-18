@@ -18,7 +18,6 @@ package logic{
 package cards{
     package interfaces{
         interface Attacker {
-            -m_attackPoints : Double
             +attack() : void
         }
 
