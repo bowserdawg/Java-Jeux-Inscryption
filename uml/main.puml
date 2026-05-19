@@ -1,0 +1,91 @@
+@startuml
+
+package logic{
+    package players{
+    abstract class Player{
+
+    }
+        class User extends Player{
+        }
+        class Rival extends Player{
+        }
+        class CardStack{
+            -m_stackSquirrel : Ecureuil
+            -m_stackCards : Card
+            +«create»(): CardStack
+            +drawCard() : Card
+            +drawCard(nbCards : Integer) : Card[nbCards]
+        }
+    }
+}
+package cards{
+    package interfaces{
+        interface Attacker {
+            +attack() : void
+        }
+
+        interface Flyable{
+        }
+    }
+
+    abstract class Card{
+        -m_life : double
+    }
+
+
+
+    package obstacles{
+        abstract class ObstacleCard extends cards.Card{}
+        class Rock extends ObstacleCard{}
+        class Pine extends ObstacleCard{}
+    }
+    package animals{
+
+        abstract class AnimalCard extends cards.Card implements cards.interfaces.Attacker{
+            -m_bloodDrops : Integer
+            -m_bones : Integer
+        }
+
+        class Chat extends AnimalCard{}
+        class Grizzly extends AnimalCard{}
+        class Coyote extends AnimalCard{}
+        class Moineau extends AnimalCard implements cards.interfaces.Flyable{}
+        class Corbeau extends AnimalCard implements cards.interfaces.Flyable{}
+        class Ecureuil extends AnimalCard{}
+        class Hermine extends AnimalCard{}
+        class Louveteau extends AnimalCard{}
+        class Loup extends AnimalCard{}
+        class Punaise extends AnimalCard{}
+    }
+
+'    class Input{
+'    }
+
+
+}
+package display{
+
+        class Score implements interfaces.Drawable{
+        }
+
+        class Display implements interfaces.Drawable{
+        }
+
+        class Board{
+            -m_round : Integer
+            +getCard() : Card
+        }
+    }
+
+Display *--> "1\n -m_board" Board
+
+Board *--> "4\n -m_rowPlayer" Card
+Board *--> "4\n -m_rowEnnemyCurrent" Card
+Board *--> "4\n -m_rowEnnemyNext" Card
+
+Player *-up-> "*\n -m_deck" Card
+Player *--> "4\n -m_hand\n" Card
+
+Player ..> CardStack
+
+@enduml
