@@ -1,4 +1,4 @@
 package logic.players;
 
-public class Player {
+public class User extends Player{
 }

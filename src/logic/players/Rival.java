@@ -1,4 +1,4 @@
 package logic.players;
 
-public class Rival {
+public class Rival extends Player{
 }
