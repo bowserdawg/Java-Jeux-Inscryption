@@ -10,6 +10,9 @@ package logic{
         class Rival extends Player{
         }
         class CardStack{
+            -m_stackSquirrel : Ecureuil
+            -m_stackCards : Card
+            +«create»(): CardStack
             +drawCard() : Card
             +drawCard(nbCards : Integer) : Card[nbCards]
         }
