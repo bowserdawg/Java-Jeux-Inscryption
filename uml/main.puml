@@ -10,8 +10,11 @@ package logic{
         class Rival extends Player{
         }
         class CardStack{
-        +drawCard() : Card
-        +drawCard(nbCards : Integer) : Card[nbCards]
+            -m_stackSquirrel : Ecureuil
+            -m_stackCards : Card
+            +«create»(): CardStack
+           +drawCard() : Card
+           +drawSquirrel() : Ecureuil
         }
     }
 }
@@ -65,10 +68,10 @@ package display{
         class Score implements interfaces.Drawable{
         }
 
-        class Display implements interfaces.Drawable{
+        class Display {
         }
 
-        class Board{
+        class Board implements interfaces.Drawable{
             -m_round : Integer
             +getCard() : Card
         }
@@ -80,8 +83,8 @@ Board *--> "4\n -m_rowPlayer" Card
 Board *--> "4\n -m_rowEnnemyCurrent" Card
 Board *--> "4\n -m_rowEnnemyNext" Card
 
-Player *-up-> "*\n -m_deck" Card
-Player *--> "4\n -m_hand\n" Card
+CardStack *-up-> "*\n -m_deck" Card
+CardStack *--> "10\n -m_squirrel\n" Card
 
 Player ..> CardStack
 
