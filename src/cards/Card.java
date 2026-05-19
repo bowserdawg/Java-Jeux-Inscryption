@@ -8,4 +8,13 @@ public abstract class Card {
     public Card(int lifePoints){
         m_lifePoints = lifePoints;
     }
+    
+    public int recivedDamage(int nbDamage){
+         m_lifePoints = m_lifePoints - nbDamage;
+         return m_lifePoints;
+    }
+    
+    public int getLife(){
+        return m_lifePoints;
+    }
 }
