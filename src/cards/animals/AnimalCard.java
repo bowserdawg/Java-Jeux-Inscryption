@@ -2,7 +2,6 @@ package cards.animals;
 
 import cards.Card;
 //import cards.interfaces.Attacker;
-import cards.animals.enums.TypeCost;
 import cards.interfaces.*;
 
 public abstract class AnimalCard extends Card implements Attacker {
@@ -10,6 +9,11 @@ public abstract class AnimalCard extends Card implements Attacker {
     private int m_bloodDrops;
     private int m_bones;
     private TypeCost m_costType;
+    
+    public enum TypeCost {
+        BloodDrops,
+        Bones;
+    }
     
     public AnimalCard(int attackDamage, int lifePoints, int bloodDrops, int bones) {
         super(lifePoints);
