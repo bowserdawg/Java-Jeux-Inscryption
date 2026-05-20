@@ -1,6 +1,7 @@
 package display;
 
 import cards.Card;
+import logic.Board;
 
 public class Display {
 
@@ -75,7 +76,7 @@ public class Display {
         }
     }
 
-    public void draw(BoardPlaceHolder b)
+    public void draw(Board b)
     {
         // Partie N
         print("Partie " + b.getM_nbPartie());
@@ -84,21 +85,21 @@ public class Display {
         else { print(b.getM_nbPartie() + "er Tour"); }
 
 
-        for(int i = 0; i < BoardPlaceHolder.BOARD_X_ARRAY.length; i++)
+        for(int i = 0; i < Board.BOARD_X_ARRAY.length; i++)
         {
             drawCardLine(
                     b.getCard(
-                            BoardPlaceHolder.BOARD_X_ARRAY[i],
-                            BoardPlaceHolder.BoardY.FIRST_ROW),
+                            Board.BOARD_X_ARRAY[i],
+                            Board.BoardY.FIRST_ROW),
                     b.getCard(
-                            BoardPlaceHolder.BOARD_X_ARRAY[i],
-                            BoardPlaceHolder.BoardY.SECOND_ROW),
+                            Board.BOARD_X_ARRAY[i],
+                            Board.BoardY.SECOND_ROW),
                     b.getCard(
-                            BoardPlaceHolder.BOARD_X_ARRAY[i],
-                            BoardPlaceHolder.BoardY.THIRD_ROW),
+                            Board.BOARD_X_ARRAY[i],
+                            Board.BoardY.THIRD_ROW),
                     b.getCard(
-                            BoardPlaceHolder.BOARD_X_ARRAY[i],
-                            BoardPlaceHolder.BoardY.FOURTH_ROW)
+                            Board.BOARD_X_ARRAY[i],
+                            Board.BoardY.FOURTH_ROW)
             );
 
             if(i == 0)

@@ -1,4 +1,4 @@
-import display.BoardPlaceHolder;
+import logic.Board;
 
 public class Main
 {
@@ -6,9 +6,9 @@ public class Main
     {
         System.out.println("Another challenger... It has been ages.");
 
-        BoardPlaceHolder bph = new BoardPlaceHolder();
+        Board bph = new Board();
 
-        bph.setCardsTemp();
+        bph.setCards();
 
         bph.display();
     }

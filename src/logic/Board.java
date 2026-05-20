@@ -1,9 +1,10 @@
-package display;
+package logic;
 
 import cards.Card;
 import cards.animals.Chat;
+import display.Display;
 
-public class BoardPlaceHolder {
+public class Board {
 
     // Les coordonéees X dans la Board
     public enum BoardX
@@ -41,7 +42,7 @@ public class BoardPlaceHolder {
 
     private Card[][] cards = new Card[3][4];
 
-    public BoardPlaceHolder()
+    public Board()
     {
         m_display = new Display();
         m_nbPartie = 1;
@@ -67,7 +68,7 @@ public class BoardPlaceHolder {
         m_display.draw(this);
     }
 
-    public void setCardsTemp()
+    public void setCards()
     {
         cards[0][0] = new Chat();
         cards[0][1] = new Chat();
