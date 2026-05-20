@@ -1,6 +1,9 @@
 package cards.interfaces;
 
+import cards.Card;
+
 public interface Attacker {
     // Attack un autre animal
-    public void attack();
+    public void attack(Card card);
+    
 }
