@@ -110,24 +110,9 @@ public class Display {
             }
             else
             {
-                print("hey\n");
+                print("\n");
             }
         }
-
-        drawCardLine(
-                b.getCard(
-                        BoardPlaceHolder.BoardX.ENNEMI,
-                        BoardPlaceHolder.BoardY.FIRST_ROW),
-                b.getCard(
-                        BoardPlaceHolder.BoardX.ENNEMI,
-                        BoardPlaceHolder.BoardY.SECOND_ROW),
-                b.getCard(
-                        BoardPlaceHolder.BoardX.ENNEMI,
-                        BoardPlaceHolder.BoardY.THIRD_ROW),
-                b.getCard(
-                        BoardPlaceHolder.BoardX.ENNEMI,
-                        BoardPlaceHolder.BoardY.FOURTH_ROW)
-        );
     }
 
 
