@@ -4,7 +4,9 @@ import cards.Card;
 //import cards.interfaces.Attacker;
 import cards.interfaces.*;
 
-public abstract class AnimalCard extends Card implements Attacker {
+import java.util.HashMap;
+
+public abstract class AnimalCard extends Card implements Attacker, Nommable {
     private int m_attackDamage;
     private int m_bloodDrops;
     private int m_bones;
@@ -39,7 +41,19 @@ public abstract class AnimalCard extends Card implements Attacker {
         
         return m_costType;
     }
-    
+
+    // Les données disponibles pour différents types d'animal
+    public static HashMap<String, String> s_animalDefaultHashMap;
+    static {
+        s_animalDefaultHashMap = new HashMap<>(s_defaultHashMap);
+        s_defaultHashMap.put(DONNE_TYPE[DONNE_TYPE_ELEMS.ATTAQUE.ordinal()], "Att: ");
+    }
+    public static HashMap<String, String> s_animalVolantHashMap;
+    static {
+        s_animalVolantHashMap = new HashMap<>(s_animalDefaultHashMap);
+        s_animalVolantHashMap.put(DONNE_TYPE[DONNE_TYPE_ELEMS.TYPE_SPECIAL.ordinal()], "VOLANT");
+    }
+
     @Override
     public void attack(Card card) {
         card.recivedDamage(m_attackDamage);

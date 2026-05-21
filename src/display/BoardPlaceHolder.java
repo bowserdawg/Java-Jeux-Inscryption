@@ -5,22 +5,22 @@ import cards.animals.Chat;
 
 public class BoardPlaceHolder {
 
-    // Les coordonéees X dans la Board
-    public enum BoardX
+    // Les coordonéees des lignes dans la Board
+    public enum BoardLigne
     {
         ENNEMI,
         MIDDLE,
         PLAYER,
         BOAR_X_LEN,
     }
-    public final static BoardX[] BOARD_X_ARRAY = {
-            BoardX.ENNEMI,
-            BoardX.MIDDLE,
-            BoardX.PLAYER
+    public final static BoardLigne[] BOARD_LIGNE_ARRAY = {
+            BoardLigne.ENNEMI,
+            BoardLigne.MIDDLE,
+            BoardLigne.PLAYER
     };
 
-    // Les coordonéees Y dans la Board
-    public enum BoardY
+    // Les coordonéee des colonnes dans la Board
+    public enum BoardColonne
     {
         FIRST_ROW,
         SECOND_ROW,
@@ -28,17 +28,18 @@ public class BoardPlaceHolder {
         FOURTH_ROW,
         BOARD_Y_LEN,
     }
-    public final static BoardY[] BOARD_Y_ARRAY = {
-            BoardY.FIRST_ROW,
-            BoardY.SECOND_ROW,
-            BoardY.THIRD_ROW,
-            BoardY.FOURTH_ROW
+    public final static BoardColonne[] BOARD_COLONNES_ARRAY = {
+            BoardColonne.FIRST_ROW,
+            BoardColonne.SECOND_ROW,
+            BoardColonne.THIRD_ROW,
+            BoardColonne.FOURTH_ROW
     };
 
     private Display m_display;
     private int m_nbPartie;
     private int m_nbTour;
 
+    // Ligne / Colonne
     private Card[][] cards = new Card[3][4];
 
     public BoardPlaceHolder()
@@ -48,16 +49,16 @@ public class BoardPlaceHolder {
         m_nbTour = 1;
     }
 
-    public int getM_nbPartie() {
+    public int getNbPartie() {
         return m_nbPartie;
     }
 
-    public int getM_nbTour() {
+    public int getNbTour() {
         return m_nbTour;
     }
 
     // Peut retourner null
-    public Card getCard(BoardX x, BoardY y)
+    public Card getCard(BoardLigne x, BoardColonne y)
     {
         return cards[x.ordinal()][y.ordinal()];
     }

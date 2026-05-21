@@ -13,11 +13,6 @@ public class Display {
         System.out.println(string);
     }
 
-    private static String itos(int integer)
-    {
-        return Integer.toString(integer);
-    }
-
     private void drawCardTopOrBottom(Card card)
     {
         if(card != null)
@@ -30,23 +25,67 @@ public class Display {
         }
     }
 
-    private void drawCardInside(Card card)
+    static private final int s_cardWidth = 13;
+    static private final int s_cardHeight = 7;
+
+    static private final int s_topLine = 0;
+    static private final int s_cardNameLine = 1;
+    static private final int s_nameSeparationLine = 2;
+    static private final int s_pvLine = 3;
+    static private final int s_attackLine = 4;
+    static private final int s_emptyLine = 5;
+    static private final int s_lastLine = 6;
+
+    private void printCardInfoLine(String info)
     {
-        if(card != null)
+        System.out.print("| ");
+        System.out.print(info);
+        for(int i = 0; i < ( info.length() - (s_cardWidth-3) ); i++)
+            System.out.print(" ");
+        System.out.print("|");
+    }
+
+    private void drawCardInside(Card card, int number)
+    {
+        if(card == null)
         {
-            System.out.print("|           |");
+            System.out.print("*************");
+            for(int i = 0; i < (s_cardHeight-2); i++)
+            {
+                System.out.print("*           *");
+            }
+            System.out.print("*************");
+
+            return;
         }
-        else
+
+        String nom = card.getName();
+
+        switch (number)
         {
-            System.out.print("*           *");
+            case s_topLine:
+                System.out.print("*-----------*");
+                break;
+            case s_cardNameLine:
+                printCardInfoLine(card.getName());
+                break;
+            case s_nameSeparationLine:
+                System.out.print("|-----------|");
+                break;
+            case s_pvLine:
+                printCardInfoLine("PV : " + card.getLife());
+                break;
+            case s_attackLine:
+                printCardInfoLine("Att : " + card.getData().get(
+                        Card.DONNE_TYPE[Card.DONNE_TYPE_ELEMS.ATTAQUE.ordinal()]
+                ));
+            // TODO : FInir ce switch.
         }
     }
 
     private void drawPaddingLeft() { System.out.print("        "); }
     private void drawPaddingBetweenCard() { System.out.print("   ");}
 
-    static private final int s_cardWidth = 13;
-    static private final int s_cardHeight = 7;
     private void drawCardLine(Card one, Card two, Card three, Card four)
     {
         Card[] array = new Card[] {one, two, three, four};
@@ -66,7 +105,7 @@ public class Display {
             {
                 for(Card c: array)
                 {
-                    drawCardInside(c);
+                    drawCardInside(c, i);
                     drawPaddingBetweenCard();
                 }
             }
@@ -78,27 +117,27 @@ public class Display {
     public void draw(BoardPlaceHolder b)
     {
         // Partie N
-        print("Partie " + b.getM_nbPartie());
+        print("Partie " + b.getNbPartie());
         // Neme tour
-        if(b.getM_nbPartie() > 1) { print(b.getM_nbPartie() + "eme Tour:"); }
-        else { print(b.getM_nbPartie() + "er Tour"); }
+        if(b.getNbPartie() > 1) { print(b.getNbPartie() + "eme Tour:"); }
+        else { print(b.getNbPartie() + "er Tour"); }
 
 
-        for(int i = 0; i < BoardPlaceHolder.BOARD_X_ARRAY.length; i++)
+        for(int i = 0; i < BoardPlaceHolder.BOARD_LIGNE_ARRAY.length; i++)
         {
             drawCardLine(
                     b.getCard(
-                            BoardPlaceHolder.BOARD_X_ARRAY[i],
-                            BoardPlaceHolder.BoardY.FIRST_ROW),
+                            BoardPlaceHolder.BOARD_LIGNE_ARRAY[i],
+                            BoardPlaceHolder.BoardColonne.FIRST_ROW),
                     b.getCard(
-                            BoardPlaceHolder.BOARD_X_ARRAY[i],
-                            BoardPlaceHolder.BoardY.SECOND_ROW),
+                            BoardPlaceHolder.BOARD_LIGNE_ARRAY[i],
+                            BoardPlaceHolder.BoardColonne.SECOND_ROW),
                     b.getCard(
-                            BoardPlaceHolder.BOARD_X_ARRAY[i],
-                            BoardPlaceHolder.BoardY.THIRD_ROW),
+                            BoardPlaceHolder.BOARD_LIGNE_ARRAY[i],
+                            BoardPlaceHolder.BoardColonne.THIRD_ROW),
                     b.getCard(
-                            BoardPlaceHolder.BOARD_X_ARRAY[i],
-                            BoardPlaceHolder.BoardY.FOURTH_ROW)
+                            BoardPlaceHolder.BOARD_LIGNE_ARRAY[i],
+                            BoardPlaceHolder.BoardColonne.FOURTH_ROW)
             );
 
             if(i == 0)
