@@ -5,13 +5,11 @@ import logic.players.CardStack;
 import logic.players.Rival;
 import logic.players.User;
 import org.junit.Test;
-
-import java.util.Stack;
-
 import static org.junit.Assert.assertEquals;
+
 public class CardTest {
     @Test
-    public void attackOccupiedSlot(){
+    public void placeOccupiedSlot(){
         Board board = new Board();
         CardStack userStack = new CardStack();
         CardStack rivalStack = new CardStack();
@@ -24,16 +22,18 @@ public class CardTest {
         assertEquals(false, result);
     }
     
-    public void attackFreeSlot(){
+    @Test
+    public void placeFreeSlot(){
         Board board = new Board();
         CardStack userStack = new CardStack();
-        CardStack rivalStack = new CardStack();
         
-        Rival rival = new Rival(rivalStack, board);
         User user = new User(userStack, board);
         
-        user.placeCard(0, 0);
-        boolean result = user.placeCard(0, 1);
+        
+        
+        boolean result = user.placeCard(0, 0);
+        
+        
         assertEquals(true, result);
     }
 }
