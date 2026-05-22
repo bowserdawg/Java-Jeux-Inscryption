@@ -34,7 +34,7 @@ public class Board {
     }
     
     public void display() {
-        m_display.draw(this);
+        //m_display.draw(this);
     }
     
     public void setCards() {

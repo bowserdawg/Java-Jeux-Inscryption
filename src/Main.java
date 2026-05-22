@@ -1,4 +1,5 @@
 import cards.Card;
+import display.BoardPlaceHolder;
 import display.Display;
 import logic.Board;
 import logic.players.CardStack;
@@ -10,7 +11,8 @@ public class Main
     public static void main(String[] args)
     {
         System.out.println("Another challenger... It has been ages.");
-// initialisation d'une partie;
+
+        // initialisation d'une partie
         Board board = new Board();
         CardStack rivalStack = new CardStack();
         CardStack userStack = new CardStack();
@@ -21,10 +23,15 @@ public class Main
             user.placeCard(3, 0);
         
         Display display = new Display();
-        display.draw(board);
-        
-        
-        
+
+        // TODO : Faire en sorte que la méthode draw marche avec Board.
+        //display.draw(board);
+
+        BoardPlaceHolder bph = new BoardPlaceHolder();
+
+        // Méthode temporaire pour avoir des cartes.
+        bph.setCardsTemp();
+        display.draw(bph);
         
     }
 }
