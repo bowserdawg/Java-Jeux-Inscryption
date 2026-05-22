@@ -49,13 +49,14 @@ public class Display {
     {
         if(card == null)
         {
-            System.out.print("*************");
-            for(int i = 0; i < (s_cardHeight-2); i++)
+            if(number == 1 || number == s_cardHeight-1)
+            {
+                System.out.print("*************");
+            }
+            else
             {
                 System.out.print("*           *");
             }
-            System.out.print("*************");
-
             return;
         }
 
@@ -79,7 +80,16 @@ public class Display {
                 printCardInfoLine("Att : " + card.getData().get(
                         Card.DONNE_TYPE[Card.DONNE_TYPE_ELEMS.ATTAQUE.ordinal()]
                 ));
-            // TODO : FInir ce switch.
+                break;
+            case s_emptyLine:
+                System.out.print("|           |");
+                break;
+            case s_lastLine:
+                System.out.print("*-----------*");
+                break;
+            default:
+                System.out.print("Error");
+                break;
         }
     }
 
