@@ -4,6 +4,8 @@ import cards.interfaces.Attacker;
 
 public abstract class Card {
     private int m_lifePoints;
+    private String m_nom;
+    
 
     public Card(int lifePoints){
         m_lifePoints = lifePoints;
@@ -16,5 +18,10 @@ public abstract class Card {
     
     public int getLife(){
         return m_lifePoints;
+    }
+    
+    @Override
+    public String toString() {
+        return "Card : " + m_nom;
     }
 }
