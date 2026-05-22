@@ -5,9 +5,10 @@ import logic.Board;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public abstract class Player {
-    private ArrayList<Card> m_hand;
+    private ArrayList<Card> m_hand = new ArrayList<>();
     private Board m_board;
     
     public Player(CardStack stack, Board board) {
@@ -22,11 +23,11 @@ public abstract class Player {
         
     }
     
-    public Card[] getHand(){
-        if(m_hand.isEmpty()){
-            return new Card[0];
-        }else {
-        return (Card[])m_hand.toArray();
-        }
+    public ArrayList<Card> getHand(){
+        return m_hand;
+    }
+    
+    public int getNbCards(){
+        return m_hand.size();
     }
 }
