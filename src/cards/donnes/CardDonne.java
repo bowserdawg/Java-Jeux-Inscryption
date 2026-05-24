@@ -1,11 +1,15 @@
 package cards.donnes;
 
+import cards.types.Regular;
+import cards.types.Typable;
+
 import java.util.Optional;
 
 /**
  * Contient toutes les données qu'une carte peut contenir.
  * Une donnée non disponible peut être accédé pour savoir qu'elle existe,
  * mais elle ne peut pas être modifiée.
+ * La variable membre "m_type" ne peut jamais être null et doit être Regular() à la place.
  */
 public class CardDonne {
 
@@ -15,7 +19,7 @@ public class CardDonne {
     int m_attaque;
     int m_bloodDrop;
     int m_bones;
-    String m_type;
+    Typable m_type;
 
 
     // Si l'un des valeurs n'est jamais utilisé.
@@ -30,7 +34,7 @@ public class CardDonne {
      * @param bloodDrop Les goutte de sang de la carte.
      * @param bones Les os de la carte.
      */
-    private CardDonne(int pv, int attaque, String type, int bloodDrop, int bones)
+    protected CardDonne(int pv, int attaque, int bloodDrop, int bones, Typable type)
     {
         m_pv = pv;
         m_attaque = attaque;
@@ -40,99 +44,40 @@ public class CardDonne {
     }
 
     /**
-     * Une carte qui peut avoir du pv et de l'attaque.
-     *
-     * @param pv Les points de vie de la carte.
-     * @param attaque Les points d'attaque de la carte.
-     * @param bloodDrop Les goutte de sang de la carte.
-     * @param bones Les os de la carte.
-     */
-    private CardDonne(int pv, int attaque, int bloodDrop, int bones)
-    {
-        m_pv = pv;
-        m_attaque = attaque;
-        m_type = null;
-        m_bones = bones;
-        m_bloodDrop = bloodDrop;
-    }
-
-    /**
      * Une carte qui a seulement du PV.
      * @param pv Les points de vie de la carte.
      */
-    private CardDonne(int pv)
+    protected CardDonne(int pv)
     {
         m_pv = pv;
         m_attaque = NO_VALUE;
-        m_type = null;
+        m_type = new Regular();
     }
 
     /**
      * Constructeur par défaut pour CardDonne.
+     * A ne pas utiliser.
      */
-    private CardDonne()
+    protected CardDonne()
     {
         m_pv = NO_VALUE;
         m_attaque = NO_VALUE;
-        m_type = null;
         m_bloodDrop = NO_VALUE;
         m_bones = NO_VALUE;
+        m_type = new Regular();
     }
 
     /**
      * Constructeur de copie pour CardDonne.
      * @param other La CardDonne copié.
      */
-    public CardDonne(CardDonne other)
+    protected CardDonne(CardDonne other)
     {
         m_pv = other.m_pv;
         m_attaque = other.m_attaque;
         m_type = other.m_type;
         m_bloodDrop = other.m_bloodDrop;
         m_bones = other.m_bones;
-    }
-
-    /**
-     *  Un ensemble de donnée avec aucune donnée.
-     *
-     * @return Une nouvelle CardDonne.
-      */
-    public static CardDonne withNothing()  { return new CardDonne(); }
-
-    /**
-     * Un ensemble de donnée avec seulement du pv.
-     * @param pv Le pv.
-     * @return Une nouvelle CardDonne avec les paramètres spécifiée.
-     */
-    public static CardDonne withPv(int pv) { return new CardDonne(pv); }
-
-    // Un ensemble de donnée avec du pv et de l'attaque.
-
-    /**
-     * Un ensemble de donnée avec du pv et de l'attaque.
-     * @param pv Le pv.
-     * @param attaque L'attaque.
-     * @param gouteSang Goute de sang.
-     * @param os L'Os.
-     * @return Une nouvelle CardDonne avec les paramètres spécifiée.
-     */
-    public static CardDonne withPvAttBloodAndBone(int pv, int attaque, int gouteSang, int os)
-    {
-        return new CardDonne(pv, attaque, gouteSang, os);
-    }
-
-    /**
-     * Un ensemble de donnée avec du pv de l'attaque et un type.
-     * @param pv Le pv.
-     * @param attaque L'attaque.
-     * @param type Le type de la carte (Exemple : volant)
-     * @param gouteSang Goute de sang.
-     * @param os L'Os.
-     * @return ne nouvelle CardDonne avec les paramètres spécifiés.
-     */
-    public static CardDonne withPvAttTypeBloodAndBone(int pv, int attaque, String type, int gouteSang, int os)
-    {
-        return new CardDonne(pv, attaque, type, gouteSang, os);
     }
 
     /**
@@ -186,10 +131,10 @@ public class CardDonne {
      *
      * @param newType Le nouveau type.
      */
-    public void setType(String newType)
+    public void setType(Typable newType)
     {
         if(m_type == null)
-            throw new RuntimeException("Le champ \"Type\" ne peut etre modifie pour ce type de donne");
+            throw new NullPointerException("Le champ \"Type\" ne peut être null");
         m_type = newType;
     }
 
@@ -198,9 +143,9 @@ public class CardDonne {
      *
      * @return Le type.
      */
-    public Optional<String> getType()
+    public Typable getType()
     {
-        return Optional.of(m_type);
+        return m_type;
     }
 
     /**
@@ -220,7 +165,7 @@ public class CardDonne {
      *
      * @return Le goute de sang s'il existe.
      */
-    public Optional<Integer> getBloodDrop()
+    public Optional<Integer> getBloodDrops()
     {
         return Optional.of(m_bloodDrop);
     }
@@ -245,5 +190,28 @@ public class CardDonne {
     public Optional<Integer> getBones()
     {
         return Optional.of(m_bones);
+    }
+
+    @Override
+    public String toString() {
+        return "Donne (PV: " + m_pv
+                + ", ATT: "  + m_attaque
+                + ", Type: " + m_type
+                + ", Goute de Sang: " + m_bloodDrop
+                + ", Os: " + m_bones + ")";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if(!(obj instanceof CardDonne))
+        {
+            return false;
+        }
+        CardDonne other = (CardDonne)obj;
+
+        return ( (m_bones == other.m_bones) && (m_type.equals(other.m_type))
+                && (m_pv == other.m_pv) && (m_attaque == other.m_attaque)
+                && (m_bloodDrop == other.m_bloodDrop) );
     }
 }

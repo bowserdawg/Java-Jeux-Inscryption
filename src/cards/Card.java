@@ -2,27 +2,35 @@ package cards;
 
 import cards.donnes.CardDonne;
 import cards.interfaces.Nommable;
+import cards.types.Typable;
 
-import java.util.HashMap;
 import java.util.Optional;
 
 public abstract class Card implements Nommable {
-    private int m_lifePoints;
+    //private int m_lifePoints;
 
     private CardDonne m_donnes;
 
-    public Card(int lifePoints, CardDonne donne){
-        m_lifePoints = lifePoints;
+    /**
+     * Crée une nouvelle carte.
+     * @param donne
+     */
+    public Card(CardDonne donne){
         m_donnes = donne;
     }
-    
-    public int recivedDamage(int nbDamage){
-         m_lifePoints = m_lifePoints - nbDamage;
-         return m_lifePoints;
-    }
-    
+
+    /**
+     * Return le pv de la carte.
+     * @return Le pv en tant qu'entier.
+     */
     public int getLife(){
-        return m_lifePoints;
+
+        var life = m_donnes.getPv();
+
+        if(life.isEmpty())
+            throw new RuntimeException("Le champ \"Vie\" est vide pour cette carte\n");
+
+        return life.get();
     }
 
     /**
@@ -61,36 +69,44 @@ public abstract class Card implements Nommable {
         return m_donnes.getAttaque();
     }
 
-    public Optional<String> getType()
+    /**
+     * Donne le type de la carte.
+     * @return Un objet qui implémente "Typable".
+     */
+    public Typable getType()
     {
-        return m_donnes.getType();
-    }
+        Typable type = m_donnes.getType();
 
-    public static String[] DONNE_TYPE = {"PV", "ATT", "SPECIAL"};
-    public enum DONNE_TYPE_ELEMS
-    {
-        PV,
-        ATTAQUE,
-        TYPE_SPECIAL,
-    }
-    public static HashMap<String, String> s_defaultHashMap;
-    static {
-        s_defaultHashMap = new HashMap<>();
-        s_defaultHashMap.put(DONNE_TYPE[DONNE_TYPE_ELEMS.PV.ordinal()], "PV: ");
+        if(type == null)
+            throw new RuntimeException("Le type d'une ne devrait jamais etre null.");
+
+        return type;
     }
 
     /**
-     * Cette fonction retourne les données que la classe contient.
-     * Des classes peuvent contenir des données que d'autres classes n'ont pas.
-     *
-     * Consulter DONNE_TYPE pour voire les clés primaires possibles.
-     *
-     * @return Une hashmap avec les données disponibles des classes.
-     * L'Hashmap devrait être statique.
+     * Donne les goutes de sangs de la carte.
+     * @return Les goute de sang s'ils existent.
      */
-    abstract public HashMap<String, String> getData();
+    public Optional<Integer> getBloodDrops()
+    {
+        return m_donnes.getBloodDrops();
+    }
+
+    /**
+     * Donne les os de la carte.
+     * @return Les os s'ils existent.
+     */
+    public Optional<Integer> getBones()
+    {
+        return m_donnes.getBones();
+    }
 
     // Vien de Nommable
     @Override
     abstract public String getName();
+
+    @Override
+    public String toString() {
+        return getName() + " : (" + m_donnes + ")";
+    }
 }

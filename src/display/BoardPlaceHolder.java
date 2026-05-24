@@ -1,7 +1,7 @@
 package display;
 
 import cards.Card;
-import cards.animals.Chat;
+import cards.animals.*;
 
 public class BoardPlaceHolder {
 
@@ -70,9 +70,9 @@ public class BoardPlaceHolder {
 
     public void setCardsTemp()
     {
-        cards[0][0] = new Chat();
-        cards[0][1] = new Chat();
-        cards[0][2] = new Chat();
+        cards[0][0] = new Louveteau();
+        cards[0][1] = new Punaise();
+        cards[0][2] = new Moineau();
         cards[0][3] = new Chat();
 
         cards[1][0] = null;
@@ -80,9 +80,9 @@ public class BoardPlaceHolder {
         cards[1][2] = null;
         cards[1][3] = null;
 
-        cards[2][0] = new Chat();
-        cards[2][1] = new Chat();
-        cards[2][2] = new Chat();
-        cards[2][3] = new Chat();
+        cards[2][0] = new Corbeau();
+        cards[2][1] = new Ecureuil();
+        cards[2][2] = new Loup();
+        cards[2][3] = new Hermine();
     }
 }
