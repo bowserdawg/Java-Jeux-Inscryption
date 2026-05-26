@@ -2,6 +2,8 @@ package display;
 
 import cards.Card;
 import cards.animals.*;
+import cards.obstacles.Pin;
+import cards.obstacles.Rock;
 
 public class BoardPlaceHolder {
 
@@ -76,8 +78,8 @@ public class BoardPlaceHolder {
         cards[0][3] = new Chat();
 
         cards[1][0] = null;
-        cards[1][1] = null;
-        cards[1][2] = null;
+        cards[1][1] = new Rock();
+        cards[1][2] = new Pin();
         cards[1][3] = null;
 
         cards[2][0] = new Corbeau();
