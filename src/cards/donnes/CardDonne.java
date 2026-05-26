@@ -91,7 +91,7 @@ public class CardDonne {
     {
         if(m_pv == NO_VALUE)
             throw new RuntimeException("Le champ \"PV\" ne peut être modifie pour ce type de donne");
-        m_pv = num;
+        m_pv = Math.max(num, 0);
     }
 
     /**
@@ -116,7 +116,8 @@ public class CardDonne {
     {
         if(m_attaque == NO_VALUE)
             throw new RuntimeException("Le champ \"Attaque\" ne peut être modifie pour ce type de donne");
-        m_attaque = num;
+        // La valeur ne doit pas etre negative.
+        m_attaque = Math.max(num, 0);
     }
 
     /**
@@ -163,7 +164,8 @@ public class CardDonne {
     {
         if(m_bloodDrop == NO_VALUE)
             throw new RuntimeException("Le champ \"Gouttes de sang\" ne peut être modifie pour ce type de donne");
-        m_bloodDrop = bloodDrop;
+        // La valeur ne doit pas etre negative.
+        m_bloodDrop = Math.max(bloodDrop, 0);
     }
 
     /**
