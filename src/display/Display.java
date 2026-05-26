@@ -2,6 +2,8 @@ package display;
 
 import cards.Card;
 
+import java.io.PrintStream;
+
 public class Display {
 
     public Display()

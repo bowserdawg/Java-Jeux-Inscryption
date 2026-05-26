@@ -1,6 +1,7 @@
-import cards.Card;
 import display.BoardPlaceHolder;
 import display.Display;
+import display.DisplayObjTest;
+import display.NewDisplay;
 import logic.Board;
 import logic.players.CardStack;
 import logic.players.Rival;
@@ -21,17 +22,29 @@ public class Main
         Rival rival = new Rival(rivalStack, board);
         
             user.placeCard(3, 0);
-        
+
+
         Display display = new Display();
 
-        // TODO : Faire en sorte que la méthode draw marche avec Board.
+        NewDisplay ndisplay = new NewDisplay();
+
+        ndisplay.printRow("Hello World", 2, 89);
+        char[] arr = {'h', 'e', 'l', 'l', 'o'};
+        ndisplay.printRow(arr, 3, 89);
+
+        DisplayObjTest d = new DisplayObjTest();
+
+        ndisplay.draw(d, 7, 95);
+
+        ndisplay.printBuffer();
+
         //display.draw(board);
 
         BoardPlaceHolder bph = new BoardPlaceHolder();
 
         // Méthode temporaire pour avoir des cartes.
         bph.setCardsTemp();
-        display.draw(bph);
+        //display.draw(bph);
         
     }
 }
