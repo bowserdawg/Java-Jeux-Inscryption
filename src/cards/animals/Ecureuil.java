@@ -1,15 +1,12 @@
 package cards.animals;
 
+import cards.donnes.DonneFactory;
+
 import java.util.HashMap;
 
 public class Ecureuil extends AnimalCard{
     public Ecureuil(){
-        super(0, 1, 0, 0);
-    }
-
-    @Override
-    public HashMap<String, String> getData() {
-        return s_animalDefaultHashMap;
+        super(DonneFactory.ecureuil());
     }
 
     @Override

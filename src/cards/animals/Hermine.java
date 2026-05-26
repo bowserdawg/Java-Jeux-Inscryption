@@ -1,15 +1,12 @@
 package cards.animals;
 
+import cards.donnes.DonneFactory;
+
 import java.util.HashMap;
 
 public class Hermine extends AnimalCard {
     public Hermine(){
-        super(1, 3, 1, 0);
-    }
-
-    @Override
-    public HashMap<String, String> getData() {
-        return s_animalDefaultHashMap;
+        super(DonneFactory.hermine());
     }
 
     @Override

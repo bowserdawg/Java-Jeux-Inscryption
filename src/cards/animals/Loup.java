@@ -1,15 +1,12 @@
 package cards.animals;
 
+import cards.donnes.DonneFactory;
+
 import java.util.HashMap;
 
 public class Loup extends AnimalCard {
     public Loup(){
-        super(3, 2, 2, 0);
-    }
-
-    @Override
-    public HashMap<String, String> getData() {
-        return s_animalDefaultHashMap;
+        super(DonneFactory.loup());
     }
 
     @Override

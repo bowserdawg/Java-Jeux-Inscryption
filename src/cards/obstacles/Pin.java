@@ -1,16 +1,14 @@
 package cards.obstacles;
 
+import cards.donnes.DonneFactory;
+
 import java.util.HashMap;
 
 public class Pin extends ObstacleCard{
     public Pin(){
-        super(3);
+        super(DonneFactory.sapin());
     }
 
-    @Override
-    public HashMap<String, String> getData() {
-        return s_defaultHashMap;
-    }
 
     @Override
     public String getName() {

@@ -1,21 +1,17 @@
 package cards.obstacles;
 
 import cards.Card;
+import cards.donnes.DonneFactory;
 
 import java.util.HashMap;
 
 public class Rock extends ObstacleCard{
     public Rock(){
-        super(5);
+        super(DonneFactory.rocher());
     }
 
     @Override
     public String getName() {
         return "Rock";
-    }
-
-    @Override
-    public HashMap<String, String> getData() {
-        return s_defaultHashMap;
     }
 }
