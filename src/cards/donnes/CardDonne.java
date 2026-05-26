@@ -52,6 +52,8 @@ public class CardDonne {
         m_pv = pv;
         m_attaque = NO_VALUE;
         m_type = new Regular();
+        m_bones = NO_VALUE;
+        m_bloodDrop = NO_VALUE;
     }
 
     /**
@@ -99,6 +101,8 @@ public class CardDonne {
      */
     public Optional<Integer> getPv()
     {
+        if(m_pv == NO_VALUE)
+            return Optional.empty();
         return Optional.of(m_pv);
     }
 
@@ -122,6 +126,8 @@ public class CardDonne {
      */
     public Optional<Integer> getAttaque()
     {
+        if(m_attaque == NO_VALUE)
+            return Optional.empty();
         return Optional.of(m_attaque);
     }
 
@@ -167,6 +173,8 @@ public class CardDonne {
      */
     public Optional<Integer> getBloodDrops()
     {
+        if(m_bloodDrop == NO_VALUE)
+            return Optional.empty();
         return Optional.of(m_bloodDrop);
     }
 
@@ -189,6 +197,8 @@ public class CardDonne {
      */
     public Optional<Integer> getBones()
     {
+        if(m_bones == NO_VALUE)
+            return Optional.empty();
         return Optional.of(m_bones);
     }
 
@@ -204,11 +214,10 @@ public class CardDonne {
     @Override
     public boolean equals(Object obj) {
 
-        if(!(obj instanceof CardDonne))
+        if(!(obj instanceof CardDonne other))
         {
             return false;
         }
-        CardDonne other = (CardDonne)obj;
 
         return ( (m_bones == other.m_bones) && (m_type.equals(other.m_type))
                 && (m_pv == other.m_pv) && (m_attaque == other.m_attaque)
