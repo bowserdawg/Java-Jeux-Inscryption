@@ -5,6 +5,8 @@ import cards.Card;
 import cards.donnes.CardDonne;
 import cards.interfaces.*;
 
+import java.util.Optional;
+
 public abstract class AnimalCard extends Card implements Attacker {
     
     public AnimalCard(CardDonne donne) {
@@ -13,8 +15,7 @@ public abstract class AnimalCard extends Card implements Attacker {
 
     @Override
     public void attack(Card card) {
-
-        var att = getAttaque();
+        Optional<Integer> att = getAttaque();
 
         if(att.isEmpty())
             throw new RuntimeException("La carte " + this + " ne peut pas attaquer");
