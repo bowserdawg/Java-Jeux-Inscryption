@@ -13,6 +13,8 @@ public class BoardTest {
         
         // Test de la hauteur du plateau
         assertEquals(3, board.getHeight());
+        
+        // Un plateau est de 4x3 par défaut
     }
     
 }
