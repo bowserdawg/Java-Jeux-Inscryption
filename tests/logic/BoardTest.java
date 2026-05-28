@@ -1,15 +1,19 @@
 package logic;
 
+import cards.animals.*;
 import logic.players.CardStack;
 import logic.players.Rival;
 import logic.players.User;
 import org.junit.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class BoardTest {
     
     @Test
-    public void initBoard(){
+    public void initBoard() {
         Board board = new Board();
         // Test de la longeur du plateau
         assertEquals(4, board.getWidth());
@@ -21,32 +25,42 @@ public class BoardTest {
     }
     
     @Test
-    public void placeFreeSlot(){
+    public void placeFreeSlot() {
         Board board = new Board();
-        CardStack userStack = new CardStack();
+        ArrayList<AnimalCard> cards = new ArrayList<>();
+        cards.add(new Loup());
+        cards.add(new Chat());
+        cards.add(new Hermine());
+        
+        CardStack userStack = new CardStack(cards);
         
         User user = new User(userStack, board);
         
-        
-        
         boolean result = user.placeCard(0, 0);
-        
         
         assertEquals(true, result);
     }
     
     @Test
-    public void placeOccupiedSlot(){
+    public void placeOccupiedSlot() {
         Board board = new Board();
-        CardStack userStack = new CardStack();
-        CardStack rivalStack = new CardStack();
         
-        Rival rival = new Rival(rivalStack, board);
+        ArrayList<AnimalCard> cards = new ArrayList<>();
+        cards.add(new Loup());
+        cards.add(new Chat());
+        cards.add(new Hermine());
+        
+        CardStack userStack = new CardStack(cards);
+        
         User user = new User(userStack, board);
-        
-        user.placeCard(0, 0);
+        ArrayList<AnimalCard> userHand = new ArrayList<>(user.getHand());
+        assertTrue(user.placeCard(0, 0));
         boolean result = user.placeCard(0, 0);
-        assertEquals(false, result);
+        assertFalse(result);
+        assertEquals(userHand.size()-1, user.getHand().size());
+        
+        
     }
+    
     
 }
