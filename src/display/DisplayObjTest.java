@@ -12,13 +12,4 @@ public class DisplayObjTest implements Displayable {
                 {'w', 'o', 'r', 'd'}
         };
     }
-
-    @Override
-    public String getDisplayableFormString() {
-        return """
-                |hel
-                |hlo
-                word
-                """;
-    }
 }

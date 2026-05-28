@@ -9,6 +9,4 @@ package display.interfaces;
 public interface Displayable {
 
     public char[][] getDisplayableFormArray();
-
-    public String getDisplayableFormString();
 }

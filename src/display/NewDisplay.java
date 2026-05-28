@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class NewDisplay {
 
-    static final int ROW_MAX_LEN = 43;
+    static final int ROW_MAX_LEN = 45;
     // Plus grand que prevus juste pour etre sûr.
     static final int COL_MAX_LEN = 120;
 
@@ -92,4 +92,12 @@ public class NewDisplay {
         }
     }
 
+    // Donne une ligne
+    public char[] getRow(int num)
+    {
+        if(num >= ROW_MAX_LEN)
+            throw new IndexOutOfBoundsException("Le ligne demandé n'existe pas");
+
+        return m_screenBuffer[num];
+    }
 }
