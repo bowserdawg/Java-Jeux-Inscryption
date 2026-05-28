@@ -7,3 +7,8 @@ public interface Attacker {
     public void attack(Card card);
     
 }
+
+//
+// Board
+// Display
+// Terminal

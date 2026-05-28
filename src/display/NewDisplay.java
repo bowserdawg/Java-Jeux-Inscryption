@@ -9,22 +9,38 @@ import java.util.Arrays;
  */
 public class NewDisplay {
 
-    static final int ROW_MAX_LEN = 45;
+    private int m_rowMaxLen; // 45
     // Plus grand que prevus juste pour etre sûr.
-    static final int COL_MAX_LEN = 120;
+    private int m_colMaxLen; // 120
 
     private char[][] m_screenBuffer;
 
+    public NewDisplay(int rowMaxLen, int colMaxLen)
+    {
+        if(rowMaxLen < 0 || colMaxLen < 0)
+            throw new IndexOutOfBoundsException("Les valeurs d'initialisation ne peuvent pas être negatives");
+
+        m_rowMaxLen = rowMaxLen;
+        m_colMaxLen = colMaxLen;
+
+        m_screenBuffer = new char[m_rowMaxLen][m_colMaxLen];
+        clearBuffer();
+    }
+
+    // Valeur par défaut 50 row 120 col
     public NewDisplay()
     {
-        m_screenBuffer = new char[ROW_MAX_LEN][COL_MAX_LEN];
+        m_rowMaxLen = 50;
+        m_colMaxLen = 120;
+
+        m_screenBuffer = new char[m_rowMaxLen][m_colMaxLen];
         clearBuffer();
     }
 
     // Permet d'écrire sur une ligne un string.
     public void printRow(String string, int row, int start)
     {
-        if (string.length()+start > COL_MAX_LEN)
+        if (string.length()+start > m_colMaxLen)
             throw new IndexOutOfBoundsException("Il est impossible d'écrire ce string sur le tableau");
         if(row < 0 || start < 0)
             throw new IndexOutOfBoundsException("Les parametres 'row' ou 'start' ne peuvent pas etre negative");
@@ -42,7 +58,7 @@ public class NewDisplay {
     // Permet d'écrire sur une ligne un tableau de char.
     public void printRow(char[] arr, int row, int start)
     {
-        if (arr.length+start > COL_MAX_LEN)
+        if (arr.length+start > m_colMaxLen)
             throw new IndexOutOfBoundsException("Il est impossible d'écrire ce string sur le tableau");
         if(row < 0 || start < 0)
             throw new NegativeArraySizeException("Les parametres 'row' ou 'start' ne peuvent pas etre negative");
@@ -67,6 +83,9 @@ public class NewDisplay {
      */
     public void draw(Displayable displayable, int row, int column)
     {
+
+        //
+
         char[][] disForm = displayable.getDisplayableForm();
         for(char[] arr : disForm)
         {
@@ -90,10 +109,7 @@ public class NewDisplay {
     {
         for(char[] buf : m_screenBuffer)
         {
-            for(char c : buf)
-                System.out.print(c);
-
-            System.out.print("\n");
+            System.out.println(String.valueOf(buf));
         }
     }
 
@@ -116,7 +132,7 @@ public class NewDisplay {
       */
     public char[] getRow(int num)
     {
-        if(num >= ROW_MAX_LEN)
+        if(num >= m_rowMaxLen || num < 0)
             throw new IndexOutOfBoundsException("Le ligne demandé n'existe pas");
 
         return m_screenBuffer[num];

@@ -12,6 +12,8 @@ public abstract class Card implements Nommable, Displayable {
     private CardDonne m_donnes;
 
     static private final String s_ligneVide = "|           |";
+    static private final int s_HORIZONTAL_SIZE = 13;
+    static private final int s_VERTICAL_SIZE = 7;
 
     /**
      * Crée une nouvelle carte.
@@ -103,7 +105,8 @@ public abstract class Card implements Nommable, Displayable {
         return m_donnes.getBones();
     }
 
-    // Renvoie la fore displayable de la carte.
+    // Renvoie la forme displayable de la carte.
+    // Viens de Displayable.
     @Override
     public char[][] getDisplayableForm()
     {

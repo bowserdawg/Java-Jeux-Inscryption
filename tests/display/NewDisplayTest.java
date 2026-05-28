@@ -45,12 +45,19 @@ public class NewDisplayTest {
     @Test
     public void erreurTropGrand2()
     {
-        NewDisplay display = new NewDisplay();
+        NewDisplay display = new NewDisplay(42, 120);
 
         assertThrows(
                 IndexOutOfBoundsException.class,
                 () -> display.printRow("Hello", 45, 0)
         );
+
+        display.printBufferToScreen();
+    }
+
+    public void erreurNegativeLen()
+    {
+        NewDisplay display = new NewDisplay(-1, 120);
 
         display.printBufferToScreen();
     }
