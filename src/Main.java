@@ -36,7 +36,7 @@ public class Main
 
         ndisplay.draw(d, 7, 95);
 
-        ndisplay.printBuffer();
+        ndisplay.printBufferToScreen();
 
         //display.draw(board);
 

@@ -4,7 +4,7 @@ import display.interfaces.Displayable;
 
 public class DisplayObjTest implements Displayable {
     @Override
-    public char[][] getDisplayableFormArray() {
+    public char[][] getDisplayableForm() {
 
         return new char[][]{
                 {'|', 'h', 'e', 'l'},

@@ -6,7 +6,7 @@ import cards.donnes.CardDonne;
 import cards.interfaces.*;
 
 public abstract class AnimalCard extends Card implements Attacker {
-    
+
     public AnimalCard(CardDonne donne) {
         super(donne);
     }
@@ -22,4 +22,3 @@ public abstract class AnimalCard extends Card implements Attacker {
         card.receiveDamage(att.get());
     }
 }
-

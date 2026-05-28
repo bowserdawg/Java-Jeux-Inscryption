@@ -4,6 +4,9 @@ import display.interfaces.Displayable;
 
 import java.util.Arrays;
 
+/**
+ * Crée un écran de caractère qui peuvent être affiché dans le terminal.
+ */
 public class NewDisplay {
 
     static final int ROW_MAX_LEN = 45;
@@ -64,7 +67,7 @@ public class NewDisplay {
      */
     public void draw(Displayable displayable, int row, int column)
     {
-        char[][] disForm = displayable.getDisplayableFormArray();
+        char[][] disForm = displayable.getDisplayableForm();
         for(char[] arr : disForm)
         {
             printRow(arr, row, column);
@@ -80,19 +83,37 @@ public class NewDisplay {
         };
     }
 
-    public void printBuffer()
+    /**
+     * Affiche le tableau dans l'ecran.
+     */
+    public void printBufferToScreen()
     {
         for(char[] buf : m_screenBuffer)
         {
             for(char c : buf)
-            {
                 System.out.print(c);
-            }
+
             System.out.print("\n");
         }
     }
 
-    // Donne une ligne
+    /**
+     * Efface tout l'écran avec un clear.
+     * Ne marche que dans les systèmes UNIX par contre.
+     */
+    public void clearScreen()
+    {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
+    /**
+     * Donne une ligne.
+     *
+     * @param num Le numero de la ligne.
+     *
+     * @return La colonne demande.
+      */
     public char[] getRow(int num)
     {
         if(num >= ROW_MAX_LEN)

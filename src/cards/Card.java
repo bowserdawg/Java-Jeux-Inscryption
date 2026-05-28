@@ -3,13 +3,15 @@ package cards;
 import cards.donnes.CardDonne;
 import cards.interfaces.Nommable;
 import cards.types.Typable;
+import display.interfaces.Displayable;
 
 import java.util.Optional;
 
-public abstract class Card implements Nommable {
-    //private int m_lifePoints;
+public abstract class Card implements Nommable, Displayable {
 
     private CardDonne m_donnes;
+
+    static private final String s_ligneVide = "|           |";
 
     /**
      * Crée une nouvelle carte.
@@ -84,7 +86,7 @@ public abstract class Card implements Nommable {
     }
 
     /**
-     * Donne les goutes de sangs de la carte.
+     * Donne-les goutes de sangs de la carte.
      * @return Les goute de sang s'ils existent.
      */
     public Optional<Integer> getBloodDrops()
@@ -99,6 +101,42 @@ public abstract class Card implements Nommable {
     public Optional<Integer> getBones()
     {
         return m_donnes.getBones();
+    }
+
+    // Renvoie la fore displayable de la carte.
+    @Override
+    public char[][] getDisplayableForm()
+    {
+        // Formatage de tout.
+
+        String name = String.format("| %-10.10s|", getName());
+
+        int oPv = getLife();
+        String pv = String.format("| PV: %-6.6s|", oPv);
+
+
+        var att = getAttaque();
+        String attack = "";
+        attack = (att.isPresent()) ?
+                String.format("| ATT: %-5.5s|", oPv)
+                :
+                s_ligneVide;
+
+        var t = getType();
+        String type = (t.isNotRegular()) ?
+                String.format("| %-10.10s|", t.getType())
+                :
+                s_ligneVide;
+
+        return new char[][]{
+                "*-----------*".toCharArray(),
+                name.toCharArray(),
+                "|-----------|".toCharArray(),
+                pv.toCharArray(),
+                attack.toCharArray(),
+                type.toCharArray(),
+                "*-----------*".toCharArray()
+        };
     }
 
     // Vien de Nommable
