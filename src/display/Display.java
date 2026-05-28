@@ -2,8 +2,6 @@ package display;
 
 import cards.Card;
 
-import java.io.PrintStream;
-
 public class Display {
 
     public Display()
@@ -154,16 +152,16 @@ public class Display {
             drawCardLine(
                     b.getCard(
                             BoardPlaceHolder.BOARD_LIGNE_ARRAY[i],
-                            BoardPlaceHolder.BoardColonne.FIRST_ROW),
+                            BoardPlaceHolder.BoardColonne.FIRST_COL),
                     b.getCard(
                             BoardPlaceHolder.BOARD_LIGNE_ARRAY[i],
-                            BoardPlaceHolder.BoardColonne.SECOND_ROW),
+                            BoardPlaceHolder.BoardColonne.SECOND_COL),
                     b.getCard(
                             BoardPlaceHolder.BOARD_LIGNE_ARRAY[i],
-                            BoardPlaceHolder.BoardColonne.THIRD_ROW),
+                            BoardPlaceHolder.BoardColonne.THIRD_COL),
                     b.getCard(
                             BoardPlaceHolder.BOARD_LIGNE_ARRAY[i],
-                            BoardPlaceHolder.BoardColonne.FOURTH_ROW)
+                            BoardPlaceHolder.BoardColonne.FOURTH_COL)
             );
 
             if(i == 0)

@@ -24,17 +24,17 @@ public class BoardPlaceHolder {
     // Les coordonéee des colonnes dans la Board
     public enum BoardColonne
     {
-        FIRST_ROW,
-        SECOND_ROW,
-        THIRD_ROW,
-        FOURTH_ROW,
-        BOARD_Y_LEN,
+        FIRST_COL,
+        SECOND_COL,
+        THIRD_COL,
+        FOURTH_COL,
+        BOARD_COL_LEN,
     }
     public final static BoardColonne[] BOARD_COLONNES_ARRAY = {
-            BoardColonne.FIRST_ROW,
-            BoardColonne.SECOND_ROW,
-            BoardColonne.THIRD_ROW,
-            BoardColonne.FOURTH_ROW
+            BoardColonne.FIRST_COL,
+            BoardColonne.SECOND_COL,
+            BoardColonne.THIRD_COL,
+            BoardColonne.FOURTH_COL
     };
 
     private Display m_display;

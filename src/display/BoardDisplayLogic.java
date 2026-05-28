@@ -1,21 +1,49 @@
 package display;
 
+import cards.Card;
+
 public class BoardDisplayLogic {
 
-    NewDisplay m_display;
-    BoardPlaceHolder m_board;
+    private NewDisplay m_display;
+    private BoardPlaceHolder m_board;
 
     static final int BOARD_VERTICAL_SIZE = 42;
     static final int BOARD_HORIZONTAL_SIZE = 120;
 
-    BoardDisplayLogic()
+    static final int PADDING_LEFT = 4;
+
+    BoardDisplayLogic(BoardPlaceHolder board)
     {
         m_display = new NewDisplay(BOARD_HORIZONTAL_SIZE, BOARD_VERTICAL_SIZE);
+        m_board = board;
     }
 
     public void afficher()
     {
-        m_display.printRow("Partie"+ m_board.getNbPartie(), 0, 4);
+        m_display.clearBuffer();
+
+
+        m_display.printRow("Partie"+ m_board.getNbPartie(), 0, PADDING_LEFT);
+
+        m_display.printRow(m_board.getNbTour() + "er Tour:", 2, PADDING_LEFT);
+
+        for(int i = 0; i < BoardPlaceHolder.BOARD_LIGNE_ARRAY.length; i++) {
+
+            Card c1 = m_board.getCard(BoardPlaceHolder.BOARD_LIGNE_ARRAY[i], BoardPlaceHolder.BoardColonne.FIRST_COL);
+            Card c2 = m_board.getCard(BoardPlaceHolder.BOARD_LIGNE_ARRAY[i], BoardPlaceHolder.BoardColonne.SECOND_COL);
+            Card c3 = m_board.getCard(BoardPlaceHolder.BOARD_LIGNE_ARRAY[i], BoardPlaceHolder.BoardColonne.THIRD_COL);
+            Card c4 = m_board.getCard(BoardPlaceHolder.BOARD_LIGNE_ARRAY[i], BoardPlaceHolder.BoardColonne.FOURTH_COL);
+
+            Card[] cards = {c1, c2, c3, c4};
+
+            for(Card c : cards)
+            {
+
+            }
+        }
+
+
+        m_display.printBufferToScreen();
     }
 }
 
