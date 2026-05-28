@@ -96,7 +96,7 @@ public class NewDisplayTest {
     @Test
     public void testDisplayableCarte()
     {
-        NewDisplay display = new NewDisplay();
+        NewDisplay display = new NewDisplay(24, 120);
 
         Card c1 = new Ecureuil();
         Card c2 = new Chat();

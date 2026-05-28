@@ -14,7 +14,7 @@ public class BoardDisplayLogic {
 
     BoardDisplayLogic(BoardPlaceHolder board)
     {
-        m_display = new NewDisplay(BOARD_HORIZONTAL_SIZE, BOARD_VERTICAL_SIZE);
+        m_display = new NewDisplay(BOARD_VERTICAL_SIZE, BOARD_HORIZONTAL_SIZE);
         m_board = board;
     }
 
@@ -27,21 +27,37 @@ public class BoardDisplayLogic {
 
         m_display.printRow(m_board.getNbTour() + "er Tour:", 2, PADDING_LEFT);
 
-        for(int i = 0; i < BoardPlaceHolder.BOARD_LIGNE_ARRAY.length; i++) {
+        final int colMax = m_board.getBoardColumnLen();
+        final int rowMax = m_board.getBoardRowLen();
 
-            Card c1 = m_board.getCard(BoardPlaceHolder.BOARD_LIGNE_ARRAY[i], BoardPlaceHolder.BoardColonne.FIRST_COL);
-            Card c2 = m_board.getCard(BoardPlaceHolder.BOARD_LIGNE_ARRAY[i], BoardPlaceHolder.BoardColonne.SECOND_COL);
-            Card c3 = m_board.getCard(BoardPlaceHolder.BOARD_LIGNE_ARRAY[i], BoardPlaceHolder.BoardColonne.THIRD_COL);
-            Card c4 = m_board.getCard(BoardPlaceHolder.BOARD_LIGNE_ARRAY[i], BoardPlaceHolder.BoardColonne.FOURTH_COL);
+        final int colMul = Card.s_HORIZONTAL_SIZE;
+        final int rowMul = Card.s_VERTICAL_SIZE;
 
-            Card[] cards = {c1, c2, c3, c4};
-
-            for(Card c : cards)
+        /*for(int row = 0; row < colMax; ++row)
+        {
+            for(int col = 0; col < rowMax; ++col)
             {
+                Card c = m_board.getCard(row, col);
+                if(c != null)
+                    m_display.draw(c, col*rowMul, col*colMul + PADDING_LEFT);
+            }
+        }*/
 
+        for(int i = 0; i < 3; ++i)
+        {
+            Card[] theCards = {m_board.getCard(i, 0),
+                    m_board.getCard(i, 1),
+                    m_board.getCard(i, 2),
+                    m_board.getCard(i, 3)
+            };
+            int j = 0;
+            for(Card c : theCards)
+            {
+                if(c != null)
+                    m_display.draw(c, i*8, j);
+                j += 14;
             }
         }
-
 
         m_display.printBufferToScreen();
     }

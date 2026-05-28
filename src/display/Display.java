@@ -149,20 +149,6 @@ public class Display {
 
         for(int i = 0; i < BoardPlaceHolder.BOARD_LIGNE_ARRAY.length; i++)
         {
-            drawCardLine(
-                    b.getCard(
-                            BoardPlaceHolder.BOARD_LIGNE_ARRAY[i],
-                            BoardPlaceHolder.BoardColonne.FIRST_COL),
-                    b.getCard(
-                            BoardPlaceHolder.BOARD_LIGNE_ARRAY[i],
-                            BoardPlaceHolder.BoardColonne.SECOND_COL),
-                    b.getCard(
-                            BoardPlaceHolder.BOARD_LIGNE_ARRAY[i],
-                            BoardPlaceHolder.BoardColonne.THIRD_COL),
-                    b.getCard(
-                            BoardPlaceHolder.BOARD_LIGNE_ARRAY[i],
-                            BoardPlaceHolder.BoardColonne.FOURTH_COL)
-            );
 
             if(i == 0)
             {

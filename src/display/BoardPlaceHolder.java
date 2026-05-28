@@ -5,6 +5,9 @@ import cards.animals.*;
 import cards.obstacles.Pin;
 import cards.obstacles.Rock;
 
+import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
+
 public class BoardPlaceHolder {
 
     // Les coordonéees des lignes dans la Board
@@ -60,9 +63,25 @@ public class BoardPlaceHolder {
     }
 
     // Peut retourner null
-    public Card getCard(BoardLigne x, BoardColonne y)
+    public Card getCard(int row, int col)
     {
-        return cards[x.ordinal()][y.ordinal()];
+        if(row < 0 || col < 0)
+            throw new IndexOutOfBoundsException("L'index ne peut pas être négative");
+
+        if(row > cards.length || col > cards[0].length)
+            throw new IndexOutOfBoundsException("L'index est plus grand que le tableau");
+
+        return cards[row][col];
+    }
+
+    public int getBoardRowLen()
+    {
+        return cards[0].length;
+    }
+
+    public int getBoardColumnLen()
+    {
+        return cards.length;
     }
 
     public void display()

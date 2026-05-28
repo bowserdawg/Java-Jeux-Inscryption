@@ -9,41 +9,43 @@ import java.util.Arrays;
  */
 public class NewDisplay {
 
-    private int m_rowMaxLen; // 45
+    private int m_numberOfRows; // 45
     // Plus grand que prevus juste pour etre sûr.
-    private int m_colMaxLen; // 120
+    private int m_sizeOfARow; // 120
 
     private char[][] m_screenBuffer;
 
-    public NewDisplay(int rowMaxLen, int colMaxLen)
+    public NewDisplay(int numberOfRows, int sizeOfARow)
     {
-        if(rowMaxLen < 0 || colMaxLen < 0)
+        if(numberOfRows < 0 || sizeOfARow < 0)
             throw new IndexOutOfBoundsException("Les valeurs d'initialisation ne peuvent pas être negatives");
 
-        m_rowMaxLen = rowMaxLen;
-        m_colMaxLen = colMaxLen;
+        m_numberOfRows = numberOfRows;
+        m_sizeOfARow = sizeOfARow;
 
-        m_screenBuffer = new char[m_rowMaxLen][m_colMaxLen];
+        m_screenBuffer = new char[m_numberOfRows][m_sizeOfARow];
         clearBuffer();
     }
 
     // Valeur par défaut 50 row 120 col
     public NewDisplay()
     {
-        m_rowMaxLen = 50;
-        m_colMaxLen = 120;
+        m_numberOfRows = 50;
+        m_sizeOfARow = 120;
 
-        m_screenBuffer = new char[m_rowMaxLen][m_colMaxLen];
+        m_screenBuffer = new char[m_numberOfRows][m_sizeOfARow];
         clearBuffer();
     }
 
     // Permet d'écrire sur une ligne un string.
     public void printRow(String string, int row, int start)
     {
-        if (string.length()+start > m_colMaxLen)
+        if (string.length()+start > m_sizeOfARow)
             throw new IndexOutOfBoundsException("Il est impossible d'écrire ce string sur le tableau");
         if(row < 0 || start < 0)
             throw new IndexOutOfBoundsException("Les parametres 'row' ou 'start' ne peuvent pas etre negative");
+        if(row > m_numberOfRows)
+            throw new IndexOutOfBoundsException("Le parametre 'row' est beaucoup trop grand");;
 
         int i = 0;
         while(i < string.length())
@@ -58,10 +60,12 @@ public class NewDisplay {
     // Permet d'écrire sur une ligne un tableau de char.
     public void printRow(char[] arr, int row, int start)
     {
-        if (arr.length+start > m_colMaxLen)
+        if (arr.length+start > m_sizeOfARow)
             throw new IndexOutOfBoundsException("Il est impossible d'écrire ce string sur le tableau");
         if(row < 0 || start < 0)
             throw new NegativeArraySizeException("Les parametres 'row' ou 'start' ne peuvent pas etre negative");
+        if(row > m_numberOfRows)
+            throw new IndexOutOfBoundsException("Le parametre 'row' est beaucoup trop grand");;
 
         int i = 0;
         while(i < arr.length)
@@ -83,9 +87,6 @@ public class NewDisplay {
      */
     public void draw(Displayable displayable, int row, int column)
     {
-
-        //
-
         char[][] disForm = displayable.getDisplayableForm();
         for(char[] arr : disForm)
         {
@@ -116,6 +117,8 @@ public class NewDisplay {
     /**
      * Efface tout l'écran avec un clear.
      * Ne marche que dans les systèmes UNIX par contre.
+     *
+     * ET ne marche pas sur le terminal d'IntelliJ.
      */
     public void clearScreen()
     {
@@ -132,7 +135,7 @@ public class NewDisplay {
       */
     public char[] getRow(int num)
     {
-        if(num >= m_rowMaxLen || num < 0)
+        if(num >= m_numberOfRows || num < 0)
             throw new IndexOutOfBoundsException("Le ligne demandé n'existe pas");
 
         return m_screenBuffer[num];
