@@ -6,16 +6,15 @@ import display.Display;
 
 public class Board {
     
-    private Display m_displayer;
     private int m_nbPartie;
     private int m_nbTour;
+    private boolean playerTurn = true;
     private final int m_width = 4;
     private final int m_height = 3;
     
     private Card[][] m_board = new Card[m_height][m_width];
     
     public Board() {
-        m_displayer = new Display(this);
         m_nbPartie = 1;
         m_nbTour = 1;
     }
@@ -43,10 +42,14 @@ public class Board {
     }
     
     public void passTurn() {
-        //attaque des cartes...
-        //...
-        
-        //displayer.draw();
+        Card[] rivalRow = m_board[1];
+        Card[] playerRow = m_board[2];
+        for(int i = 0; i < m_width; i++){
+            for(int j = 0; j< m_height; j++){
+                
+                getCard(i,j);
+            }
+        }
     }
     
     public int getWidth(){

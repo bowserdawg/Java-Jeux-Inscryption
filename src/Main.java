@@ -1,7 +1,7 @@
 import cards.Card;
 import cards.animals.*;
-import display.BoardPlaceHolder;
-import display.Display;
+//import display.BoardPlaceHolder;
+//import display.Display;
 import logic.Board;
 import logic.players.CardStack;
 import logic.players.Rival;
@@ -28,18 +28,8 @@ public class Main
         User user = new User(userStack, board);
         Rival rival = new Rival(rivalStack, board);
         
-            user.placeCard(3, 0);
-        
-        Display display = new Display();
-
-        // TODO : Faire en sorte que la méthode draw marche avec Board.
-        //display.draw(board);
-
-        BoardPlaceHolder bph = new BoardPlaceHolder();
-
-        // Méthode temporaire pour avoir des cartes.
-        bph.setCardsTemp();
-        display.draw(bph);
-        
+        user.placeCard(3, 0);
+        user.placeCard(2, 0);
+            board.passTurn();
     }
 }

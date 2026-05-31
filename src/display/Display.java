@@ -33,16 +33,14 @@ public class Display {
     static private final int s_nameSeparationLine = 2;
     static private final int s_pvLine = 3;
     static private final int s_attackLine = 4;
-    static private final int s_typeLine = 5;
+    static private final int s_emptyLine = 5;
     static private final int s_lastLine = 6;
-
-    static private final int s_numberUsableColumns = s_cardWidth-3;
 
     private void printCardInfoLine(String info)
     {
         System.out.print("| ");
         System.out.print(info);
-        for(int i = 0; i < ( s_numberUsableColumns - info.length() ); i++)
+        for(int i = 0; i < ( info.length() - (s_cardWidth-3) ); i++)
             System.out.print(" ");
         System.out.print("|");
     }
@@ -51,7 +49,7 @@ public class Display {
     {
         if(card == null)
         {
-            if(number == 0 || number == s_cardHeight-1)
+            if(number == 1 || number == s_cardHeight-1)
             {
                 System.out.print("*************");
             }
@@ -79,41 +77,18 @@ public class Display {
                 printCardInfoLine("PV : " + card.getLife());
                 break;
             case s_attackLine:
-                {
-                    // Il faut declarer les variables dans
-                    // des blocs pour les switchs
-                    // cars ils ont des comportements bizzares.
-                    var att = card.getAttaque();
-
-                    if(att.isEmpty())
-                    {
-                        System.out.print("|           |");
-                    }
-                    else
-                    {
-                        printCardInfoLine("Att : " + att.get());
-                    }
-                }
+//                printCardInfoLine("Att : " + card.getData().get(
+//                        Card.DONNE_TYPE[Card.DONNE_TYPE_ELEMS.ATTAQUE.ordinal()]
+//                ));
                 break;
-            case s_typeLine:
-                {
-                    var type = card.getType();
-
-                    if(type.isNotRegular())
-                    {
-                        printCardInfoLine(type.toString());
-                    }
-                    else
-                    {
-                        System.out.print("|           |");
-                    }
-                }
+            case s_emptyLine:
+                System.out.print("|           |");
                 break;
             case s_lastLine:
                 System.out.print("*-----------*");
                 break;
             default:
-                print("Error invalid state");
+                System.out.print("Error");
                 break;
         }
     }
@@ -128,11 +103,21 @@ public class Display {
         for(int i = 0; i < s_cardHeight; i++)
         {
             drawPaddingLeft();
-
-            for(Card c: array)
+            if(i == 0 || i == s_cardHeight-1)
             {
-                drawCardInside(c, i);
-                drawPaddingBetweenCard();
+                for(Card c : array)
+                {
+                    drawCardTopOrBottom(c);
+                    drawPaddingBetweenCard();
+                }
+            }
+            else
+            {
+                for(Card c: array)
+                {
+                    drawCardInside(c, i);
+                    drawPaddingBetweenCard();
+                }
             }
 
             print("");
@@ -146,6 +131,7 @@ public class Display {
         // Neme tour
         if(b.getNbPartie() > 1) { print(b.getNbPartie() + "eme Tour:"); }
         else { print(b.getNbPartie() + "er Tour"); }
+
 
         for(int i = 0; i < BoardPlaceHolder.BOARD_LIGNE_ARRAY.length; i++)
         {
