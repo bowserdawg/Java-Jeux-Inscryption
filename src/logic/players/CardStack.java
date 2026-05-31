@@ -11,7 +11,7 @@ public class CardStack {
     static final Random r = new Random();
     ArrayList<AnimalCard> m_cards;
     //    ArrayList<Ecureuil> m_squirrels = new ArrayList<>();
-    int m_squirrels = 10;
+    private int m_squirrels = 10;
     
     public CardStack(ArrayList<AnimalCard> cardList) {
         m_cards = cardList;

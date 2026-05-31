@@ -8,7 +8,7 @@ public class Board {
     
     private int m_nbPartie;
     private int m_nbTour;
-    private boolean playerTurn = true;
+    private boolean m_playerTurn = true;
     private final int m_width = 4;
     private final int m_height = 3;
     
