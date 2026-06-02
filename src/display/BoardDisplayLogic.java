@@ -95,18 +95,18 @@ public class BoardDisplayLogic {
 
                 if(i == ENNEMI_ROW)
                 {
-                    m_display.printRow("||", (row + 8)+rowMul, j + PADDING_CARDS + (PADDING_CARDS/2) + 1);
-                    m_display.printRow("\\/", (row + 8)+rowMul+1, j + PADDING_CARDS + (PADDING_CARDS/2) + 1);
+                    m_display.printRow("||", (row + 7), j + PADDING_CARDS + (PADDING_CARDS/2) + 1);
+                    m_display.printRow("\\/", (row + 8), j + PADDING_CARDS + (PADDING_CARDS/2) + 1);
                 }
                 j += colMul + 1;
             }
             row++;
         }
 
+
         row = END_DISPLAY_CARD;
 
         m_display.printRow("  Votre main :", row, 0);
-        row++;
 
         var playerArray = m_user.getHand();
         var len = playerArray.size();
@@ -124,7 +124,9 @@ public class BoardDisplayLogic {
                     " PV: " + life + "    " +
                     " Att: " + att + "    " +
                     " Gouttes de sang: " + bloodDrop +
-                    " Os " + bone, row, PADDING_LEFT);
+                    " Os " + bone,
+
+                    row, PADDING_LEFT);
             row++;
         }
         row++;
@@ -141,10 +143,9 @@ public class BoardDisplayLogic {
         row++;
 
         m_display.printRow("Score " + m_board.getScore(), 0, 60);
-        m_display.printRow("Pioche",  END_DISPLAY_CARD, 70);
-        m_display.printRow("Pioche",  END_DISPLAY_CARD, 70);
-        m_display.draw(nullCard, END_DISPLAY_CARD + 1, 66);
-        m_display.printRow("cartes",  END_DISPLAY_CARD+8, 65);
+        m_display.printRow("Pioche",  END_DISPLAY_CARD, 73);
+        m_display.draw(nullCard, END_DISPLAY_CARD + 1, 70);
+        m_display.printRow("11 cartes",  END_DISPLAY_CARD+8, 73);
 
         m_display.printBufferToScreen();
     }

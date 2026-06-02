@@ -120,10 +120,7 @@ public abstract class Card implements Nommable, Displayable {
 
         var att = getAttaque();
         String attack = "";
-        attack = (att.isPresent()) ?
-                String.format("| ATT: %-5.5s|", oPv)
-                :
-                s_ligneVide;
+        attack = att.map(integer -> String.format("| ATT: %-5.5s|", integer)).orElse(s_ligneVide);
 
         var t = getType();
         String type = (t.isNotRegular()) ?
