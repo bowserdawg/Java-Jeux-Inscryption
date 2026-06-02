@@ -1,11 +1,8 @@
 package cards.animals;
 
 import cards.donnes.DonneFactory;
-import cards.interfaces.Flyable;
 
-import java.util.HashMap;
-
-public class Moineau extends AnimalCard implements Flyable {
+public class Moineau extends FlyingAnimal {
     public Moineau(){
         super(DonneFactory.moineau());
     }

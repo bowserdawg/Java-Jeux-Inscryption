@@ -53,31 +53,21 @@ public class Board {
             Card rivalCard = rivalRow[i];
             Card playerCard = playerRow[i];
             
-            AnimalCard attacker;
+            Card attacker;
             Card victim;
             
             if (m_playerTurn) {
-                if (playerCard != null && playerCard.getAttaque().isPresent()) {
-                    attacker = (AnimalCard) playerCard;
-                    victim = rivalCard;
-                } else {
-                    continue;
-                }
+                attacker = playerCard;
+                victim = rivalCard;
             } else {
-                if (rivalCard != null && rivalCard.getAttaque().isPresent()) {
-                    attacker = (AnimalCard) rivalCard;
-                    victim = rivalCard;
-                } else {
-                    continue;
-                }
+                attacker = rivalCard;
+                victim = playerCard;
             }
             
-            if(victim == null){
-                this.attack(attacker.getAttaque().get());
+            if (attacker != null && attacker.getAttaque().isPresent()) {
+                ((AnimalCard) attacker).attack(this , victim);
             }
-            else {
-                attacker.attack(victim);
-            }
+            
         }
 
 
@@ -139,9 +129,9 @@ public class Board {
      */
     
     public void attack(int damage) {
-        if(m_playerTurn){
+        if (m_playerTurn) {
             m_playerScore += damage;
-        }else {
+        } else {
             m_playerScore -= damage;
         }
     }

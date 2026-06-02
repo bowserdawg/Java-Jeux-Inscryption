@@ -1,6 +1,5 @@
 package cards.donnes;
 
-import cards.interfaces.Flyable;
 import cards.types.Regular;
 import cards.types.Volant;
 

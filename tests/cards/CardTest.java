@@ -21,8 +21,9 @@ public class CardTest {
     public void attackCard() {
         AnimalCard card1 = new Loup();
         AnimalCard card2 = new Loup();
+        Board board = new Board();
         int lifeCard2Before = card2.getLife();
-        card1.attack(card2);
+        card1.attack(board,card2);
         
         // On limite la vie 0 au minimum
         int cardAttaque;
