@@ -15,12 +15,15 @@ public abstract class AnimalCard extends Card implements Attacker {
 
     @Override
     public void attack(Card card) {
+        if(card != null){
+        
         Optional<Integer> att = getAttaque();
 
         if(att.isEmpty())
             throw new RuntimeException("La carte " + this + " ne peut pas attaquer");
 
         card.receiveDamage(att.get());
+        }
     }
 }
 
