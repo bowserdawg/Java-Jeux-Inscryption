@@ -2,6 +2,7 @@ import cards.Card;
 import cards.animals.*;
 //import display.BoardPlaceHolder;
 //import display.Display;
+import display.Display;
 import logic.Board;
 import logic.players.CardStack;
 import logic.players.Rival;
@@ -27,9 +28,10 @@ public class Main
         
         User user = new User(userStack, board);
         Rival rival = new Rival(rivalStack, board);
-        
+
         user.placeCard(3, 0);
         user.placeCard(2, 0);
+        
             board.passTurn();
     }
 }

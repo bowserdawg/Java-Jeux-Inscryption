@@ -49,6 +49,7 @@ public class Board {
     public void passTurn() {
         Card[] rivalRow = m_board[1];
         Card[] playerRow = m_board[2];
+        Card[] nextRivalRow = m_board[0];
         for (int i = 0; i < rivalRow.length; i++) {
             Card rivalCard = rivalRow[i];
             Card playerCard = playerRow[i];
@@ -65,9 +66,27 @@ public class Board {
             }
             
             if (attacker != null && attacker.getAttaque().isPresent()) {
-                ((AnimalCard) attacker).attack(this , victim);
+                ((AnimalCard) attacker).attack(this, victim);
             }
             
+            Card nextRivalCard = nextRivalRow[i];
+            if (victim != null) {
+                
+                int cardLife = victim.getLife();
+                
+                if (cardLife <= 0) {
+                    if (m_playerTurn) {
+                        if (cardLife < 0) {
+                            if (nextRivalCard.receiveDamage(cardLife) <= 0) {
+                                nextRivalRow[i] = null;
+                            }
+                        }
+                        playerRow[i] = null;
+                    } else {
+                        rivalRow[i] = null;
+                    }
+                }
+            }
         }
 
 
