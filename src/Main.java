@@ -1,5 +1,4 @@
-import display.BoardPlaceHolder;
-import display.Display;
+import display.BoardDisplayLogic;
 import display.DisplayObjTest;
 import display.NewDisplay;
 import logic.Board;
@@ -23,28 +22,23 @@ public class Main
         
             user.placeCard(3, 0);
 
+        BoardDisplayLogic log = getBoardDisplayLogic();
 
-        Display display = new Display();
+        log.afficher();
+    }
 
-        NewDisplay ndisplay = new NewDisplay();
-
-        ndisplay.printRow("Hello World", 2, 89);
-        char[] arr = {'h', 'e', 'l', 'l', 'o'};
-        ndisplay.printRow(arr, 3, 89);
-
-        DisplayObjTest d = new DisplayObjTest();
-
-        ndisplay.draw(d, 7, 95);
-
-        ndisplay.printBufferToScreen();
-
+    private static BoardDisplayLogic getBoardDisplayLogic() {
         //display.draw(board);
 
-        BoardPlaceHolder bph = new BoardPlaceHolder();
+        Board b = new Board();
 
         // Méthode temporaire pour avoir des cartes.
-        bph.setCardsTemp();
+        b.setCards();
         //display.draw(bph);
-        
+        BoardDisplayLogic log = new BoardDisplayLogic(b,
+                new User(new CardStack(), b),
+                new Rival(new CardStack(), b)
+        );
+        return log;
     }
 }

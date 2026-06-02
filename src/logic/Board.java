@@ -2,11 +2,11 @@ package logic;
 
 import cards.Card;
 import cards.animals.Chat;
-import display.Display;
+import display.BoardDisplayLogic;
+import display.NewDisplay;
 
 public class Board {
-    
-    private Display m_display;
+
     private int m_nbPartie;
     private int m_nbTour;
     private int score = 0;
@@ -17,7 +17,6 @@ public class Board {
     private Card[][] m_board = new Card[m_height][m_width];
     
     public Board() {
-        m_display = new Display();
         m_nbPartie = 1;
         m_nbTour = 1;
     }

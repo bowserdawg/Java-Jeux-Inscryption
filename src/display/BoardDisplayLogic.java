@@ -36,7 +36,7 @@ public class BoardDisplayLogic {
      * Constructeur pour BoardDisplayLogic.
      * @param board Le plateau qui va etre afficher.
      */
-    BoardDisplayLogic(Board board, User user, Rival rival)
+    public BoardDisplayLogic(Board board, User user, Rival rival)
     {
         m_display = new NewDisplay(BOARD_VERTICAL_SIZE, BOARD_HORIZONTAL_SIZE);
         m_board = board;
@@ -95,8 +95,8 @@ public class BoardDisplayLogic {
 
                 if(i == ENNEMI_ROW)
                 {
-                    m_display.printRow("||", (row + i * 8)+rowMul, j + PADDING_CARDS + (PADDING_CARDS/2) + 1);
-                    m_display.printRow("\\/", (row + i * 8)+rowMul+1, j + PADDING_CARDS + (PADDING_CARDS/2) + 1);
+                    m_display.printRow("||", (row + 8)+rowMul, j + PADDING_CARDS + (PADDING_CARDS/2) + 1);
+                    m_display.printRow("\\/", (row + 8)+rowMul+1, j + PADDING_CARDS + (PADDING_CARDS/2) + 1);
                 }
                 j += colMul + 1;
             }
@@ -144,7 +144,7 @@ public class BoardDisplayLogic {
         m_display.printRow("Pioche",  END_DISPLAY_CARD, 70);
         m_display.printRow("Pioche",  END_DISPLAY_CARD, 70);
         m_display.draw(nullCard, END_DISPLAY_CARD + 1, 66);
-        m_display.printRow("11 cartes",  END_DISPLAY_CARD+8, 65);
+        m_display.printRow("cartes",  END_DISPLAY_CARD+8, 65);
 
         m_display.printBufferToScreen();
     }
