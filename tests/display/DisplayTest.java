@@ -9,19 +9,19 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertThrows;
 
-public class NewDisplayTest {
+public class DisplayTest {
 
     @Test
     public void testDisplayVide()
     {
-        NewDisplay display = new NewDisplay();
+        Display display = new Display();
         display.printBufferToScreen();
     }
 
     @Test
     public void testDisplayObj()
     {
-        NewDisplay display = new NewDisplay();
+        Display display = new Display();
         DisplayObjTest obj = new DisplayObjTest();
         display.draw(obj, 0, 0);
         display.printBufferToScreen();
@@ -30,7 +30,7 @@ public class NewDisplayTest {
     @Test
     public void erreurTropGrand()
     {
-        NewDisplay display = new NewDisplay();
+        Display display = new Display();
 
         assertThrows(
                 IndexOutOfBoundsException.class,
@@ -43,7 +43,7 @@ public class NewDisplayTest {
     @Test
     public void erreurTropGrand2()
     {
-        NewDisplay display = new NewDisplay(42, 120);
+        Display display = new Display(42, 120);
 
         assertThrows(
                 IndexOutOfBoundsException.class,
@@ -55,7 +55,7 @@ public class NewDisplayTest {
 
     public void erreurNegativeLen()
     {
-        NewDisplay display = new NewDisplay(-1, 120);
+        Display display = new Display(-1, 120);
 
         display.printBufferToScreen();
     }
@@ -63,7 +63,7 @@ public class NewDisplayTest {
     @Test
     public void overWritePrint()
     {
-        NewDisplay display = new NewDisplay();
+        Display display = new Display();
 
         display.printRow("Hello", 0, 0);
 
@@ -77,7 +77,7 @@ public class NewDisplayTest {
     @Test
     public void clearTest()
     {
-        NewDisplay display = new NewDisplay();
+        Display display = new Display();
 
         int i = 0;
 
@@ -94,7 +94,7 @@ public class NewDisplayTest {
     @Test
     public void testDisplayableCarte()
     {
-        NewDisplay display = new NewDisplay(24, 120);
+        Display display = new Display(24, 120);
 
         Card c1 = new Ecureuil();
         Card c2 = new Chat();

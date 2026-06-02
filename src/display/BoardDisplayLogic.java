@@ -12,7 +12,7 @@ import java.util.Optional;
 public class BoardDisplayLogic {
 
     // Utilisez pour l'affchage
-    private NewDisplay m_display;
+    private Display m_display;
     // Le plateau ou les cartes sont en place.
     private Board m_board;
     private Rival m_rival;
@@ -38,7 +38,7 @@ public class BoardDisplayLogic {
      */
     public BoardDisplayLogic(Board board, User user, Rival rival)
     {
-        m_display = new NewDisplay(BOARD_VERTICAL_SIZE, BOARD_HORIZONTAL_SIZE);
+        m_display = new Display(BOARD_VERTICAL_SIZE, BOARD_HORIZONTAL_SIZE);
         m_board = board;
         m_rival = rival;
         m_user = user;
@@ -69,10 +69,10 @@ public class BoardDisplayLogic {
         // row++ = on saute une ligne en plus
         int row = 0;
 
-        m_display.printRow("Partie"+ m_board.getM_nbPartie(), row, PADDING_LEFT);
+        m_display.printRow("Partie"+ m_board.getNbPartie(), row, PADDING_LEFT);
         row+=2; // Saut de ligne
 
-        m_display.printRow(m_board.getM_nbPartie() + "er Tour:", row, PADDING_LEFT);
+        m_display.printRow(m_board.getNbTour() + "er Tour:", row, PADDING_LEFT);
         row+=2;
 
         final int colMax = m_board.getHeight();
