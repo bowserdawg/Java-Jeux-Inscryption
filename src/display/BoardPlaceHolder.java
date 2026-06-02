@@ -4,6 +4,11 @@ import cards.Card;
 import cards.animals.*;
 import cards.obstacles.Pin;
 import cards.obstacles.Rock;
+import logic.Board;
+import logic.players.CardStack;
+import logic.players.Player;
+import logic.players.Rival;
+import logic.players.User;
 
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;

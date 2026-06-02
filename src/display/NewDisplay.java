@@ -88,6 +88,7 @@ public class NewDisplay {
     public void draw(Displayable displayable, int row, int column)
     {
         char[][] disForm = displayable.getDisplayableForm();
+
         for(char[] arr : disForm)
         {
             printRow(arr, row, column);

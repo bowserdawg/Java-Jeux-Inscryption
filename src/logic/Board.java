@@ -9,6 +9,8 @@ public class Board {
     private Display m_display;
     private int m_nbPartie;
     private int m_nbTour;
+    private int score = 0;
+
     private final int m_width = 4;
     private final int m_height = 3;
     
@@ -19,7 +21,12 @@ public class Board {
         m_nbPartie = 1;
         m_nbTour = 1;
     }
-    
+
+    public int getScore()
+    {
+        return score;
+    }
+
     public int getM_nbPartie() {
         return m_nbPartie;
     }

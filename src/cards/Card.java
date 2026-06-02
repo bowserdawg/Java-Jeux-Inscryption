@@ -112,7 +112,6 @@ public abstract class Card implements Nommable, Displayable {
     public char[][] getDisplayableForm()
     {
         // Formatage de tout.
-
         String name = String.format("| %-10.10s|", getName());
 
         int oPv = getLife();
