@@ -93,43 +93,6 @@ public class Board {
                 }
             }
         }
-
-
-//            if (m_playerTurn) {
-//
-//                if (playerCard == null) {
-//                    continue;
-//                }
-//
-//                Optional<Integer> tempAttack = playerCard.getAttaque();
-//                if (tempAttack.isPresent()) {
-//
-//                    if (rivalCard == null) {
-//                        int attack = tempAttack.get();
-//                        attackRival(attack);
-//                    } else {
-//                        Attacker playerAttack = (AnimalCard) playerCard;
-//                        playerAttack.attack(rivalCard);
-//                    }
-//                }
-//            } else {
-//                if (rivalCard == null) {
-//                    continue;
-//                }
-//
-//                Optional<Integer> tempAttack = rivalCard.getAttaque();
-//                if (tempAttack.isPresent()) {
-//
-//                    if (playerCard == null) {
-//                        int attack = tempAttack.get();
-//                        attackPlayer(attack);
-//                    } else {
-//                        Attacker rivalAttack = (AnimalCard) playerCard;
-//                        rivalAttack.attack(rivalCard);
-//                    }
-//                }
-//            }
-//        }
     }
 
 
