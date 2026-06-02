@@ -91,7 +91,7 @@ public class CardDonne {
     {
         if(m_pv == NO_VALUE)
             throw new RuntimeException("Le champ \"PV\" ne peut être modifie pour ce type de donne");
-        m_pv = Math.max(num, 0);
+        m_pv = num;
     }
 
     /**

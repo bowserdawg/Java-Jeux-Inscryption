@@ -3,9 +3,7 @@ package display;
 import cards.Card;
 import cards.animals.Chat;
 import cards.animals.Ecureuil;
-import cards.animals.Hermine;
 import cards.animals.Moineau;
-import cards.donnes.CardDonne;
 import cards.obstacles.Pin;
 import org.junit.Test;
 

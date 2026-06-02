@@ -22,5 +22,6 @@ modules.xml
 
 ### UML ###
 **/uml/*.png
+**/uml/*.svg
 
 questions.md

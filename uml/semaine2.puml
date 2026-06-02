@@ -1,0 +1,244 @@
+@startuml
+
+package cards{
+
+    package animals{
+
+        abstract class AnimalCard extends cards.Card implements cards.interfaces.Attacker{
+            +«create»(donne: CardDonne)
+            +attack(card : Card): void
+        }
+
+        class Chat extends AnimalCard{
+        +«create»()
+        }
+
+        class Grizzly extends AnimalCard{
+        +«create»()
+        }
+
+        class Coyote extends AnimalCard{
+        +«create»()
+        }
+
+        class Moineau extends AnimalCard implements cards.interfaces.Flyable{
+        +«create»()
+        }
+
+        class Corbeau extends AnimalCard implements cards.interfaces.Flyable{
+        +«create»()
+        }
+
+        class Ecureuil extends AnimalCard{
+        +«create»()
+        }
+
+        class Hermine extends AnimalCard{
+        +«create»()
+        }
+
+        class Louveteau extends AnimalCard{
+        +«create»()
+        }
+
+        class Loup extends AnimalCard{
+        +«create»()
+        }
+
+        class Punaise extends AnimalCard{
+        +«create»()
+        }
+    }
+
+    package donnes{
+        class CardDonne{
+            -m_pv : Integer
+            -m_attaque : Integer
+            -m_bloodDrop : Integer
+            -m_bones : Integer
+            -NO_VALUE : Integer
+            #«create»(pv: Integer, attaque: Integer, bloodDrop: Integer, bones: Integer, type: Typable)
+            #«create»(pv : Integer)
+            #«create»()
+            #«create»(other: CardDonne)
+            +setPv(num: Integer) : void
+            +getPv() : Integer
+            +setAttaque(num Integer) : void
+            +getAttaque() : Integer
+            +setType(newType : Typable) : void
+            +getType() : Typable
+            +setBloodDrop(bloodDrop : Integer) : void
+            +getBloodDrops() : Integer
+            +setBones(bones : Integer)  void
+            +getBones() : Integer
+            +toString() : String
+            +equals(obj : Object) : Boolean
+        }
+        class DonneFactory{
+            +chat()
+            +grizzly()
+            +coyote()
+            +moineau()
+            +corbeau()
+            +ecureuil()
+            +hermine()
+            +louveteau()
+            +loup()
+            +punaise()
+            +rocher()
+            +sapin()
+        }
+    }
+
+    package interfaces{
+        interface Attacker {
+            +attack(Card : card) : void
+        }
+
+        interface Flyable{
+        }
+
+        interface Nommable{
+            gameName() : String
+        }
+
+    }
+
+    package obstacles{
+        abstract class ObstacleCard extends cards.Card{
+            +«create»(donne : CardDonne)
+        }
+        class Rock extends ObstacleCard{
+            +«create»()
+        }
+        class Pin extends ObstacleCard{
+            +«create»()
+        }
+    }
+
+    package types{
+        class Regular implements Typable{
+            -CLASS_NAME : String
+            +«create»()
+            +getType() : String
+            +isNotRegular() : Boolean
+            +toString() : String
+            +equals(obj : Object) : Boolean
+        }
+
+        interface Typable{
+            getType() : String
+            isNotRegular() : Boolean()
+        }
+        class Volant implements Typable{
+            -CLASS_NAME : String
+            +«create»()
+            +getType() : String
+            +isNotRegular() : Boolean
+            +toString() : String
+            +equals(obj : Object) : Boolean
+        }
+    }
+
+     abstract class Card{
+        +«create»(donne : CardDonne)
+        +getLife() : Integer
+        +receiveDamage(nbDamage : int) : Integer
+        +getPv() : Integer
+        +getAttaque() : Integer
+        +getType() : Typable
+        +getBloodDrops() : Integer
+        +getBones() : Integer
+        +getName() : String
+        +toString() : String
+    }
+}
+
+package display{
+
+    class Display{
+        -s_cardWidth : Integer
+        -s_cardHeight : Integer
+        -s_topLine : Integer
+        -s_cardNameLine : Integer
+        -s_nameSeparationLine : Integer
+        -s_pvLine : Integer
+        -s_attackLine : Integer
+        -s_emptyLine : Integer
+        -s_lastLine : Integer
+        -print(string : String) : void
+        -drawCardTopOrBottom(card : Card) : void
+        -printCardInfoLine(info : String) : void
+        -drawCardInside(card : Card, number : Integer) : void
+        -drawPaddingLeft() : void
+        -drawPaddingBetweenCard() : void
+        -drawCardLine(one : Card, two : Card, tree : Card, four : Card) : void
+        +«create»()
+        +draw(b : BoardPlaceHolder) : void
+    }
+}
+
+package logic{
+    package players{
+
+        class CardStack{
+            -r : Random
+            -m_squirrels : Integer
+            +«create»(cardList[] AnimalCard)
+            +drawCard() : AnimalCard
+            +drawSquirrel() : Ecureuil
+            +getCards() : AnimalCard[*]
+            +getSquirrels() : Integer
+        }
+
+        abstract class Player{
+            +«create»(stack : AnimalCard, board : Board)
+            +placeCard(column : Integer, indexCardInHand : Integer) : Boolean
+            +getHand() : AnimalCard[*]
+            +getNbCards() : Integer
+            +getCardFromHand(index : Integer) : AnimalCard
+            +removeCardFromHand(card AnimalCard) : Boolean
+        }
+
+        class Rival extends Player{
+            +«create»(stack : CardStack, board : Board)}
+        }
+
+        class User extends Player{
+            +«create»(stack : CardStack, board : Board)
+        }
+    }
+    class Board{
+        -m_nbPartie : Integer
+        -m_nbTour : Integer
+        -m_playerTurn : Boolean
+        -m_width : Integer
+        -m_height : Integer
+        +«create»()
+        +getNbPartie() : Integer
+        +getNbTour() : Integer
+        +getCard(row : Integer, column : Integer) : Card
+        +placeCard(row : Integer, column : Integer, cardToPlace : Card) : Boolean
+        +passTurn() : void
+        +getWidth() : Integer
+        +isOccupied(row : Integer, column : Integer) : Boolean
+        +getHeight() : Integer
+    }
+}
+
+CardDonne *--> "1\n -m_type" Typable
+
+Card *--> "1\n -m_donnes" CardDonne
+
+Display *--> "1\n -m_board" Board
+
+Board *--> "4x3\n -m_board" Card
+
+Player *--> "*\n -m_hand" AnimalCard
+Player *--> "1\n -m_board" Board
+
+
+
+Player ..> CardStack
+
+@enduml
