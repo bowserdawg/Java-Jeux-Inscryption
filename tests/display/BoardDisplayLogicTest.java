@@ -18,8 +18,8 @@ public class BoardDisplayLogicTest {
     public void testNbPartie()
     {
         Board b = new Board();
-        b.placeCard(0, 0, new Moineau());
-        b.placeCard(0, 1, new Chat());
+        b.placeCard(Board.Positions.NextRivalRow, 0, new Moineau());
+        b.placeCard(Board.Positions.NextRivalRow, 1, new Chat());
 
         ArrayList<AnimalCard> cardStack = new ArrayList<>();
 
@@ -34,8 +34,8 @@ public class BoardDisplayLogicTest {
     public void testAffichage()
     {
         Board b = new Board();
-        b.placeCard(0, 0, new Moineau());
-        b.placeCard(0, 1, new Chat());
+        b.placeCard(Board.Positions.NextRivalRow, 0, new Moineau());
+        b.placeCard(Board.Positions.NextRivalRow, 1, new Chat());
 
         ArrayList<AnimalCard> cardStack = new ArrayList<>();
 

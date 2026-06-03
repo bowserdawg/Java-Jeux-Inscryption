@@ -25,12 +25,7 @@ public class BoardDisplayLogic {
 
     static final int PADDING_LEFT = 4;
     static final int PADDING_CARDS = 9;
-
-    static final int ENNEMI_ROW = 0;
-    static final int MIDDLE_ROW = 1;
-    static final int PLAYER_ROW = 2;
-
-
+    
     static final int END_DISPLAY_CARD = 30;
     /**
      * Constructeur pour BoardDisplayLogic.
@@ -81,7 +76,7 @@ public class BoardDisplayLogic {
         final int colMul = Card.s_HORIZONTAL_SIZE;
         final int rowMul = Card.s_VERTICAL_SIZE;
 
-        for(int i = 0; i < 3; ++i)
+        for(Board.Positions i: Board.Positions.values())
         {
             Card[] theCards = {m_board.getCard(i, 0),
                     m_board.getCard(i, 1),
@@ -91,9 +86,9 @@ public class BoardDisplayLogic {
             int j = 0;
             for(Card c : theCards)
             {
-                m_display.draw(Objects.requireNonNullElse(c, nullCard), row + i * 8, j + PADDING_CARDS);
+                m_display.draw(Objects.requireNonNullElse(c, nullCard), row + i.ordinal() * 8, j + PADDING_CARDS);
 
-                if(i == ENNEMI_ROW)
+                if(i == Board.Positions.NextRivalRow)
                 {
                     m_display.printRow("||", (row + 7), j + PADDING_CARDS + (PADDING_CARDS/2) + 1);
                     m_display.printRow("\\/", (row + 8), j + PADDING_CARDS + (PADDING_CARDS/2) + 1);

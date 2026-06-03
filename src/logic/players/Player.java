@@ -24,21 +24,12 @@ public abstract class Player {
         m_board = board;
     }
     
-    public boolean placeCard(int column, int indexCardInHand) {
-        if (!m_hand.isEmpty()) {
-            Optional<AnimalCard> tempCard = getCardFromHand(indexCardInHand);
-            AnimalCard selectedCard;
-            if (tempCard.isPresent()) {
-                selectedCard = tempCard.get();
-                if (m_board.placeCard(2, column, selectedCard)) {
-                    return removeCardFromHand(selectedCard);
-                }
-            }
-            return false;
-            
-        } else {
-            return false;
-        }
+    public boolean placeCard(int column, int indexCardInHand){
+        return true;
+    }
+    
+    public Board getBoard(){
+        return m_board;
     }
     
     public ArrayList<AnimalCard> getHand() {

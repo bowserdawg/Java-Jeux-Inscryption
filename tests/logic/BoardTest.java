@@ -6,6 +6,7 @@ import logic.players.Rival;
 import logic.players.User;
 import org.junit.Test;
 
+import javax.swing.text.Position;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -57,10 +58,38 @@ public class BoardTest {
         assertTrue(user.placeCard(0, 0));
         boolean result = user.placeCard(0, 0);
         assertFalse(result);
-        assertEquals(userHand.size()-1, user.getHand().size());
-        
-        
+        assertEquals(userHand.size() - 1, user.getHand().size());
+    }
+    
+    @Test
+    public void playerTurnTest() {
+        Board board = new Board();
+        assertTrue(board.isPlayerTurn());
+        board.passTurn();
+        assertFalse(board.isPlayerTurn());
     }
     
     
+    /**
+     * Si le test passe pas vérifier que playerTurnTest passe
+     */
+    
+    @Test
+    public void passTurnTest() {
+        Board board = new Board();
+        AnimalCard card = new Loup();
+        board.placeCard(Board.Positions.NextRivalRow, 0, card);
+        
+        assertEquals(board.getCard(Board.Positions.NextRivalRow, 0), card);
+        
+        assertFalse(board.isOccupied(Board.Positions.RivalRow, 0));
+        assertEquals(board.getCard(Board.Positions.NextRivalRow, 0), card);
+        board.passTurn();
+        
+        assertFalse(board.isOccupied(Board.Positions.NextRivalRow, 0));
+        assertEquals(board.getCard(Board.Positions.RivalRow, 0), card);
+    }
+    
 }
+    
+    

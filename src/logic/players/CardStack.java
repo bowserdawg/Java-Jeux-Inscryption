@@ -14,7 +14,7 @@ public class CardStack {
     private int m_squirrels = 10;
     
     public CardStack(ArrayList<AnimalCard> cardList) {
-        m_cards = cardList;
+        m_cards = new ArrayList<>(cardList);
     }
     
     public Optional<AnimalCard> drawCard() {
