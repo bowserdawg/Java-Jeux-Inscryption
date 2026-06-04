@@ -11,6 +11,8 @@ import java.util.Optional;
 public abstract class Player {
     private ArrayList<AnimalCard> m_hand = new ArrayList<>();
     private Board m_board;
+    private int m_remainingBones = 0;
+    
     
     public Player(CardStack stack, Board board) {
         for (int i = 0; i < 4; i++) {
@@ -25,20 +27,11 @@ public abstract class Player {
     }
     
     public boolean placeCard(int column, int indexCardInHand) {
-        if (!m_hand.isEmpty()) {
-            Optional<AnimalCard> tempCard = getCardFromHand(indexCardInHand);
-            AnimalCard selectedCard;
-            if (tempCard.isPresent()) {
-                selectedCard = tempCard.get();
-                if (m_board.placeCard(2, column, selectedCard)) {
-                    return removeCardFromHand(selectedCard);
-                }
-            }
-            return false;
-            
-        } else {
-            return false;
-        }
+        return true;
+    }
+    
+    public Board getBoard() {
+        return m_board;
     }
     
     public ArrayList<AnimalCard> getHand() {
@@ -63,5 +56,14 @@ public abstract class Player {
         }
         m_hand.remove(card);
         return true;
+    }
+    
+    public int cardDied() {
+        m_remainingBones += 1;
+        return m_remainingBones;
+    }
+    
+    public int getRemainingBones() {
+        return m_remainingBones;
     }
 }
