@@ -2,21 +2,22 @@ package display;
 
 import cards.Card;
 import cards.CardNull;
+import display.interfaces.Displayable;
 import logic.Board;
 import logic.players.Rival;
 import logic.players.User;
 
-import java.util.Objects;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class BoardDisplayLogic {
 
     // Utilisez pour l'affchage
-    private Display m_display;
+    private final Display m_display;
     // Le plateau ou les cartes sont en place.
-    private Board m_board;
-    private Rival m_rival;
-    private User m_user;
+    private final Board m_board;
+    private final Rival m_rival;
+    private final User m_user;
 
     // Constantes
 
@@ -30,8 +31,19 @@ public class BoardDisplayLogic {
     static final int MIDDLE_ROW = 1;
     static final int PLAYER_ROW = 2;
 
+    final static int ACTION_TITLE_PADDING = 0;
+    final static int ACTIONS_PADDING = 2;
+
+    static final int SCORE_COL = 60;
+    static final int SCORE_ROW = 0;
+
+    final int PIOCHE_COL_PADDING = 3;
 
     static final int END_DISPLAY_CARD = 30;
+
+    final int CARD_WIDTH  = Card.s_HORIZONTAL_SIZE;
+    final int CARD_HEIGHT = Card.s_VERTICAL_SIZE;
+
     /**
      * Constructeur pour BoardDisplayLogic.
      * @param board Le plateau qui va etre afficher.
@@ -56,56 +68,85 @@ public class BoardDisplayLogic {
         }
     }
 
-    // Affiche l'instance actuelle du plateau
-    public void afficher()
+    /**
+     * Affiche le bloc qui contient les informations sur le nombre de parties et de tour.
+     * @param row La ligne ou le bloc va etre affiché.
+     * @return La ligne suivante.
+     */
+    private int head(int row)
     {
-        // Pour les cartes null
-        CardNull nullCard = new CardNull();
-
-        // mets tous l'écran à zero
-        m_display.clearBuffer();
-
-        // Pour se repérer dans les lignes.
-        // row++ = on saute une ligne en plus
-        int row = 0;
-
         m_display.printRow("Partie"+ m_board.getNbPartie(), row, PADDING_LEFT);
         row+=2; // Saut de ligne
 
         m_display.printRow(m_board.getNbTour() + "er Tour:", row, PADDING_LEFT);
         row+=2;
 
-        final int colMax = m_board.getHeight();
-        final int rowMax = m_board.getWidth();
+        return row;
+    }
 
-        final int colMul = Card.s_HORIZONTAL_SIZE;
-        final int rowMul = Card.s_VERTICAL_SIZE;
+    /**
+     * Affiche une colonne de QUATRE cartes.
+     * @param boardRow Ligne du Board qui va être affiché.
+     * @param rowCordName Nom du coordonné Y de la carte 'A','B'...
+     *                    Les coordonnés X est évalué dans cette fonction.
+     * @param row Ligne où la ligne va être affiché.
+     * @return Ligne suivante ou un autre bloc ou le meme bloc peut être re-affiché.
+     */
+    private int cardRow(int boardRow, char rowCordName , int row)
+    {
+        // Les coordonnées X de la colonne vont être évalué avec cette variable.
+        char colCordName = '1';
 
-        for(int i = 0; i < 3; ++i)
+        ArrayList<Card> theCards = new ArrayList<>();
+        int width = m_board.getWidth();
+        for(int i = 0; i < width; ++i)
         {
-            Card[] theCards = {m_board.getCard(i, 0),
-                    m_board.getCard(i, 1),
-                    m_board.getCard(i, 2),
-                    m_board.getCard(i, 3)
-            };
-            int j = 0;
-            for(Card c : theCards)
-            {
-                m_display.draw(Objects.requireNonNullElse(c, nullCard), row + i * 8, j + PADDING_CARDS);
-
-                if(i == ENNEMI_ROW)
-                {
-                    m_display.printRow("||", (row + 7), j + PADDING_CARDS + (PADDING_CARDS/2) + 1);
-                    m_display.printRow("\\/", (row + 8), j + PADDING_CARDS + (PADDING_CARDS/2) + 1);
-                }
-                j += colMul + 1;
-            }
-            row++;
+            theCards.add(m_board.getCard(boardRow, i));
         }
 
+        int j = 0;
+        for(Card c : theCards)
+        {
+            // Pour les cartes null
+            CardNull nullCard = new CardNull();
 
-        row = END_DISPLAY_CARD;
+            if(c == null)
+                m_display.draw(nullCard, row + boardRow * (CARD_HEIGHT+1), j + PADDING_CARDS);
 
+            if(boardRow == MIDDLE_ROW || boardRow == PLAYER_ROW)
+            {
+                m_display.printRow(
+                        new char[]{rowCordName, colCordName},
+                        row + boardRow * (CARD_HEIGHT+1) + CARD_HEIGHT / 2,
+                        j + PADDING_CARDS + CARD_WIDTH / 2
+                );
+                colCordName++;
+            }
+
+            if(c != null)
+                m_display.draw(c,row + boardRow * (CARD_HEIGHT+1), j + PADDING_CARDS);
+
+            if(boardRow == ENNEMI_ROW)
+            {
+                m_display.printRow("||", (row + CARD_HEIGHT), j + PADDING_CARDS + (PADDING_CARDS/2) + 1);
+                m_display.printRow("\\/", (row + (CARD_HEIGHT+1)), j + PADDING_CARDS + (PADDING_CARDS/2) + 1);
+            }
+
+            j += CARD_WIDTH + 1;
+        }
+        row++;
+
+        return row;
+    }
+
+    /**
+     * Affiche le bloc pour le
+     * @param row  Ligne où le bloc va être affiché.
+     * @param paddingLeft  Le padding de gauche du bloc.
+     * @return La ligne suivante.
+     */
+    private int hand(int row, int paddingLeft)
+    {
         m_display.printRow("  Votre main :", row, 0);
 
         var playerArray = m_user.getHand();
@@ -120,36 +161,111 @@ public class BoardDisplayLogic {
 
             m_display.printRow(
                     (i+1) + ". " +
-                    c.getName() +
-                    " PV: " + life + "    " +
-                    " Att: " + att + "    " +
-                    " Gouttes de sang: " + bloodDrop +
-                    " Os " + bone,
+                            c.getName() +
+                            " PV: " + life + '\t' +
+                            " Att: " + att + '\t' +
+                            " Gouttes de sang: " + bloodDrop + '\t' +
+                            " Os " + bone + '\t',
 
-                    row, PADDING_LEFT);
+                    row,
+                    paddingLeft);
             row++;
         }
-        row++;
-        row++;
-        row++;
 
-        m_display.printRow("Actions possibles:", row, 0);
         row++;
-        m_display.printRow("[fin] Terminer votre tour:", row, 2);
         row++;
-        m_display.printRow("[piocher] Piocher une carte[piocher] Piocher une carte:", row, 2);
+        return ++row;
+    }
+
+    /**
+     * Le bloc qui affiche les actions.
+     * @param row La position y du bloc.
+     * @return La prochaine ligne.
+     */
+    private int actions(int row)
+    {
+        m_display.printRow("Actions possibles:", row, ACTION_TITLE_PADDING);
+        row++;
+        m_display.printRow("[fin] Terminer votre tour:", row, ACTIONS_PADDING);
+        row++;
+        m_display.printRow("[piocher] Piocher une carte:", row, ACTIONS_PADDING);
         row++;
         m_display.printRow("[placer <numero carte> <position>] Placer une carte sur le plateau:", row, 2);
-        row++;
+        return ++row;
+    }
 
-        m_display.printRow("Score " + m_board.getScore(), 0, 60);
-        m_display.printRow("Pioche",  END_DISPLAY_CARD, 73);
-        m_display.draw(nullCard, END_DISPLAY_CARD + 1, 70);
-        m_display.printRow("11 cartes",  END_DISPLAY_CARD+8, 73);
+    /**
+     * Le bloc qui affiche le score.
+     * @param row La position y du bloc.
+     * @param col La position x du bloc.
+     * @return La prochaine ligne.
+     */
+    private int score(int row, int col)
+    {
+        m_display.printRow("Score " + m_board.getScore(), row, col);
+
+        return row;
+    }
+
+    /**
+     * Permet d'afficher la pioche.
+     * @param displayable La carte qui va être affiché pour indiquer la pioche .
+     * @param row La position y du bloc.
+     * @param col La position x du bloc.
+     * @return La prochaine ligne.
+     */
+    private int pioche(Displayable displayable, int row, int col)
+    {
+        m_display.printRow("Pioche",  row, col + PIOCHE_COL_PADDING);
+        m_display.draw(displayable, row + 1, col);
+        m_display.printRow("11 cartes",  row + CARD_HEIGHT+1, col + PIOCHE_COL_PADDING);
+
+        return row;
+    }
+
+    // Affiche l'instance actuelle du plateau
+    public void afficher()
+    {
+        // Pour les cartes null
+        CardNull nullCard = new CardNull();
+
+        // mets tous l'écran à zero
+        m_display.clearBuffer();
+
+        // Pour se repérer dans les lignes.
+        // row++ = on saute une ligne en plus
+
+        int row = 0;
+
+        // Appelle à this dans cette partie,
+        // car ça montre que c'est une fonction plus explicitement.
+        row = this.head(row);
+
+        char rowCordName = 'A' - 1;
+
+        int height = m_board.getHeight();
+        for(int i = 0; i < height; ++i)
+        {
+            row = this.cardRow(i, rowCordName, row);
+            rowCordName++;
+        }
+
+        row = END_DISPLAY_CARD;
+
+        row = this.hand(row, PADDING_LEFT);
+
+        row = this.actions(row);
+
+        this.score(SCORE_ROW, SCORE_COL);
+
+        this.pioche(nullCard, END_DISPLAY_CARD, 70);
 
         m_display.printBufferToScreen();
     }
 }
+
+// Réferences
+
 /*
     Partie 1
 
