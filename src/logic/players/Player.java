@@ -12,7 +12,7 @@ public abstract class Player {
     private ArrayList<AnimalCard> m_hand = new ArrayList<>();
     private Board m_board;
     private int m_remainingBones = 0;
-    
+    private CardStack m_stack;
     
     public Player(CardStack stack, Board board) {
         for (int i = 0; i < 4; i++) {
@@ -24,6 +24,7 @@ public abstract class Player {
             }
         }
         m_board = board;
+        m_stack = stack;
     }
     
     public boolean placeCard(int column, int indexCardInHand) {
@@ -65,5 +66,19 @@ public abstract class Player {
     
     public int getRemainingBones() {
         return m_remainingBones;
+    }
+
+    public boolean drawCardFromStack()
+    {
+        Optional<AnimalCard> op = m_stack.drawCard();
+
+        if(op.isEmpty())
+        {
+            return false;
+        }
+
+        m_hand.add(op.get());
+
+        return true;
     }
 }

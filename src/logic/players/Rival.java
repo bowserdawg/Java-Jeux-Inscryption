@@ -3,6 +3,7 @@ package logic.players;
 import cards.animals.AnimalCard;
 import logic.Board;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class Rival extends Player{
@@ -20,7 +21,7 @@ public class Rival extends Player{
     public boolean placeCard(int column, int indexCardInHand) {
         
         if (!getHand().isEmpty()) {
-            Optional<AnimalCard> tempCard = getCardFromHand(indexCardInHand);
+            Optional<AnimalCard> tempCard = super.getCardFromHand(indexCardInHand);
             AnimalCard selectedCard;
             if (tempCard.isPresent()) {
                 selectedCard = tempCard.get();
@@ -33,5 +34,24 @@ public class Rival extends Player{
         } else {
             return false;
         }
+    }
+
+    // C C C C
+    // C C C C
+    // C C C C
+
+    // 0 0 0 0
+
+    public boolean autoPlaceCard(Board board)
+    {
+        ArrayList<AnimalCard> hand = getHand();
+        if(hand == null)
+           return false;
+
+
+        ArrayList<Integer> costPlace = new ArrayList<>();
+
+        super.drawCardFromStack();
+        return true;
     }
 }
