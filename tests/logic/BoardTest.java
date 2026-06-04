@@ -90,6 +90,50 @@ public class BoardTest {
         assertEquals(board.getCard(Board.Positions.RivalRow, 0), card);
     }
     
+    @Test
+    public void cardsNoDamageAttack() {
+        Board board = new Board();
+        AnimalCard wolf = new Loup();
+        AnimalCard squirrel = new Ecureuil();
+        
+        assertEquals(1, squirrel.getLife());
+        assertEquals(2, wolf.getLife());
+        board.placeCard(Board.Positions.UserRow, 0, squirrel);
+        board.placeCard(Board.Positions.RivalRow, 0, wolf);
+        board.passTurn();
+        assertEquals(1, squirrel.getLife());
+        board.passTurn();
+        assertFalse(board.isOccupied(Board.Positions.RivalRow, 0));
+        assertTrue(board.isOccupied(Board.Positions.UserRow, 0));
+        
+        assertEquals(-2, squirrel.getLife());
+        assertEquals(2, wolf.getLife());
+    }
+    
+    @Test
+    public void damagePropagationTest() {
+        Board board = new Board();
+        Loup wolf = new Loup();
+        Ecureuil backSquirrel = new Ecureuil();
+        Ecureuil frontSquirrel = new Ecureuil();
+        
+        board.placeCard(Board.Positions.UserRow,0,wolf);
+        board.placeCard(Board.Positions.RivalRow, 0,frontSquirrel);
+        board.placeCard(Board.Positions.NextRivalRow,0, backSquirrel);
+        
+        assertEquals(1, frontSquirrel.getLife());
+        assertEquals(1, backSquirrel.getLife());
+        assertEquals(2, wolf.getLife());
+        
+        board.passTurn();
+        
+        assertEquals(-1, backSquirrel.getLife());
+        assertEquals(-2, frontSquirrel.getLife());
+        assertEquals(2, wolf.getLife());
+        
+        
+        
+    }
 }
     
     

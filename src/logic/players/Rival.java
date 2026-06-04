@@ -6,11 +6,16 @@ import logic.Board;
 import java.util.Optional;
 
 public class Rival extends Player{
-    
     public Rival(CardStack stack, Board board){
         super(stack, board);
     }
     
+    /**
+     * Place une carte sur la ligne de l'adversaire.
+     * @param column La colonne où placer la carte
+     * @param indexCardInHand L'indice de la carte contenue dans la main
+     * @return Vrai si la carte à pu être placée. Faux sinon.
+     */
     @Override
     public boolean placeCard(int column, int indexCardInHand) {
         

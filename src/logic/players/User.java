@@ -10,6 +10,13 @@ public class User extends Player {
         super(stack, board);
     }
     
+    /**
+     * Place une carte sur la ligne de l'utilisateur.
+     * @param column La colonne où placer la carte
+     * @param indexCardInHand L'indice de la carte contenue dans la main
+     * @return Vrai si la carte à pu être placée. Faux sinon.
+     */
+    
     @Override
     public boolean placeCard(int column, int indexCardInHand) {
         if (!getHand().isEmpty()) {

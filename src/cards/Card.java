@@ -29,11 +29,9 @@ public abstract class Card implements Nommable, Displayable {
      * @return Le pv en tant qu'entier.
      */
     public int getLife(){
-
-        var life = m_donnes.getPv();
-
-        if(life.isEmpty())
-            throw new RuntimeException("Le champ \"Vie\" est vide pour cette carte\n");
+        
+        Optional<Integer> life = m_donnes.getPv();
+        
 
         return life.get();
     }
@@ -45,12 +43,13 @@ public abstract class Card implements Nommable, Displayable {
      */
     public int receiveDamage(int nbDamage)
     {
+        
         Optional<Integer> currentPv = m_donnes.getPv();
 
         if(currentPv.isEmpty())
             throw new RuntimeException("Card.receiveDamage : essaie d'attaque carte avec aucun PV.\n");
 
-        int newPv = currentPv.get() - nbDamage;
+        int newPv = currentPv.get() - Math.abs(nbDamage);
         m_donnes.setPv(newPv);
 
         return newPv;

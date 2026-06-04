@@ -26,23 +26,40 @@ public class Board {
     
     public Board() {
         m_nbPartie = 1;
-        m_nbTour = 0;
+        m_nbTour = -1;
     }
+    
+    /**
+     *
+     * @return Le score de la partie.
+     */
     
     public int getScore() {
         return m_playerScore;
     }
     
+    /**
+     *
+     * @return Le nombre de parties
+     */
+    
     public int getNbPartie() {
         return m_nbPartie;
     }
     
+    /**
+     * @return Le Nombre de tours
+     *
+     */
     public int getNbTour() {
         return m_nbTour;
     }
     
     /**
-     * Peut renvoyer null
+     * Renvoie la carte à la case indiquée
+     * @param row La ligne de la case
+     * @param column La colonne de la case
+     * @return Une carte s'il y en a une. Null si aucune carte n'est présente à la case indiqué
      */
     public Card getCard(Positions row, int column) {
         return m_board[row.ordinal()][column];
@@ -59,6 +76,13 @@ public class Board {
         return m_nbTour % 2 == 0;
     }
     
+    /**
+     * Place une carte à la position indiqué
+     * @param row La ligne où placer la carte
+     * @param column La colonne où placer la carte
+     * @param cardToPlace La carte à placer
+     * @return Vrai si la carte à était placé.
+     */
     public boolean placeCard(Positions row, int column, Card cardToPlace) {
         if (isOccupied(row, column)) {
             return false;
@@ -67,6 +91,13 @@ public class Board {
         return true;
     }
     
+    
+    /**
+     * Attaque les cartes entre elles.
+     * Applique, aux cartes en amont de la ligne de l'adversaire, les dégats infligé par excès aux cartes devant.
+     * Avance les prochaines cartes placées par l'adversaire
+     * Incremente le nombre de tours de la partie.
+     */
     public void passTurn() {
         Card[] rivalRow = m_board[1];
         Card[] playerRow = m_board[2];
@@ -123,15 +154,30 @@ public class Board {
         
     }
     
+    /**
+     *
+     * @return La longueur du plateau
+     */
     
     public int getWidth() {
         return m_width;
     }
     
     
+    /**
+     *
+     * @param row    La ligne de la case dont on veut connaitre l'occupation
+     * @param column La colonne de la case dont on veut connaitre l'occupation
+     * @return Vrai si la case séléctionné est occupé
+     */
     public boolean isOccupied(Positions row, int column) {
         return m_board[row.ordinal()][column] != null;
     }
+    
+    /**
+     *
+     * @return La largeur du plateau
+     */
     
     public int getHeight() {
         return m_height;

@@ -23,7 +23,7 @@ public class CardDonne {
 
 
     // Si l'un des valeurs n'est jamais utilisé.
-    private static final int NO_VALUE = -1;
+    private static final int NO_VALUE = -200000;
 
     /**
      * Une carte qui peut avoir du pv, de l'attaque et un type.
