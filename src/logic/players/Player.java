@@ -58,8 +58,25 @@ public abstract class Player {
         return true;
     }
     
-    public int cardDied() {
-        m_remainingBones += 1;
+    /**
+     *
+     * @param nbBonesToRemove Le nombre d'os à retirer
+     * @return Le nombre d'os restants
+     */
+    
+    public int removeBones(int nbBonesToRemove) {
+        m_remainingBones -= nbBonesToRemove;
+        return m_remainingBones;
+    }
+    
+    /**
+     *
+     * @param nbBonesToAdd Le nombre d'os à ajouter
+     * @return Le nombre d'os restants
+     */
+    
+    public int addBones(int nbBonesToAdd){
+        m_remainingBones += nbBonesToAdd;
         return m_remainingBones;
     }
     

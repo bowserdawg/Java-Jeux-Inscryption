@@ -97,11 +97,13 @@ public class Board {
      * Applique, aux cartes en amont de la ligne de l'adversaire, les dégats infligé par excès aux cartes devant.
      * Avance les prochaines cartes placées par l'adversaire
      * Incremente le nombre de tours de la partie.
+     * @return Le nombre de cartes qui on était tué
      */
-    public void passTurn() {
+    public int passTurn() {
         Card[] rivalRow = m_board[1];
         Card[] playerRow = m_board[2];
         Card[] nextRivalRow = m_board[0];
+        int nbKilledCards = 0;
         m_nbTour++;
         
         for (int i = 0; i < rivalRow.length; i++) {
@@ -133,12 +135,14 @@ public class Board {
                         if (cardLife < 0) {
                             if (nextRivalCard.receiveDamage(cardLife) <= 0) {
                                 nextRivalRow[i] = null;
+                                nbKilledCards++;
                             }
                         }
                         playerRow[i] = null;
                     } else {
                         rivalRow[i] = null;
                     }
+                    nbKilledCards++;
                 }
             }
         }
@@ -151,7 +155,7 @@ public class Board {
                 }
             }
         }
-        
+        return nbKilledCards;
     }
     
     /**
