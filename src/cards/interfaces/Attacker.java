@@ -8,8 +8,3 @@ public interface Attacker {
     void attack(Board board, Card card);
     
 }
-
-//
-// Board
-// Display
-// Terminal

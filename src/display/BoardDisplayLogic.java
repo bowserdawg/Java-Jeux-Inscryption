@@ -149,11 +149,11 @@ public class BoardDisplayLogic {
     {
         m_display.printRow("  Votre main :", row, 0);
 
-        var playerArray = m_user.getHand();
-        var len = playerArray.size();
+        var userHand = m_user.getHand();
+        var len = userHand.size();
         for(int i = 0; i < len; ++i)
         {
-            Card c =  playerArray.get(i);
+            Card c =  userHand.get(i);
             var life = c.getLife();
             var att  = getOptionalValue(c.getAttaque());
             var bloodDrop = getOptionalValue(c.getBloodDrops());
@@ -264,7 +264,7 @@ public class BoardDisplayLogic {
     }
 }
 
-// Réferences
+// Réference
 
 /*
     Partie 1
