@@ -78,7 +78,7 @@ public class BoardDisplayLogic {
         m_display.printRow("Partie"+ m_board.getNbPartie(), row, PADDING_LEFT);
         row+=2; // Saut de ligne
 
-        m_display.printRow(m_board.getNbTour() + "er Tour:", row, PADDING_LEFT);
+        m_display.printRow((m_board.getNbTour()+1) + "er Tour:", row, PADDING_LEFT);
         row+=2;
 
         return row;
@@ -99,9 +99,13 @@ public class BoardDisplayLogic {
 
         ArrayList<Card> theCards = new ArrayList<>();
         int width = m_board.getWidth();
-        for(int i = 0; i < width; ++i)
+
+
+        int i = 0;
+        for(Board.Positions pos : Board.Positions.values())
         {
-            theCards.add(m_board.getCard(boardRow, i));
+            theCards.add(m_board.getCard(pos, i));
+            ++i;
         }
 
         int j = 0;

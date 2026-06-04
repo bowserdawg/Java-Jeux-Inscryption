@@ -30,6 +30,7 @@ public class BoardDisplayLogicTest {
 
         log.afficher();
     }
+
     @Test
     public void testAffichage()
     {
