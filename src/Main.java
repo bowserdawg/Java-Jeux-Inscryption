@@ -5,6 +5,7 @@ import cards.animals.*;
 import display.BoardDisplayLogic;
 import display.Display;
 import logic.Board;
+import logic.input.Input;
 import logic.players.CardStack;
 import logic.players.Rival;
 import logic.players.User;
@@ -17,6 +18,7 @@ public class Main {
         
         // initialisation d'une partie
         Board board = new Board();
+        Input i = new Input();
         
         ArrayList<AnimalCard> cards = new ArrayList<>();
         cards.add(new Loup());
@@ -40,5 +42,6 @@ public class Main {
         d.afficher();
         board.passTurn();
         d.afficher();
+        i.promptAction();
     }
 }
