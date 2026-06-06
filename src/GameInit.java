@@ -1,4 +1,6 @@
 import cards.animals.*;
+import display.BoardDisplayLogic;
+import display.Display;
 import logic.Board;
 import logic.input.Controller;
 import logic.input.Input;
@@ -18,6 +20,7 @@ public class GameInit {
     private Input m_input;
     private Controller m_userController;
     private Controller m_rivalController;
+    private BoardDisplayLogic m_display;
 
     public GameInit() {
         m_board = new Board();
@@ -28,6 +31,8 @@ public class GameInit {
         m_userController = new Controller(m_board, m_user);
         m_rivalController = new Controller(m_board, m_rival);
         m_input = new Input(m_userController);
+
+        m_display = new BoardDisplayLogic(m_board, m_user, m_rival);
     }
 
     public Board getBoard() {
@@ -60,5 +65,9 @@ public class GameInit {
 
     public Input getInput() {
         return m_input;
+    }
+
+    public BoardDisplayLogic getDisplay() {
+        return m_display;
     }
 }
