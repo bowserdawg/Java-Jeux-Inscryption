@@ -1,4 +1,10 @@
 @startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam style strictuml
+hide empty members
+
 
 package cards{
 
@@ -331,6 +337,7 @@ GameInit *--> "1\n -m_user" User
 GameInit *--> "1\n -m_rival" Rival
 GameInit *--> "1\n -m_userStack" CardStack
 GameInit *--> "1\n -m_rivalStack" CardStack
+CardStack <--* "1\n -m_rivalStack" GameInit
 GameInit *--> "1\n -m_input" Input
 GameInit *-up-> "1\n -m_userController" Controller
 GameInit *-up-> "1\n -m_rivalController" Controller
