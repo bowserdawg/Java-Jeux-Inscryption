@@ -1,10 +1,9 @@
 package logic.players;
 
-import cards.Card;
 import cards.animals.AnimalCard;
+import cards.animals.Ecureuil;
 import logic.Board;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -44,7 +43,7 @@ public abstract class Player {
     }
     
     public Optional<AnimalCard> getCardFromHand(int index) {
-        if (m_hand.size() < index + 1) {
+        if (m_hand.size()-1  <= index) {
             return Optional.empty();
         }
         AnimalCard selectedCard = m_hand.get(index);
@@ -85,7 +84,7 @@ public abstract class Player {
         return m_remainingBones;
     }
 
-    public boolean drawCardFromStack()
+    public boolean drawCard()
     {
         Optional<AnimalCard> op = m_stack.drawCard();
 
@@ -97,5 +96,15 @@ public abstract class Player {
         m_hand.add(op.get());
 
         return true;
+    }
+
+    public boolean drawSquirrel(){
+        Optional<Ecureuil> tempCard = m_stack.drawSquirrel();
+        if(tempCard.isPresent()){
+            Ecureuil squirrel = tempCard.get();
+            m_hand.add(squirrel);
+        return  true;
+        }
+        return false;
     }
 }

@@ -51,7 +51,7 @@ public class Rival extends Player{
 
         ArrayList<Integer> costPlace = new ArrayList<>();
 
-        super.drawCardFromStack();
+        super.drawCard();
         return true;
     }
 }

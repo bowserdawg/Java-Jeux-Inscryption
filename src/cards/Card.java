@@ -105,6 +105,10 @@ public abstract class Card implements Nommable, Displayable {
         return m_donnes.getBones();
     }
 
+    public boolean isSacrifiable(){
+        return false;
+    }
+
     // Renvoie la forme displayable de la carte.
     // Viens de Displayable.
     @Override

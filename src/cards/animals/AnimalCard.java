@@ -30,4 +30,9 @@ public abstract class AnimalCard extends Card implements Attacker {
             board.attack(attDmg);
         }
     }
+
+    @Override
+    public boolean isSacrifiable(){
+        return true;
+    }
 }

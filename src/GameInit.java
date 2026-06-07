@@ -1,6 +1,5 @@
 import cards.animals.*;
 import display.BoardDisplayLogic;
-import display.Display;
 import logic.Board;
 import logic.input.Controller;
 import logic.input.Input;
@@ -10,17 +9,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GameInit {
-    private static ArrayList<AnimalCard> m_defaultStack = new ArrayList<>(Arrays.asList(new Loup(), new Hermine(), new Ecureuil()));
+    private static final ArrayList<AnimalCard>  m_defaultStack = new ArrayList<>(Arrays.asList(new Loup(), new Hermine(), new Ecureuil(), new Ecureuil(), new Loup()));
 
-    private Board m_board;
-    private User m_user;
-    private Rival m_rival;
-    private CardStack m_userStack;
-    private CardStack m_rivalStack;
-    private Input m_input;
-    private Controller m_userController;
-    private Controller m_rivalController;
-    private BoardDisplayLogic m_display;
+    private final Board m_board;
+    private final User m_user;
+    private final Rival m_rival;
+    private final CardStack m_userStack;
+    private final CardStack m_rivalStack;
+    private final Input m_input;
+    private final Controller m_userController;
+    private final Controller m_rivalController;
+    private final BoardDisplayLogic m_display;
 
     public GameInit() {
         m_board = new Board();
