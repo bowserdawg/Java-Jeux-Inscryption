@@ -10,7 +10,6 @@ import java.util.Random;
 public class CardStack {
     static final Random r = new Random();
     ArrayList<AnimalCard> m_cards;
-    //    ArrayList<Ecureuil> m_squirrels = new ArrayList<>();
     private int m_squirrels = 10;
     
     public CardStack(ArrayList<AnimalCard> cardList) {

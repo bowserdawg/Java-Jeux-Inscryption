@@ -14,7 +14,7 @@ public class User extends Player {
      * Place une carte sur la ligne de l'utilisateur.
      * @param column La colonne où placer la carte
      * @param indexCardInHand L'indice de la carte contenue dans la main
-     * @return Vrai si la carte à pu être placée. Faux sinon.
+     * @return Vrai si la carte a pu être placée. Faux sinon.
      */
     
     @Override

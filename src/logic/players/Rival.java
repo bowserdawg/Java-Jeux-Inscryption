@@ -15,7 +15,7 @@ public class Rival extends Player{
      * Place une carte sur la ligne de l'adversaire.
      * @param column La colonne où placer la carte
      * @param indexCardInHand L'indice de la carte contenue dans la main
-     * @return Vrai si la carte à pu être placée. Faux sinon.
+     * @return Vrai si la carte a pu être placée. Faux sinon.
      */
     @Override
     public boolean placeCard(int column, int indexCardInHand) {
@@ -29,11 +29,9 @@ public class Rival extends Player{
                     return removeCardFromHand(selectedCard);
                 }
             }
-            return false;
-            
-        } else {
-            return false;
+
         }
+        return false;
     }
 
     // C C C C
@@ -42,8 +40,9 @@ public class Rival extends Player{
 
     // 0 0 0 0
 
-    public boolean autoPlaceCard(Board board)
+    public boolean autoPlaceCard()
     {
+        Board board = super.getBoard();
         ArrayList<AnimalCard> hand = getHand();
         if(hand == null)
            return false;
