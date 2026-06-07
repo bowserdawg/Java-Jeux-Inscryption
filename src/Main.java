@@ -1,4 +1,4 @@
-import cards.animals.*;
+import logic.GameInit;
 import logic.input.Input;
 
 

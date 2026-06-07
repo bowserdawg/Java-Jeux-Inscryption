@@ -1,6 +1,7 @@
+package logic;
+
 import cards.animals.*;
 import display.BoardDisplayLogic;
-import logic.Board;
 import logic.input.Controller;
 import logic.input.Input;
 import logic.players.*;
