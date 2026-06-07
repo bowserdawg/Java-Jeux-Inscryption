@@ -15,7 +15,8 @@ public class BoardTest {
     
     @Test
     public void initBoard() {
-        Board board = new Board();
+        GameInit game = new GameInit();
+        Board board = game.getBoard();
         // Test de la longeur du plateau
         assertEquals(4, board.getWidth());
         
@@ -27,56 +28,40 @@ public class BoardTest {
     
     @Test
     public void placeFreeSlot() {
-        Board board = new Board();
-        ArrayList<AnimalCard> cards = new ArrayList<>();
-        cards.add(new Loup());
-        cards.add(new Chat());
-        cards.add(new Hermine());
-        
-        CardStack userStack = new CardStack(cards);
-        
-        User user = new User(userStack, board);
-        
-        boolean result = user.placeCard(0, 0);
-        
-        assertEquals(true, result);
+        GameInit game = new GameInit();
+        Board board = game.getBoard();
+
+        User user = game.getUser();
+
+        assertTrue(user.placeCard(0, 0));
     }
     
     @Test
     public void placeOccupiedSlot() {
+        GameInit game = new GameInit();
         Board board = new Board();
-        
-        ArrayList<AnimalCard> cards = new ArrayList<>();
-        cards.add(new Loup());
-        cards.add(new Chat());
-        cards.add(new Hermine());
-        
-        CardStack userStack = new CardStack(cards);
-        
-        User user = new User(userStack, board);
+
+        User user = game.getUser();
         ArrayList<AnimalCard> userHand = new ArrayList<>(user.getHand());
+
         assertTrue(user.placeCard(0, 0));
-        boolean result = user.placeCard(0, 0);
-        assertFalse(result);
+        assertFalse(user.placeCard(0, 0));
         assertEquals(userHand.size() - 1, user.getHand().size());
     }
     
     @Test
     public void playerTurnTest() {
         Board board = new Board();
-        assertTrue(board.isPlayerTurn());
-        board.passTurn();
         assertFalse(board.isPlayerTurn());
+        board.passTurn();
+        assertTrue(board.isPlayerTurn());
     }
-    
-    
-    /**
-     * Si le test passe pas vérifier que playerTurnTest passe
-     */
     
     @Test
     public void passTurnTest() {
-        Board board = new Board();
+        playerTurnTest();
+        GameInit game = new GameInit();
+        Board board = game.getBoard();
         AnimalCard card = new Loup();
         board.placeCard(Board.Positions.NextRivalRow, 0, card);
         
@@ -86,13 +71,15 @@ public class BoardTest {
         assertEquals(board.getCard(Board.Positions.NextRivalRow, 0), card);
         board.passTurn();
         
-        assertFalse(board.isOccupied(Board.Positions.NextRivalRow, 0));
         assertEquals(board.getCard(Board.Positions.RivalRow, 0), card);
+        assertFalse(board.isOccupied(Board.Positions.NextRivalRow, 0));
     }
     
     @Test
     public void cardsNoDamageAttack() {
-        Board board = new Board();
+        GameInit game = new GameInit();
+
+        Board board = game.getBoard();
         AnimalCard wolf = new Loup();
         AnimalCard squirrel = new Ecureuil();
         
@@ -112,7 +99,9 @@ public class BoardTest {
     
     @Test
     public void damagePropagationTest() {
-        Board board = new Board();
+        GameInit game = new GameInit();
+
+        Board board = game.getBoard()
         Loup wolf = new Loup();
         Ecureuil backSquirrel = new Ecureuil();
         Ecureuil frontSquirrel = new Ecureuil();
@@ -130,9 +119,6 @@ public class BoardTest {
         assertEquals(-1, backSquirrel.getLife());
         assertEquals(-2, frontSquirrel.getLife());
         assertEquals(2, wolf.getLife());
-        
-        
-        
     }
 }
     
