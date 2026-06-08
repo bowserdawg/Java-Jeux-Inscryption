@@ -57,6 +57,11 @@ public class BoardTest {
         assertTrue(board.isPlayerTurn());
     }
     
+    
+    /**
+     * Si le test passe pas vérifier que playerTurnTest passe
+     */
+    
     @Test
     public void passTurnTest() {
         playerTurnTest();
@@ -71,6 +76,7 @@ public class BoardTest {
         assertEquals(board.getCard(Board.Positions.NextRivalRow, 0), card);
         board.passTurn();
         
+        assertFalse(board.isOccupied(Board.Positions.NextRivalRow, 0));
         assertEquals(board.getCard(Board.Positions.RivalRow, 0), card);
         assertFalse(board.isOccupied(Board.Positions.NextRivalRow, 0));
     }
@@ -119,6 +125,9 @@ public class BoardTest {
         assertEquals(-1, backSquirrel.getLife());
         assertEquals(-2, frontSquirrel.getLife());
         assertEquals(2, wolf.getLife());
+        
+        
+        
     }
 }
     
