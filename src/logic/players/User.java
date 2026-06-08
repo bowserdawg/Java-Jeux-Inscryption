@@ -21,17 +21,13 @@ public class User extends Player {
     public boolean placeCard(int column, int indexCardInHand) {
         if (!getHand().isEmpty()) {
             Optional<AnimalCard> tempCard = getCardFromHand(indexCardInHand);
-            AnimalCard selectedCard;
-            if (tempCard.isPresent()) {
-                selectedCard = tempCard.get();
+                if (tempCard.isPresent()) {
+                AnimalCard selectedCard = tempCard.get();
                 if (getBoard().placeCard(Board.Positions.UserRow, column, selectedCard)) {
                     return removeCardFromHand(selectedCard);
                 }
             }
-            return false;
-            
-        } else {
-            return false;
         }
+        return false;
     }
 }

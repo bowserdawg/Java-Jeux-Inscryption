@@ -26,9 +26,7 @@ public abstract class Player {
         m_stack = stack;
     }
     
-    public boolean placeCard(int column, int indexCardInHand) {
-        return true;
-    }
+    public abstract boolean placeCard(int column, int indexCardInHand);
     
     public Board getBoard() {
         return m_board;

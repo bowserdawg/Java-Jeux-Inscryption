@@ -2,15 +2,10 @@ package logic;
 
 import cards.Card;
 import cards.animals.AnimalCard;
-import cards.animals.Chat;
-import cards.interfaces.Attacker;
-import display.Display;
-
-import java.util.Optional;
 
 public class Board {
     
-    private int m_nbPartie;
+    private final int m_nbPartie;
     private int m_nbTour;
     private final int m_width = 4;
     private final int m_height = 3;
@@ -22,7 +17,7 @@ public class Board {
         UserRow
     }
     
-    private Card[][] m_board = new Card[m_height][m_width];
+    private final Card[][] m_board = new Card[m_height][m_width];
     
     public Board() {
         m_nbPartie = 1;
@@ -59,17 +54,17 @@ public class Board {
      * Renvoie la carte à la case indiquée
      * @param row La ligne de la case
      * @param column La colonne de la case
-     * @return Une carte s'il y en a une. Null si aucune carte n'est présente à la case indiqué
+     * @return Une carte s'il y en a une. Null si aucune carte n'est présente à la case indiquée
      */
     public Card getCard(Positions row, int column) {
         return m_board[row.ordinal()][column];
     }
     
     /**
-     * On admet que c'est le joureur qui commence au tour 0, 0 qui est pair.
-     * Par concequant quand le tour est pair s'est le tour du joueur
+     * On admet que c'est le jureur qui commence au tour 0, 0 qui est pair.
+     * Par concevant quand le tour est pair, c'est le tour du joueur
      *
-     * @return true quand c'est le nombre de tour est pair
+     * @return true quand c'est le nombre de tours est pair
      */
     
     public boolean isPlayerTurn() {
@@ -77,7 +72,7 @@ public class Board {
     }
     
     /**
-     * Place une carte à la position indiqué
+     * Place une carte à la position indiquée
      * @param row La ligne où placer la carte
      * @param column La colonne où placer la carte
      * @param cardToPlace La carte à placer
@@ -172,7 +167,7 @@ public class Board {
      *
      * @param row    La ligne de la case dont on veut connaitre l'occupation
      * @param column La colonne de la case dont on veut connaitre l'occupation
-     * @return Vrai si la case séléctionné est occupé
+     * @return Vrai si la case sélectionnée est occupé
      */
     public boolean isOccupied(Positions row, int column) {
         return m_board[row.ordinal()][column] != null;
@@ -191,7 +186,7 @@ public class Board {
      *
      * S'occupe de mettre à jour le score selon les attaques fait les uns aux autres
      *
-     * @param damage : Les dégats à infliger à l'adversaire
+     * @param damage : Les dégâts à infliger à l'adversaire
      */
     
     public void attack(int damage) {

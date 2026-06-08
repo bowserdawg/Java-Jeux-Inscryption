@@ -6,20 +6,29 @@ import logic.Board;
 import logic.players.Player;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Controller {
     private final Board m_board;
     private final Player m_player;
+    
 
     public Controller(Board board, Player player) {
         m_board = board;
         m_player = player;
     }
 
-    public boolean canPlace(AnimalCard cardToPlace) {
+    public Optional<String> canPlace(AnimalCard cardToPlace) {
 
         // Si le joueur a assez d'os et de cartes à sacrifier pour placer sa carte alors, on renvoie true.
-        return hasEnoughBlood(cardToPlace) || hasEnoughBone(cardToPlace);
+//        return hasEnoughBlood(cardToPlace) || hasEnoughBone(cardToPlace);
+        if(!hasEnoughBlood(cardToPlace)){
+            return Optional.of("Pas assez de carte à sacrifier");
+        }
+        else if (!hasEnoughBone(cardToPlace)) {
+            return Optional.of("Pas assez d'os");
+        }
+        return Optional.empty();
     }
 
     public void drawCard(){
@@ -31,11 +40,14 @@ public class Controller {
     }
 
     public void placeCard(int column, int cardIndex) {
-        ArrayList<AnimalCard> playerHand = m_player.getHand();
+        ArrayList<AnimalCard> playerHand = m_player.getHand();// à revoir
         AnimalCard cardToPlace;
         if (playerHand.size() - 1 >= cardIndex) {
             cardToPlace = playerHand.get(cardIndex);
-            if (canPlace(cardToPlace)) {
+            Optional<String> result = canPlace(cardToPlace);
+            if (canPlace(cardToPlace).isPresent()) {
+                System.out.println(canPlace(cardToPlace).get());
+            }else {
                 m_player.placeCard(column,cardIndex);
             }
         }
