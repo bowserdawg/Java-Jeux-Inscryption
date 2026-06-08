@@ -2,8 +2,11 @@ package logic.input;
 
 import cards.Card;
 import cards.animals.AnimalCard;
+import display.BoardDisplayLogic;
 import logic.Board;
 import logic.players.Player;
+import logic.GameStatus;
+import logic.CantPlaceReason;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -11,44 +14,44 @@ import java.util.Optional;
 public class Controller {
     private final Board m_board;
     private final Player m_player;
-    
+    private GameStatus m_status;
+    private CantPlaceReason m_placeReason;
+
 
     public Controller(Board board, Player player) {
         m_board = board;
         m_player = player;
     }
 
-    public Optional<String> canPlace(AnimalCard cardToPlace) {
+    public void canPlace(AnimalCard cardToPlace) {
 
         // Si le joueur a assez d'os et de cartes à sacrifier pour placer sa carte alors, on renvoie true.
 //        return hasEnoughBlood(cardToPlace) || hasEnoughBone(cardToPlace);
-        if(!hasEnoughBlood(cardToPlace)){
-            return Optional.of("Pas assez de carte à sacrifier");
+        if (!hasEnoughBlood(cardToPlace)) {
+            m_status = GameStatus.CANT_PLACE;
+            m_placeReason = CantPlaceReason.NOT_ENOUGH_BLOOD;
+        } else if (!hasEnoughBone(cardToPlace)) {
+            m_status = GameStatus.CANT_PLACE;
+            m_placeReason = CantPlaceReason.NOT_ENOUGH_BONES;
         }
-        else if (!hasEnoughBone(cardToPlace)) {
-            return Optional.of("Pas assez d'os");
-        }
-        return Optional.empty();
+
     }
 
-    public void drawCard(){
+    public void drawCard() {
         m_player.drawCard();
     }
 
-    public void drawSquirrel(){
+    public void drawSquirrel() {
         m_player.drawSquirrel();
     }
 
     public void placeCard(int column, int cardIndex) {
-        ArrayList<AnimalCard> playerHand = m_player.getHand();// à revoir
-        AnimalCard cardToPlace;
-        if (playerHand.size() - 1 >= cardIndex) {
-            cardToPlace = playerHand.get(cardIndex);
-            Optional<String> result = canPlace(cardToPlace);
-            if (canPlace(cardToPlace).isPresent()) {
-                System.out.println(canPlace(cardToPlace).get());
-            }else {
-                m_player.placeCard(column,cardIndex);
+
+        if (m_player.getCardFromHand(cardIndex).isPresent()) {
+            AnimalCard cardToPlace = m_player.getCardFromHand(cardIndex).get();
+            canPlace(cardToPlace);
+            if (m_status == GameStatus.OK) {
+                m_player.placeCard(column, cardIndex);
             }
         }
     }
@@ -81,7 +84,15 @@ public class Controller {
         return false;
     }
 
-    public void passTurn(){
+    public void passTurn() {
         m_board.passTurn();
+    }
+
+    public GameStatus getGameStatus() {
+        return m_status;
+    }
+
+    public CantPlaceReason getPlacingReason() {
+        return m_placeReason;
     }
 }

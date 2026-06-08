@@ -2,6 +2,7 @@ package logic.input;
 
 import display.BoardDisplayLogic;
 import logic.Board;
+import logic.GameStatus;
 
 import java.util.Scanner;
 
@@ -17,10 +18,9 @@ public class Input {
     
     /**
      *
-     * @return False si le joueur demande la fin du jeu
      */
     
-    public boolean promptAction() {
+    public void promptAction() {
         System.out.print("Votre choix : ");
         String[] input = s.nextLine().split(" ");
         System.out.println(input[0]);
@@ -49,6 +49,5 @@ public class Input {
                 }
             }
         }
-        return true;
     }
 }

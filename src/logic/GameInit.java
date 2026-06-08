@@ -29,10 +29,10 @@ public class GameInit {
         m_user = new User(m_userStack, m_board);
         m_rival = new Rival(m_rivalStack, m_board);
         m_userController = new Controller(m_board, m_user);
-        m_rivalController = new Controller(m_board, m_rival);
+        m_rivalController = new Controller(m_board, m_user);
         m_input = new Input(m_userController);
-
         m_display = new BoardDisplayLogic(m_board, m_user, m_rival);
+
     }
 
     public Board getBoard() {
@@ -70,4 +70,6 @@ public class GameInit {
     public BoardDisplayLogic getDisplay() {
         return m_display;
     }
+
+
 }

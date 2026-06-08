@@ -1,5 +1,7 @@
 import logic.GameInit;
+import logic.input.Controller;
 import logic.input.Input;
+import logic.GameStatus;
 
 
 public class Main {
@@ -9,12 +11,25 @@ public class Main {
         // initialisation d'une partie
         GameInit game = new GameInit(); // utilisation d'une classe pour facilement initialiser une partie
         Input i = game.getInput();
-        do {
+        Controller controller = game.getUserController();
+        boolean gameRunning = true;
+        while (gameRunning) {
+            GameStatus gameStatus = controller.getGameStatus();
+            switch (gameStatus) {
+                case STOPPED:
+                    gameRunning = false;
+                    break;
+                case CANT_PLACE:
+                    switch (controller.getPlacingReason()) {
+                        case NOT_ENOUGH_BLOOD:
+                            System.out.println("pas assez de cartes à sacrifier");
+                            break;
+                        case NOT_ENOUGH_BONES:
+                            System.out.println("pas de assez d'os");
+                    }
+                    break;
+            }
 
-//            System.out.println(game.getUser().getNbCards());
-            game.getDisplay().afficher();
         }
-        while (i.promptAction());
-
     }
 }
