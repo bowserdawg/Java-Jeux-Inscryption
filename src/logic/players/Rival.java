@@ -25,7 +25,7 @@ public class Rival extends Player{
             AnimalCard selectedCard;
             if (tempCard.isPresent()) {
                 selectedCard = tempCard.get();
-                if (getBoard().placeCard(Board.Positions.NextRivalRow, column, selectedCard)) {
+                if (getBoard().placeCard(Board.PositionsRow.NextRivalRow, column, selectedCard)) {
                     return removeCardFromHand(selectedCard);
                 }
             }

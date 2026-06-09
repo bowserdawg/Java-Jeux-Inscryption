@@ -2,20 +2,16 @@ package logic.input;
 
 import cards.Card;
 import cards.animals.AnimalCard;
-import display.BoardDisplayLogic;
 import logic.Board;
 import logic.players.Player;
 import logic.GameStatus;
 import logic.CantPlaceReason;
 
-import java.util.ArrayList;
-import java.util.Optional;
-
 public class Controller {
     private final Board m_board;
     private final Player m_player;
-    private GameStatus m_status;
-    private CantPlaceReason m_placeReason;
+    private GameStatus m_status = GameStatus.OK;
+    private CantPlaceReason m_placeReason = CantPlaceReason.OK;
 
 
     public Controller(Board board, Player player) {
@@ -59,7 +55,7 @@ public class Controller {
     public boolean hasEnoughBlood(AnimalCard playerCard) {
         int maxBloodDrops = 0;
         for (int i = 0; i < m_board.getWidth(); i++) {
-            Card boardCard = m_board.getCard(Board.Positions.UserRow, i);
+            Card boardCard = m_board.getCard(Board.PositionsRow.UserRow, i);
             if (boardCard != null) {
                 if (boardCard.isSacrifiable()) {
                     maxBloodDrops++;

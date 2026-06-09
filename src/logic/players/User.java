@@ -23,7 +23,7 @@ public class User extends Player {
             Optional<AnimalCard> tempCard = getCardFromHand(indexCardInHand);
                 if (tempCard.isPresent()) {
                 AnimalCard selectedCard = tempCard.get();
-                if (getBoard().placeCard(Board.Positions.UserRow, column, selectedCard)) {
+                if (getBoard().placeCard(Board.PositionsRow.UserRow, column, selectedCard)) {
                     return removeCardFromHand(selectedCard);
                 }
             }

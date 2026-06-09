@@ -17,11 +17,11 @@ public class Main {
         while (gameRunning) {
             GameStatus gameStatus = controller.getGameStatus();
             switch (gameStatus) {
-                case STOPPED:
-                    gameRunning = false;
-                    break;
                 case OK:
                     i.promptAction();
+                    break;
+                case STOPPED:
+                    gameRunning = false;
                     break;
                 case CANT_PLACE:
                     switch (controller.getPlacingReason()) {

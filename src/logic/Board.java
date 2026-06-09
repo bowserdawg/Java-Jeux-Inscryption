@@ -11,7 +11,7 @@ public class Board {
     private final int m_height = 3;
     private int m_playerScore = 0;
     
-    public enum Positions {
+    public enum PositionsRow {
         NextRivalRow,
         RivalRow,
         UserRow
@@ -56,7 +56,7 @@ public class Board {
      * @param column La colonne de la case
      * @return Une carte s'il y en a une. Null si aucune carte n'est présente à la case indiquée
      */
-    public Card getCard(Positions row, int column) {
+    public Card getCard(PositionsRow row, int column) {
         return m_board[row.ordinal()][column];
     }
     
@@ -78,7 +78,7 @@ public class Board {
      * @param cardToPlace La carte à placer
      * @return Vrai si la carte à était placé.
      */
-    public boolean placeCard(Positions row, int column, Card cardToPlace) {
+    public boolean placeCard(PositionsRow row, int column, Card cardToPlace) {
         if (isOccupied(row, column)) {
             return false;
         }
@@ -169,7 +169,7 @@ public class Board {
      * @param column La colonne de la case dont on veut connaitre l'occupation
      * @return Vrai si la case sélectionnée est occupé
      */
-    public boolean isOccupied(Positions row, int column) {
+    public boolean isOccupied(PositionsRow row, int column) {
         return m_board[row.ordinal()][column] != null;
     }
     
