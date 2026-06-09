@@ -196,4 +196,16 @@ public class Board {
             m_playerScore -= damage;
         }
     }
+    
+    public void removeCard(PositionsRow row, int column){
+        m_board[row.ordinal()][column] = null;
+    }
+    
+    public boolean sacrificeCardAt(PositionsRow row, int column){
+        if(getCard(row, column) !=null){
+            removeCard(row, column);
+            return true;
+        }
+        else return false;
+    }
 }

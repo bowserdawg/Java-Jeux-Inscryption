@@ -21,6 +21,11 @@ public class Input {
      */
     
     public void promptAction() {
+        System.out.println("[placer <numero carte> <position>] Placer une carte sur le plateau");
+        System.out.println("[piocher] Piocher une carte");
+        System.out.println("[ecureuil] Piocher un écureuil");
+        System.out.println("[fin] Finir son tour");
+        System.out.println("[quitter] Quitter le jeu");
         System.out.print("Votre choix : ");
         String[] input = s.nextLine().split(" ");
         System.out.println(input[0]);
@@ -43,11 +48,25 @@ public class Input {
             if (input[0].equalsIgnoreCase("piocher")) {
                 m_controller.drawCard();
                 System.out.println(input[0]);
+            } else if (input[0].equalsIgnoreCase("ecureuil")) {
+                m_controller.drawSquirrel();
             } else {
                 if (input[0].equalsIgnoreCase("fin")) {
                     m_controller.passTurn();
                 }
             }
         }
+    }
+    
+    public void promptSacrifie(){
+        System.out.print("Sélectionnez les cartes à sacrifier (1-4 séparé par des espaces) : ");
+        String[] input = s.nextLine().split(" ");
+        int[] cardSelected = new int[input.length];
+        for(int i = 0; i < input.length; i++){
+            
+            int card = Integer.parseInt(input[i]);
+            cardSelected[i] = card;
+        }
+        m_controller.sacrificeCards(cardSelected);
     }
 }

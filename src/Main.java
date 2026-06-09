@@ -1,3 +1,4 @@
+import display.BoardDisplayLogic;
 import logic.GameInit;
 import logic.input.Controller;
 import logic.input.Input;
@@ -12,14 +13,17 @@ public class Main {
         GameInit game = new GameInit(); // utilisation d'une classe pour facilement initialiser une partie
         Input i = game.getInput();
         Controller controller = game.getUserController();
-        game.getDisplay().afficher();
+        BoardDisplayLogic display = game.getDisplay();
+        display.afficher();
         boolean gameRunning = true;
         while (gameRunning) {
             GameStatus gameStatus = controller.getGameStatus();
             switch (gameStatus) {
-                case OK:
-                    i.promptAction();
+                case PLACED:
+                    display.afficher();
                     break;
+                case NEED_TO_SACRIFIE:
+                    i.promptSacrifie();
                 case STOPPED:
                     gameRunning = false;
                     break;
@@ -32,8 +36,11 @@ public class Main {
                             System.out.println("pas de assez d'os");
                     }
                     break;
+                case PASSED_TURN:
+                    display.afficher();
+                    break;
             }
-            
+            i.promptAction();
         }
     }
 }
