@@ -1,12 +1,9 @@
 package logic;
 
 import cards.animals.*;
-import logic.players.CardStack;
-import logic.players.Rival;
 import logic.players.User;
 import org.junit.Test;
 
-import javax.swing.text.Position;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -68,17 +65,17 @@ public class BoardTest {
         GameInit game = new GameInit();
         Board board = game.getBoard();
         AnimalCard card = new Loup();
-        board.placeCard(Board.Positions.NextRivalRow, 0, card);
+        board.placeCard(Board.PositionsRow.NextRivalRow, 0, card);
         
-        assertEquals(board.getCard(Board.Positions.NextRivalRow, 0), card);
+        assertEquals(board.getCard(Board.PositionsRow.NextRivalRow, 0), card);
         
-        assertFalse(board.isOccupied(Board.Positions.RivalRow, 0));
-        assertEquals(board.getCard(Board.Positions.NextRivalRow, 0), card);
+        assertFalse(board.isOccupied(Board.PositionsRow.RivalRow, 0));
+        assertEquals(board.getCard(Board.PositionsRow.NextRivalRow, 0), card);
         board.passTurn();
         
-        assertFalse(board.isOccupied(Board.Positions.NextRivalRow, 0));
-        assertEquals(board.getCard(Board.Positions.RivalRow, 0), card);
-        assertFalse(board.isOccupied(Board.Positions.NextRivalRow, 0));
+        assertFalse(board.isOccupied(Board.PositionsRow.NextRivalRow, 0));
+        assertEquals(board.getCard(Board.PositionsRow.RivalRow, 0), card);
+        assertFalse(board.isOccupied(Board.PositionsRow.NextRivalRow, 0));
     }
     
     @Test
@@ -91,13 +88,13 @@ public class BoardTest {
         
         assertEquals(1, squirrel.getLife());
         assertEquals(2, wolf.getLife());
-        board.placeCard(Board.Positions.UserRow, 0, squirrel);
-        board.placeCard(Board.Positions.RivalRow, 0, wolf);
+        board.placeCard(Board.PositionsRow.UserRow, 0, squirrel);
+        board.placeCard(Board.PositionsRow.RivalRow, 0, wolf);
         board.passTurn();
         assertEquals(1, squirrel.getLife());
         board.passTurn();
-        assertFalse(board.isOccupied(Board.Positions.RivalRow, 0));
-        assertTrue(board.isOccupied(Board.Positions.UserRow, 0));
+        assertFalse(board.isOccupied(Board.PositionsRow.RivalRow, 0));
+        assertTrue(board.isOccupied(Board.PositionsRow.UserRow, 0));
         
         assertEquals(-2, squirrel.getLife());
         assertEquals(2, wolf.getLife());
@@ -112,9 +109,9 @@ public class BoardTest {
         Ecureuil backSquirrel = new Ecureuil();
         Ecureuil frontSquirrel = new Ecureuil();
         
-        board.placeCard(Board.Positions.UserRow,0,wolf);
-        board.placeCard(Board.Positions.RivalRow, 0,frontSquirrel);
-        board.placeCard(Board.Positions.NextRivalRow,0, backSquirrel);
+        board.placeCard(Board.PositionsRow.UserRow,0,wolf);
+        board.placeCard(Board.PositionsRow.RivalRow, 0,frontSquirrel);
+        board.placeCard(Board.PositionsRow.NextRivalRow,0, backSquirrel);
         
         assertEquals(1, frontSquirrel.getLife());
         assertEquals(1, backSquirrel.getLife());

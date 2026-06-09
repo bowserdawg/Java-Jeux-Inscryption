@@ -43,7 +43,14 @@ public class BoardDisplayLogic {
 
     final int CARD_WIDTH  = Card.s_HORIZONTAL_SIZE;
     final int CARD_HEIGHT = Card.s_VERTICAL_SIZE;
-
+    
+    
+    final private Board.PositionsRow[] colArr = {
+            Board.PositionsRow.NextRivalRow,
+            Board.PositionsRow.RivalRow,
+            Board.PositionsRow.UserRow
+    };
+    
     /**
      * Constructeur pour BoardDisplayLogic.
      * @param board Le plateau qui va etre afficher.
@@ -99,13 +106,10 @@ public class BoardDisplayLogic {
 
         ArrayList<Card> theCards = new ArrayList<>();
         int width = m_board.getWidth();
-
-
-        int i = 0;
-        for(Board.Positions pos : Board.Positions.values())
+        
+        for(int i = 0; i < width; ++i)
         {
-            theCards.add(m_board.getCard(pos, i));
-            ++i;
+            theCards.add(m_board.getCard(colArr[boardRow], i));
         }
 
         int j = 0;
