@@ -12,6 +12,7 @@ public class Main {
         GameInit game = new GameInit(); // utilisation d'une classe pour facilement initialiser une partie
         Input i = game.getInput();
         Controller controller = game.getUserController();
+        game.getDisplay().afficher();
         boolean gameRunning = true;
         while (gameRunning) {
             GameStatus gameStatus = controller.getGameStatus();
@@ -28,6 +29,8 @@ public class Main {
                             System.out.println("pas de assez d'os");
                     }
                     break;
+                case OK:
+                    i.promptAction();
             }
 
         }
