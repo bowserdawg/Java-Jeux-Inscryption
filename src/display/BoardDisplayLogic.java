@@ -110,6 +110,7 @@ public class BoardDisplayLogic {
         for(int i = 0; i < width; ++i)
         {
             theCards.add(m_board.getCard(colArr[boardRow], i));
+
         }
 
         int j = 0;
@@ -277,7 +278,7 @@ public class BoardDisplayLogic {
 
         row = this.hand(row, PADDING_LEFT);
 
-        row = this.actions(row);
+//        row = this.actions(row);
 
         this.score(SCORE_ROW, SCORE_COL);
 

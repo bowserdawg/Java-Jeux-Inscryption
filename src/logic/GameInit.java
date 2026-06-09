@@ -18,8 +18,7 @@ public class GameInit {
     private final CardStack m_userStack;
     private final CardStack m_rivalStack;
     private final Input m_input;
-    private final Controller m_userController;
-    private final Controller m_rivalController;
+    private final Controller m_controller;
     private final BoardDisplayLogic m_display;
 
     public GameInit() {
@@ -28,9 +27,8 @@ public class GameInit {
         m_rivalStack = new CardStack(m_defaultStack);
         m_user = new User(m_userStack, m_board);
         m_rival = new Rival(m_rivalStack, m_board);
-        m_userController = new Controller(m_board, m_user);
-        m_rivalController = new Controller(m_board, m_user);
-        m_input = new Input(m_userController);
+        m_controller = new Controller(m_board, m_user);
+        m_input = new Input(m_controller);
         m_display = new BoardDisplayLogic(m_board, m_user, m_rival);
 
     }
@@ -40,13 +38,9 @@ public class GameInit {
     }
 
     public Controller getUserController() {
-        return m_userController;
+        return m_controller;
     }
-
-    public Controller getRivalController() {
-        return m_rivalController;
-    }
-
+    
     public CardStack getUserStack() {
         return m_userStack;
     }
@@ -70,6 +64,5 @@ public class GameInit {
     public BoardDisplayLogic getDisplay() {
         return m_display;
     }
-
 
 }
