@@ -9,7 +9,6 @@ public class Input {
     private final Controller m_controller;
     private int m_slot;
     private int m_cardToPlace;
-private boolean m_alreadyDraw = false;
 
     public Input(Controller controller) {
         m_controller = controller;
@@ -22,7 +21,6 @@ private boolean m_alreadyDraw = false;
     public void promptAction() {
         System.out.println("[placer] Placer une carte sur le plateau");
         System.out.println("[piocher] Piocher une carte");
-        System.out.println("[ecureuil] Piocher un écureuil");
         System.out.println("[fin] Finir son tour");
         System.out.println("[quitter] Quitter le jeu");
         System.out.print("Votre choix : ");
@@ -31,15 +29,11 @@ private boolean m_alreadyDraw = false;
         if (input[0].equalsIgnoreCase("placer")) {
             promptCardToPlace();
         } else if (input[0].equalsIgnoreCase("piocher")) {
-            m_controller.drawCard();
-            System.out.println(input[0]);
-        } else if (input[0].equalsIgnoreCase("ecureuil")) {
-            m_controller.drawSquirrel();
+            promptDraw();
         } else if (input[0].equalsIgnoreCase("fin")) {
             m_controller.passTurn();
         } else if (input[0].equalsIgnoreCase("quitter")) {
             m_controller.endGame();
-
         }
     }
 
@@ -78,6 +72,26 @@ private boolean m_alreadyDraw = false;
             promptSlotToPlace(false);
         }
 
+    }
+
+    public void promptDraw() {
+        System.out.println("Que voulez vous piochez ? ");
+        System.out.println("1. Carte normale");
+        System.out.println("2. Carte Ecureuil");
+        System.out.println("Votre choix (1-2) :");
+        int input;
+        do {
+            input = getNumberInput();
+
+            if (input == 0) {
+                m_controller.drawCard();
+            } else if (input == 1) {
+                m_controller.drawSquirrel();
+            } else {
+                System.out.println("Veuillez retentez");
+            }
+        }
+        while (!(input >=0 && input <=1));
     }
 
     public void promptSlotToPlace(boolean hasSacrified) {

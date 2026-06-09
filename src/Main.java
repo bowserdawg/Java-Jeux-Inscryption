@@ -26,7 +26,12 @@ public class Main {
                     gameRunning = false;
                     break;
             }
+            if(game.getBoard().isPlayerTurn()){
             i.promptAction();
+            }
+            else {
+//                game.getRival().autoPlaceCard();
+            }
         }
     }
 }

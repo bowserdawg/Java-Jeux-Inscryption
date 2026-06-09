@@ -4,6 +4,7 @@ import cards.Card;
 import cards.CostType;
 import cards.animals.AnimalCard;
 import logic.Board;
+import logic.DrawReason;
 import logic.players.Player;
 import logic.GameStatus;
 import logic.CantPlaceReason;
@@ -15,6 +16,7 @@ public class Controller {
     private final Board m_board;
     private final Player m_player;
     private GameStatus m_status = GameStatus.OK;
+    private boolean m_alreadyDraw = false;
     private CantPlaceReason m_placeReason = CantPlaceReason.OK;
 //
 
@@ -41,14 +43,25 @@ public class Controller {
         return CantPlaceReason.EMPTY_CARD;
     }
 
-    public void drawCard() {
-        m_player.drawCard();
-        m_status = GameStatus.REFRESH;
+    public DrawReason drawCard() {
+        if (!m_alreadyDraw) {
+            m_player.drawCard();
+            m_status = GameStatus.REFRESH;
+            return DrawReason.OK;
+        } else {
+            return DrawReason.ALREADY_DRAW;
+        }
     }
 
-    public void drawSquirrel() {
-        m_player.drawSquirrel();
-        m_status = GameStatus.REFRESH;
+    public DrawReason drawSquirrel() {
+        if (!m_alreadyDraw) {
+
+            m_player.drawSquirrel();
+            m_status = GameStatus.REFRESH;
+            return DrawReason.OK;
+        } else {
+            return DrawReason.ALREADY_DRAW;
+        }
     }
 
     public boolean placeCard(int column, int cardIndex) {
@@ -84,10 +97,10 @@ public class Controller {
     public GameStatus getGameStatus() {
         return m_status;
     }
-
-    public CantPlaceReason getPlacingReason() {
-        return m_placeReason;
-    }
+//
+//    public CantPlaceReason getPlacingReason() {
+//        return m_placeReason;
+//    }
 
     public void sacrificeCards(ArrayList<Integer> cardsColumns) {
         for (int cardColumn : cardsColumns) {
