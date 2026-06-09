@@ -73,11 +73,12 @@ public class Rival extends Player{
 
     /**
      * Place automatiquement une carte dans le board si c'est possible.
-     * @param board Le board ou il faut placer la carte.
      * @return Si l'opération a abouti ou non.
      */
-    public boolean autoPlaceCard(Board board)
+    public boolean autoPlaceCard()
     {
+        Board board = getBoard();
+
         AnimalCard drawnCard;
         ArrayList<AnimalCard> hand = getHand();
 

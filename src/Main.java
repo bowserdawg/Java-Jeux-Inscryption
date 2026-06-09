@@ -37,6 +37,7 @@ public class Main {
                     }
                     break;
                 case PASSED_TURN:
+                    game.getRival().autoPlaceCard();
                     display.afficher();
                     break;
             }
