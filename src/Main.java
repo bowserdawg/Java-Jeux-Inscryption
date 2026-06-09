@@ -19,25 +19,11 @@ public class Main {
         while (gameRunning) {
             GameStatus gameStatus = controller.getGameStatus();
             switch (gameStatus) {
-                case PLACED:
+                case REFRESH:
                     display.afficher();
                     break;
-                case NEED_TO_SACRIFIE:
-                    i.promptSacrifie();
                 case STOPPED:
                     gameRunning = false;
-                    break;
-                case CANT_PLACE:
-                    switch (controller.getPlacingReason()) {
-                        case NOT_ENOUGH_BLOOD:
-                            System.out.println("pas assez de cartes à sacrifier");
-                            break;
-                        case NOT_ENOUGH_BONES:
-                            System.out.println("pas de assez d'os");
-                    }
-                    break;
-                case PASSED_TURN:
-                    display.afficher();
                     break;
             }
             i.promptAction();

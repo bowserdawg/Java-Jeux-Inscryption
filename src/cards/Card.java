@@ -35,6 +35,10 @@ public abstract class Card implements Nommable, Displayable {
 
         return life.get();
     }
+    
+    public CostType getCostType(){
+        return m_donnes.getCostType();
+    }
 
     /**
      * Donne des dégâts et à la carte et fait baisser ses points de vies.

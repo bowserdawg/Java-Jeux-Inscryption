@@ -52,7 +52,8 @@ public class Board {
     
     /**
      * Renvoie la carte à la case indiquée
-     * @param row La ligne de la case
+     *
+     * @param row    La ligne de la case
      * @param column La colonne de la case
      * @return Une carte s'il y en a une. Null si aucune carte n'est présente à la case indiquée
      */
@@ -73,8 +74,9 @@ public class Board {
     
     /**
      * Place une carte à la position indiquée
-     * @param row La ligne où placer la carte
-     * @param column La colonne où placer la carte
+     *
+     * @param row         La ligne où placer la carte
+     * @param column      La colonne où placer la carte
      * @param cardToPlace La carte à placer
      * @return Vrai si la carte à était placé.
      */
@@ -92,6 +94,7 @@ public class Board {
      * Applique, aux cartes en amont de la ligne de l'adversaire, les dégats infligé par excès aux cartes devant.
      * Avance les prochaines cartes placées par l'adversaire
      * Incremente le nombre de tours de la partie.
+     *
      * @return Le nombre de cartes qui on était tué
      */
     public int passTurn() {
@@ -197,15 +200,27 @@ public class Board {
         }
     }
     
-    public void removeCard(PositionsRow row, int column){
+    public void removeCard(PositionsRow row, int column) {
         m_board[row.ordinal()][column] = null;
     }
     
-    public boolean sacrificeCardAt(PositionsRow row, int column){
-        if(getCard(row, column) !=null){
+    public boolean isCardSacrifiable(PositionsRow row, int column) {
+        if (getCard(row, column) != null) {
             removeCard(row, column);
             return true;
+        } else return false;
+    }
+    
+    public int getNbSacrifiableCards(PositionsRow row) {
+        int nbSacrifiableCards = 0;
+        for (int i = 0; i < getWidth(); i++) {
+            
+            if (getCard(PositionsRow.UserRow, i) != null) {
+                if (getCard(PositionsRow.UserRow, i).isSacrifiable()) {
+                    nbSacrifiableCards++;
+                }
+            }
         }
-        else return false;
+        return nbSacrifiableCards;
     }
 }

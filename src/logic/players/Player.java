@@ -41,7 +41,7 @@ public abstract class Player {
     }
     
     public Optional<AnimalCard> getCardFromHand(int index) {
-        if (m_hand.size()-1  <= index) {
+        if (index  > m_hand.size() - 1 ) {
             return Optional.empty();
         }
         AnimalCard selectedCard = m_hand.get(index);
@@ -73,7 +73,7 @@ public abstract class Player {
      * @return Le nombre d'os restants
      */
     
-    public int addBones(int nbBonesToAdd){
+    public int addBones(int nbBonesToAdd) {
         m_remainingBones += nbBonesToAdd;
         return m_remainingBones;
     }
@@ -81,48 +81,46 @@ public abstract class Player {
     public int getRemainingBones() {
         return m_remainingBones;
     }
-
-    public boolean drawCard()
-    {
+    
+    public boolean drawCard() {
         Optional<AnimalCard> op = m_stack.drawCard();
-
-        if(op.isEmpty())
-        {
+        
+        if (op.isEmpty()) {
             return false;
         }
-
+        
         m_hand.add(op.get());
-
+        
         return true;
     }
-
-    public boolean drawSquirrel(){
+    
+    public boolean drawSquirrel() {
         Optional<Ecureuil> tempCard = m_stack.drawSquirrel();
-        if(tempCard.isPresent()){
+        if (tempCard.isPresent()) {
             Ecureuil squirrel = tempCard.get();
             m_hand.add(squirrel);
-        return  true;
+            return true;
         }
         return false;
     }
-
+    
     /**
      * Nombre d'écureuils restants.
+     *
      * @return Un entier.
      */
-    public int remainingSquirrels()
-    {
+    public int remainingSquirrels() {
         return m_stack.getSquirrels();
     }
-
+    
     /**
      * Nombre de cartes restant.
+     *
      * @return Un entier.
      */
-    public int remainingCards()
-    {
+    public int remainingCards() {
         return m_stack.remainingCards();
     }
-
-
+    
+    
 }
