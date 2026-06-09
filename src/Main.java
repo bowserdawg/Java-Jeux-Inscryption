@@ -7,7 +7,7 @@ import logic.GameStatus;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Another challenger... It has been ages.");
-
+        
         // initialisation d'une partie
         GameInit game = new GameInit(); // utilisation d'une classe pour facilement initialiser une partie
         Input i = game.getInput();
@@ -20,6 +20,9 @@ public class Main {
                 case STOPPED:
                     gameRunning = false;
                     break;
+                case OK:
+                    i.promptAction();
+                    break;
                 case CANT_PLACE:
                     switch (controller.getPlacingReason()) {
                         case NOT_ENOUGH_BLOOD:
@@ -29,10 +32,8 @@ public class Main {
                             System.out.println("pas de assez d'os");
                     }
                     break;
-                case OK:
-                    i.promptAction();
             }
-
+            
         }
     }
 }
