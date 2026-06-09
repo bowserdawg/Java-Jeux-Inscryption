@@ -85,7 +85,7 @@ public class Display {
      * @param column La colonne ou commence l'affichage, comme l'abscisse X.
      * @return Un boolean indiquant si l'opération a échoué ou non.
      */
-    public void draw(Displayable displayable, int row, int column)
+    public void draw(Displayable displayable, int row, final int column)
     {
         char[][] disForm = displayable.getDisplayableForm();
 
