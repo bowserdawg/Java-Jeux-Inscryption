@@ -157,12 +157,15 @@ public class BoardDisplayLogic {
     private int hand(int row, int paddingLeft)
     {
         m_display.printRow("  Votre main :", row, 0);
+        row++;
 
         var playerArray = m_user.getHand();
         var len = playerArray.size();
         for(int i = 0; i < len; ++i)
         {
+
             Card c =  playerArray.get(i);
+            String name = "%-10s".formatted(c.getName());
             var life = c.getLife();
             var att  = getOptionalValue(c.getAttaque());
             var bloodDrop = getOptionalValue(c.getBloodDrops());
@@ -170,17 +173,18 @@ public class BoardDisplayLogic {
 
             m_display.printRow(
                     (i+1) + ". " +
-                            c.getName() +
-                            " PV: " + life + '\t' +
-                            " Att: " + att + '\t' +
-                            " Gouttes de sang: " + bloodDrop + '\t' +
-                            " Os " + bone + '\t',
+                            name +
+                            " PV: " + life + ' ' +
+                            " Att: " + att + ' ' +
+                            " Gouttes de sang: " + bloodDrop + ' ' +
+                            " Os " + bone,
 
                     row,
                     paddingLeft);
             row++;
         }
-
+        //    1. Ecureuil PV: 1	 Att: 0	 Gouttes de sang: 0	 Os 0
+        //
         row++;
         row++;
         return ++row;
@@ -225,9 +229,20 @@ public class BoardDisplayLogic {
      */
     private int pioche(Displayable displayable, int row, int col)
     {
+
+        int remainingCards = m_user.remainingCards();
+
         m_display.printRow("Pioche",  row, col + PIOCHE_COL_PADDING);
         m_display.draw(displayable, row + 1, col);
-        m_display.printRow("11 cartes",  row + CARD_HEIGHT+1, col + PIOCHE_COL_PADDING);
+        m_display.printRow(remainingCards + " carte(s)",  row + CARD_HEIGHT+1, col + PIOCHE_COL_PADDING-1);
+
+        col += CARD_WIDTH + PADDING_LEFT;
+
+        remainingCards = m_user.remainingSquirrels();
+
+        m_display.printRow("Pioche ecureuil",  row, col-1);
+        m_display.draw(displayable, row + 1, col);
+        m_display.printRow(remainingCards + " carte(s)",  row + CARD_HEIGHT+1, col + PIOCHE_COL_PADDING-1);
 
         return row;
     }

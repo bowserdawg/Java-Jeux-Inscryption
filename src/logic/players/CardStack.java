@@ -43,4 +43,13 @@ public class CardStack {
     public int getSquirrels() {
         return m_squirrels;
     }
+
+    /**
+     * Nombre de cartes restant.
+     * @return Un entier.
+     */
+    public int remainingCards()
+    {
+        return m_cards.size();
+    }
 }

@@ -105,4 +105,24 @@ public abstract class Player {
         }
         return false;
     }
+
+    /**
+     * Nombre d'écureuils restants.
+     * @return Un entier.
+     */
+    public int remainingSquirrels()
+    {
+        return m_stack.getSquirrels();
+    }
+
+    /**
+     * Nombre de cartes restant.
+     * @return Un entier.
+     */
+    public int remainingCards()
+    {
+        return m_stack.remainingCards();
+    }
+
+
 }
