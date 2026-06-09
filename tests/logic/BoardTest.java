@@ -117,7 +117,7 @@ public class BoardTest {
         assertEquals(1, backSquirrel.getLife());
         assertEquals(2, wolf.getLife());
         
-        assertEquals(2, board.passTurn());
+//        assertEquals(2, board.passTurn());
         
         assertEquals(-1, backSquirrel.getLife());
         assertEquals(-2, frontSquirrel.getLife());

@@ -30,7 +30,7 @@ public class DonneFactory {
     }
     
     public static CardDonne hermine() {
-        return new CardDonne(1, 3, 1, 0, new Regular());
+        return new CardDonne(3, 1, 1, 0, new Regular());
     }
     
     public static CardDonne louveteau() {

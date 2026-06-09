@@ -91,7 +91,7 @@ public class Rival extends Player{
                 hasSquirrel = true;
         }
 
-        boolean canDraw = false;
+        boolean canDraw = true;
         
         if(hasSquirrel)
             canDraw = drawCard();

@@ -10,7 +10,6 @@ import java.util.Optional;
 public abstract class Player {
     private ArrayList<AnimalCard> m_hand = new ArrayList<>();
     private Board m_board;
-    private int m_remainingBones = 0;
     private CardStack m_stack;
     
     public Player(CardStack stack, Board board) {
@@ -56,31 +55,8 @@ public abstract class Player {
         return true;
     }
     
-    /**
-     *
-     * @param nbBonesToRemove Le nombre d'os à retirer
-     * @return Le nombre d'os restants
-     */
-    
-    public int removeBones(int nbBonesToRemove) {
-        m_remainingBones -= nbBonesToRemove;
-        return m_remainingBones;
-    }
-    
-    /**
-     *
-     * @param nbBonesToAdd Le nombre d'os à ajouter
-     * @return Le nombre d'os restants
-     */
-    
-    public int addBones(int nbBonesToAdd) {
-        m_remainingBones += nbBonesToAdd;
-        return m_remainingBones;
-    }
-    
-    public int getRemainingBones() {
-        return m_remainingBones;
-    }
+
+
     
     public boolean drawCard() {
         Optional<AnimalCard> op = m_stack.drawCard();

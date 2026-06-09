@@ -1,13 +1,9 @@
 package logic.input;
 
-import cards.Card;
 import cards.CostType;
 import cards.animals.AnimalCard;
-import logic.Board;
-import logic.DrawReason;
+import logic.*;
 import logic.players.Player;
-import logic.GameStatus;
-import logic.CantPlaceReason;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -33,10 +29,8 @@ public class Controller {
             if (!hasEnoughBlood(card)) {
                 return CantPlaceReason.NOT_ENOUGH_BLOOD;
             } else if (!hasEnoughBone(card)) {
-                m_placeReason = CantPlaceReason.NOT_ENOUGH_BONES;
                 return CantPlaceReason.NOT_ENOUGH_BONES;
             } else {
-                m_placeReason = CantPlaceReason.OK;
                 return CantPlaceReason.OK;
             }
         }
@@ -47,6 +41,8 @@ public class Controller {
         if (!m_alreadyDraw) {
             m_player.drawCard();
             m_status = GameStatus.REFRESH;
+            m_alreadyDraw = true;
+
             return DrawReason.OK;
         } else {
             return DrawReason.ALREADY_DRAW;
@@ -58,6 +54,7 @@ public class Controller {
 
             m_player.drawSquirrel();
             m_status = GameStatus.REFRESH;
+            m_alreadyDraw = true;
             return DrawReason.OK;
         } else {
             return DrawReason.ALREADY_DRAW;
@@ -80,7 +77,7 @@ public class Controller {
     }
 
     public boolean hasEnoughBone(AnimalCard card) {
-        int playerBones = m_player.getRemainingBones();
+        int playerBones = m_board.getRemainingBones(BoneProperties.USER);
         int cardCost;
         if (card.getBones().isPresent()) {
             cardCost = card.getBones().get();
@@ -89,9 +86,20 @@ public class Controller {
         return false;
     }
 
+    public int getBones() {
+        return m_board.getRemainingBones(BoneProperties.USER);
+    }
+
     public void passTurn() {
         m_board.passTurn();
-        m_status = GameStatus.REFRESH;
+        int score = m_board.getScore();
+        if (score <= -5) {
+            m_status = GameStatus.RIVAL_WIN;
+        } else if (score >= 5) {
+            m_status = GameStatus.USER_WIN;
+        } else {
+            m_status = GameStatus.REFRESH;
+        }
     }
 
     public GameStatus getGameStatus() {
@@ -109,30 +117,20 @@ public class Controller {
         m_status = GameStatus.REFRESH;
     }
 
-    public boolean canSacrifice(int cardToPlace) {
+    public CantPlaceReason canSacrifice(int cardToPlace) {
         if (m_player.getCardFromHand(cardToPlace).isPresent()) {
             AnimalCard card = m_player.getCardFromHand(cardToPlace).get();
             switch (card.getCostType()) {
                 case BLOOD_DROPS:
                     if (hasEnoughBlood(card)) {
-                        return true;
+                        return CantPlaceReason.OK;
                     } else {
-                        m_status = GameStatus.CANT_PLACE;
                         m_placeReason = CantPlaceReason.NOT_ENOUGH_BLOOD;
                     }
                     break;
-                case BONES:
-                    if (!hasEnoughBone(card)) {
-                        return true;
-                    } else {
-                        m_status = GameStatus.CANT_PLACE;
-                        m_placeReason = CantPlaceReason.NOT_ENOUGH_BONES;
-                    }
-
-                    break;
             }
         }
-        return false;
+        return CantPlaceReason.EMPTY_CARD;
     }
 
     // retourne true si la carte est gratuit false sinon
@@ -160,11 +158,30 @@ public class Controller {
         return 0;
     }
 
+    public CostType getCostType(int cardToPlace) {
+        Optional<AnimalCard> tempCard = m_player.getCardFromHand(cardToPlace);
+        if (tempCard.isPresent()) {
+            AnimalCard card = tempCard.get();
+            // Pas besoin de verifier si l'optional n'est pas vide parce qu'on est sur qu'il ne l'est pas
+            return card.getCostType();
+        }
+        return CostType.EMPTY_CARD;
+    }
+
     public boolean isSacrifiable(int column) {
         return m_board.isCardSacrifiable(Board.PositionsRow.UserRow, column);
     }
 
+    public int getNbSacrifiableCards() {
+        return m_board.getNbSacrifiableCards(Board.PositionsRow.UserRow);
+    }
+
     public void endGame() {
         m_status = GameStatus.STOPPED;
+    }
+
+
+    public boolean hasAlreadyDraw() {
+        return m_alreadyDraw;
     }
 }

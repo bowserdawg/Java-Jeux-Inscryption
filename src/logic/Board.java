@@ -4,44 +4,47 @@ import cards.Card;
 import cards.animals.AnimalCard;
 
 public class Board {
-    
-    private final int m_nbPartie;
+
+    private  int m_nbPartie;
     private int m_nbTour;
     private final int m_width = 4;
     private final int m_height = 3;
     private int m_playerScore = 0;
-    
+    private int m_userBones = 0;
+    private int m_rivalBones = 0;
+
+
     public enum PositionsRow {
         NextRivalRow,
         RivalRow,
         UserRow
     }
-    
+
     private final Card[][] m_board = new Card[m_height][m_width];
-    
+
     public Board() {
         m_nbPartie = 1;
         m_nbTour = -1;
     }
-    
+
     /**
      *
      * @return Le score de la partie.
      */
-    
+
     public int getScore() {
         return m_playerScore;
     }
-    
+
     /**
      *
      * @return Le nombre de parties
      */
-    
+
     public int getNbPartie() {
         return m_nbPartie;
     }
-    
+
     /**
      * @return Le Nombre de tours
      *
@@ -49,7 +52,7 @@ public class Board {
     public int getNbTour() {
         return m_nbTour;
     }
-    
+
     /**
      * Renvoie la carte à la case indiquée
      *
@@ -60,18 +63,18 @@ public class Board {
     public Card getCard(PositionsRow row, int column) {
         return m_board[row.ordinal()][column];
     }
-    
+
     /**
      * On admet que c'est le jureur qui commence au tour 0, 0 qui est pair.
      * Par concevant quand le tour est pair, c'est le tour du joueur
      *
      * @return true quand c'est le nombre de tours est pair
      */
-    
+
     public boolean isPlayerTurn() {
         return m_nbTour % 2 == 0;
     }
-    
+
     /**
      * Place une carte à la position indiquée
      *
@@ -87,8 +90,8 @@ public class Board {
         m_board[row.ordinal()][column] = cardToPlace;
         return true;
     }
-    
-    
+
+
     /**
      * Attaque les cartes entre elles.
      * Applique, aux cartes en amont de la ligne de l'adversaire, les dégats infligé par excès aux cartes devant.
@@ -97,20 +100,19 @@ public class Board {
      *
      * @return Le nombre de cartes qui on était tué
      */
-    public int passTurn() {
+    public void passTurn() {
         Card[] rivalRow = m_board[1];
         Card[] playerRow = m_board[2];
         Card[] nextRivalRow = m_board[0];
-        int nbKilledCards = 0;
         m_nbTour++;
-        
+
         for (int i = 0; i < rivalRow.length; i++) {
             Card rivalCard = rivalRow[i];
             Card playerCard = playerRow[i];
-            
+
             Card attacker;
             Card victim;
-            
+
             if (isPlayerTurn()) {
                 attacker = playerCard;
                 victim = rivalCard;
@@ -118,33 +120,13 @@ public class Board {
                 attacker = rivalCard;
                 victim = playerCard;
             }
-            
+
             if (attacker != null && attacker.getAttaque().isPresent()) {
                 ((AnimalCard) attacker).attack(this, victim);
             }
-            
-            Card nextRivalCard = nextRivalRow[i];
-            if (victim != null) {
-                
-                int cardLife = victim.getLife();
-                
-                if (cardLife <= 0) {
-                    if (isPlayerTurn()) {
-                        if (cardLife < 0) {
-                            if (nextRivalCard.receiveDamage(cardLife) <= 0) {
-                                nextRivalRow[i] = null;
-                                nbKilledCards++;
-                            }
-                        }
-                        playerRow[i] = null;
-                    } else {
-                        rivalRow[i] = null;
-                    }
-                    nbKilledCards++;
+                    checkCardLife();
                 }
-            }
-        }
-        
+
         if (!isPlayerTurn()) {
             for (int i = 0; i < nextRivalRow.length; i++) {
                 if (nextRivalRow[i] != null && rivalRow[i] == null) {
@@ -153,19 +135,35 @@ public class Board {
                 }
             }
         }
-        return nbKilledCards;
+        System.out.println(m_playerScore);
     }
-    
+
+    public void checkScore(){
+
+    }
+
     /**
      *
      * @return La longueur du plateau
      */
-    
+
     public int getWidth() {
         return m_width;
     }
-    
-    
+
+    public void checkCardLife() {
+        for (PositionsRow row : PositionsRow.values()) {
+            for (int column = 0; column < getWidth(); column++) {
+                Card card = getCard(row, column);
+                if (card != null) {
+                    if (card.getLife() < 0) {
+                        removeCard(row, column);
+                    }
+                }
+            }
+        }
+    }
+
     /**
      *
      * @param row    La ligne de la case dont on veut connaitre l'occupation
@@ -175,23 +173,23 @@ public class Board {
     public boolean isOccupied(PositionsRow row, int column) {
         return m_board[row.ordinal()][column] != null;
     }
-    
+
     /**
      *
      * @return La largeur du plateau
      */
-    
+
     public int getHeight() {
         return m_height;
     }
-    
+
     /**
      *
      * S'occupe de mettre à jour le score selon les attaques fait les uns aux autres
      *
      * @param damage : Les dégâts à infliger à l'adversaire
      */
-    
+
     public void attack(int damage) {
         if (isPlayerTurn()) {
             m_playerScore += damage;
@@ -199,22 +197,27 @@ public class Board {
             m_playerScore -= damage;
         }
     }
-    
+
     public void removeCard(PositionsRow row, int column) {
         m_board[row.ordinal()][column] = null;
+        if (row == PositionsRow.UserRow) {
+            m_userBones++;
+        } else if (row == PositionsRow.RivalRow || row == PositionsRow.NextRivalRow) {
+            m_rivalBones++;
+        }
     }
-    
+
     public boolean isCardSacrifiable(PositionsRow row, int column) {
         if (getCard(row, column) != null) {
             removeCard(row, column);
             return true;
         } else return false;
     }
-    
+
     public int getNbSacrifiableCards(PositionsRow row) {
         int nbSacrifiableCards = 0;
         for (int i = 0; i < getWidth(); i++) {
-            
+
             if (getCard(PositionsRow.UserRow, i) != null) {
                 if (getCard(PositionsRow.UserRow, i).isSacrifiable()) {
                     nbSacrifiableCards++;
@@ -222,5 +225,17 @@ public class Board {
             }
         }
         return nbSacrifiableCards;
+    }
+
+    public int getRemainingBones(BoneProperties boneProperties) {
+        if (boneProperties == BoneProperties.USER) {
+            return m_userBones;
+        } else  {
+            return m_rivalBones;
+        }
+    }
+
+    public void increasePartie(){
+        m_nbPartie++;
     }
 }

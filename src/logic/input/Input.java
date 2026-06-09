@@ -1,5 +1,10 @@
 package logic.input;
 
+import cards.CostType;
+import logic.CantPlaceReason;
+import logic.DrawReason;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -25,11 +30,12 @@ public class Input {
         System.out.println("[quitter] Quitter le jeu");
         System.out.print("Votre choix : ");
         String[] input = getUserInput();
-        System.out.println(input[0]);
         if (input[0].equalsIgnoreCase("placer")) {
             promptCardToPlace();
         } else if (input[0].equalsIgnoreCase("piocher")) {
-            promptDraw();
+            if (!m_controller.hasAlreadyDraw()) {
+                promptDraw();
+            }
         } else if (input[0].equalsIgnoreCase("fin")) {
             m_controller.passTurn();
         } else if (input[0].equalsIgnoreCase("quitter")) {
@@ -47,7 +53,10 @@ public class Input {
             input = getNumberInput();
             if (input >= 0 && input <= 4 && m_controller.isSacrifiable(input)) {
                 cardsSelected.add(input);
+            }else {
+                System.out.println("Pas de cartes à sacrifier ici");
             }
+
         }
         while (cardsSelected.size() < sacrificeNeeded);
 
@@ -58,20 +67,34 @@ public class Input {
     public void promptCardToPlace() {
         System.out.print("Quelle carte placer ? : ");
         m_cardToPlace = getNumberInput();
-        // si la carte est gratuit alors demander où placer la carte
+        // si la carte n'est pas gratuite alors
         if (!m_controller.isCardFree(m_cardToPlace)) {
-
-            // si ne peut pas sacrifier alors demander, changer de carte
-            if (m_controller.canSacrifice(m_cardToPlace)) {
-                promptSacrifice();
-            } else {
-                System.out.println("Pas assez de carte à sacrifier");
-                promptCardToPlace();
+            // voir si la carte coute du sang
+            CostType costTypeCard = m_controller.getCostType(m_cardToPlace);
+            if (costTypeCard == CostType.BLOOD_DROPS) {
+                // et si on peut sacrifier des cartes pour la placer alors
+                if (m_controller.getNbSacrifiableCards() >= m_controller.costOf(m_cardToPlace)) {
+                    // demander les cartes à sacrifier
+                    promptSacrifice();
+                } else {
+                    System.out.println("Pas assez de carte à sacrifier");
+                    promptAction();
+                }
+                //si la carte coute des os
+            } else if (costTypeCard == CostType.BONES) {
+                // et qu'on a assez d'os
+                if (m_controller.costOf(m_cardToPlace) <= m_controller.getBones()) {
+                    promptSlotToPlace(false);
+                }else {
+                    System.out.println("Pas assez d'os");
+                    promptAction();
+                }
             }
-        } else {
+        }
+        // si la carte est gratuite alors demander où la placer
+        else {
             promptSlotToPlace(false);
         }
-
     }
 
     public void promptDraw() {
@@ -84,14 +107,18 @@ public class Input {
             input = getNumberInput();
 
             if (input == 0) {
-                m_controller.drawCard();
+                if (m_controller.drawCard() != DrawReason.OK) {
+                    return;
+                }
             } else if (input == 1) {
-                m_controller.drawSquirrel();
+                if (m_controller.drawSquirrel() != DrawReason.OK) {
+                    return;
+                }
             } else {
                 System.out.println("Veuillez retentez");
             }
         }
-        while (!(input >=0 && input <=1));
+        while (!(input >= 0 && input <= 1));
     }
 
     public void promptSlotToPlace(boolean hasSacrified) {

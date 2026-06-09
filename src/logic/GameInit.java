@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GameInit {
-    private static final ArrayList<AnimalCard>  m_defaultStack = new ArrayList<>(Arrays.asList(new Loup(), new Hermine(), new Ecureuil(), new Ecureuil(), new Loup()));
+    private static final ArrayList<AnimalCard>  m_defaultStack = new ArrayList<>(Arrays.asList(new Loup(), new Hermine(), new Ecureuil(), new Punaise(), new Loup()));
 
     private final Board m_board;
     private final User m_user;

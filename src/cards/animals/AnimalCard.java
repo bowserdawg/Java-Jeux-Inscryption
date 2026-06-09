@@ -16,23 +16,26 @@ public abstract class AnimalCard extends Card implements Attacker {
     public AnimalCard(CardDonne donne) {
         super(donne);
     }
-    
-    
+
+
     public void attack(Board board, Card card) {
         int attDmg = 0;
+        // si la carte qu'on nous demande d'attaqué n'est null
+        // sinon on recupère les nos degats
+        Optional<Integer> att = getAttaque();
+        if (att.isPresent()) {
+            attDmg = att.get();
+        }
         if (card != null) {
-            Optional<Integer> att = getAttaque();
-            if (att.isPresent()) {
-                attDmg = att.get();
-            }
-                card.receiveDamage(attDmg);
+            card.receiveDamage(attDmg);
         } else {
+            // sinon, on attaque l'adversaire
             board.attack(attDmg);
         }
     }
 
     @Override
-    public boolean isSacrifiable(){
+    public boolean isSacrifiable() {
         return true;
     }
 }

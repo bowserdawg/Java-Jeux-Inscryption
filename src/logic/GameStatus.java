@@ -3,7 +3,8 @@ package logic;
 public enum GameStatus{
     OK,
     STOPPED,
-    CANT_PLACE,
+    RIVAL_WIN,
+    USER_WIN,
     REFRESH
 
 }
