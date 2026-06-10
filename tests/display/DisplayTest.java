@@ -53,11 +53,13 @@ public class DisplayTest {
         display.printBufferToScreen();
     }
 
+    @Test
     public void erreurNegativeLen()
     {
-        Display display = new Display(-1, 120);
-
-        display.printBufferToScreen();
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> new Display(-1, 120)
+        );
     }
 
     @Test
