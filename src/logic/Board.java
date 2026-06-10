@@ -261,16 +261,14 @@ public class Board {
                     sacrificeHandled = true;
                 }
             }
-            if (!sacrificeHandled) {
-                removeCard(row, column);
-            } else {
-                // Si le sacrifice est géré (Nombreuses Vies), on gagne quand même l'os
+            if (sacrificeHandled) {
                 if (row == PositionsRow.UserRow) {
                     m_userBones++;
                 } else if (row == PositionsRow.RivalRow || row == PositionsRow.NextRivalRow) {
                     m_rivalBones++;
                 }
             }
+            
             return true;
         } else return false;
     }

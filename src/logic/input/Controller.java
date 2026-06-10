@@ -92,6 +92,7 @@ public class Controller {
 
     public void passTurn() {
         m_board.passTurn();
+        m_alreadyDraw = false;
         int score = m_board.getScore();
         if (score <= -5) {
             m_status = GameStatus.RIVAL_WIN;

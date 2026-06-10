@@ -33,10 +33,7 @@ public class Main {
                 case RIVAL_WIN:
                     System.out.println("L'adversaire à gagner");
                     game.newPartie();
-                   
-
                 default:
-                    System.out.println("Unreachable");
                     break;
             }
             if(game.getBoard().isPlayerTurn()){
