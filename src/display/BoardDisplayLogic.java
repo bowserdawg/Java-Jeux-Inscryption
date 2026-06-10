@@ -22,7 +22,7 @@ public class BoardDisplayLogic {
 
     // Constantes
 
-    static final int BOARD_VERTICAL_SIZE = 42;
+    static final int BOARD_VERTICAL_SIZE = 48;
     static final int BOARD_HORIZONTAL_SIZE = 120;
 
     static final int PADDING_LEFT = 4;
@@ -40,7 +40,7 @@ public class BoardDisplayLogic {
 
     final int PIOCHE_COL_PADDING = 3;
 
-    static final int END_DISPLAY_CARD = 30;
+    static final int END_DISPLAY_CARD = 33;
 
     final int CARD_WIDTH  = Card.s_HORIZONTAL_SIZE;
     final int CARD_HEIGHT = Card.s_VERTICAL_SIZE;
@@ -172,13 +172,26 @@ public class BoardDisplayLogic {
             var bloodDrop = getOptionalValue(c.getBloodDrops());
             var bone = getOptionalValue(c.getBones());
 
-            m_display.printRow(
+            StringBuilder cardStr = new StringBuilder(
                     (i+1) + ". " +
                             name +
                             " PV: " + life + ' ' +
                             " Att: " + att + ' ' +
-                            " Gouttes de sang: " + bloodDrop + ' ' +
-                            " Os " + bone,
+                            " Sang: " + bloodDrop + ' ' +
+                            " Os: " + bone
+            );
+            if (!c.getPouvoirs().isEmpty()) {
+                cardStr.append(" Pouvoir: ");
+                for (int pIdx = 0; pIdx < c.getPouvoirs().size(); pIdx++) {
+                    cardStr.append(c.getPouvoirs().get(pIdx).getNom());
+                    if (pIdx < c.getPouvoirs().size() - 1) {
+                        cardStr.append(", ");
+                    }
+                }
+            }
+
+            m_display.printRow(
+                    cardStr.toString(),
 
                     row,
                     paddingLeft);
@@ -295,7 +308,7 @@ public class BoardDisplayLogic {
 
         this.score(SCORE_ROW, SCORE_COL);
 
-        this.pioche(nullCard, END_DISPLAY_CARD, 70);
+        this.pioche(nullCard, END_DISPLAY_CARD, 85);
 
         this.bones(41, 0);
 

@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class Punaise extends AnimalCard{
     public Punaise(){
         super(DonneFactory.punaise());
+        addPouvoir(new cards.pouvoir.Puant());
     }
 
     @Override

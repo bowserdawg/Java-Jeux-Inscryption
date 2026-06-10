@@ -21,6 +21,7 @@ public class CardNull implements Nommable, Displayable {
                                 "*           *".toCharArray(),
                                 "*           *".toCharArray(),
                                 "*           *".toCharArray(),
+                                "*           *".toCharArray(),
                                 "*************".toCharArray()
                         };
     }

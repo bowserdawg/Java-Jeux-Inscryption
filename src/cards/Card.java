@@ -3,18 +3,23 @@ package cards;
 import cards.donnes.CardDonne;
 import cards.interfaces.Nommable;
 import cards.types.Typable;
+import cards.pouvoir.Pouvoir;
 import display.interfaces.Displayable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import java.util.Optional;
 
 public abstract class Card implements Nommable, Displayable {
 
     private CardDonne m_donnes;
+    private final List<Pouvoir> m_pouvoirs = new ArrayList<>();
 
     static private final String s_ligneVide = "|           |";
 
     static public final int s_HORIZONTAL_SIZE = 13;
-    static public final int s_VERTICAL_SIZE = 7;
+    static public final int s_VERTICAL_SIZE = 8;
 
     /**
      * Crée une nouvelle carte.
@@ -109,6 +114,16 @@ public abstract class Card implements Nommable, Displayable {
         return m_donnes.getBones();
     }
 
+    public List<Pouvoir> getPouvoirs() {
+        return m_pouvoirs;
+    }
+
+    public void addPouvoir(Pouvoir p) {
+        if (p != null) {
+            m_pouvoirs.add(p);
+        }
+    }
+
     public boolean isSacrifiable(){
         return false;
     }
@@ -135,6 +150,11 @@ public abstract class Card implements Nommable, Displayable {
                 :
                 s_ligneVide;
 
+        String powerStr = s_ligneVide;
+        if (!m_pouvoirs.isEmpty()) {
+            powerStr = String.format("| %-10.10s|", m_pouvoirs.get(0).getNom());
+        }
+
         return new char[][]{
                 "*-----------*".toCharArray(),
                 name.toCharArray(),
@@ -142,6 +162,7 @@ public abstract class Card implements Nommable, Displayable {
                 pv.toCharArray(),
                 attack.toCharArray(),
                 type.toCharArray(),
+                powerStr.toCharArray(),
                 "*-----------*".toCharArray()
         };
     }

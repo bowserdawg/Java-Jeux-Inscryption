@@ -1,91 +1,525 @@
 @startuml
 
-package logic{
-    package players{
-    abstract class Player{
-
-    }
-        class User extends Player{
-        }
-        class Rival extends Player{
-        }
-        class CardStack{
-            -m_stackSquirrel : Ecureuil
-            -m_stackCards : Card
-            +«create»(): CardStack
-            +drawCard() : Card
-            +drawCard(nbCards : Integer) : Card[nbCards]
-        }
-    }
-}
 package cards{
-    package interfaces{
-        interface Attacker {
-            +attack() : void
-        }
 
-        interface Flyable{
-        }
-    }
-
-    abstract class Card{
-        -m_life : double
-    }
-
-
-
-    package obstacles{
-        abstract class ObstacleCard extends cards.Card{}
-        class Rock extends ObstacleCard{}
-        class Pine extends ObstacleCard{}
-    }
     package animals{
 
         abstract class AnimalCard extends cards.Card implements cards.interfaces.Attacker{
-            -m_bloodDrops : Integer
-            -m_bones : Integer
+            +«create»(donne: CardDonne)
+            +attack(board: Board, card: Card): void
+            +isSacrifiable(): Boolean
         }
 
-        class Chat extends AnimalCard{}
-        class Grizzly extends AnimalCard{}
-        class Coyote extends AnimalCard{}
-        class Moineau extends AnimalCard implements cards.interfaces.Flyable{}
-        class Corbeau extends AnimalCard implements cards.interfaces.Flyable{}
-        class Ecureuil extends AnimalCard{}
-        class Hermine extends AnimalCard{}
-        class Louveteau extends AnimalCard{}
-        class Loup extends AnimalCard{}
-        class Punaise extends AnimalCard{}
+        class Chat extends AnimalCard{
+            +«create»()
+            +getName(): String
+        }
+
+        class Corbeau extends AnimalCard{
+            +«create»()
+            +getName(): String
+        }
+
+        class Coyote extends AnimalCard{
+            +«create»()
+            +getName(): String
+        }
+
+        class Ecureuil extends AnimalCard{
+            +«create»()
+            +getName(): String
+        }
+
+        class FlyingAnimal extends AnimalCard{
+            +«create»(donne: CardDonne)
+            +getName(): String
+        }
+
+        class Grizzly extends AnimalCard{
+            +«create»()
+            +getName(): String
+        }
+
+        class Hermine extends AnimalCard{
+            +«create»()
+            +getName(): String
+        }
+
+        class Loup extends AnimalCard{
+            +«create»()
+            +getName(): String
+        }
+
+        class Louveteau extends AnimalCard{
+            +«create»()
+            +getName(): String
+        }
+
+        class Moineau extends AnimalCard{
+            +«create»()
+            +getName(): String
+        }
+
+        class Punaise extends AnimalCard{
+            +«create»()
+            +getName(): String
+        }
+
+        class Elan extends AnimalCard{
+            +«create»()
+            +getName(): String
+        }
+
+        class Vipere extends AnimalCard{
+            +«create»()
+            +getName(): String
+        }
+
+        class PorcEpic extends AnimalCard{
+            +«create»()
+            +getName(): String
+        }
     }
 
-'    class Input{
-'    }
+    package donnes{
+        class CardDonne{
+            ~m_pv: Integer
+            ~m_attaque: Integer
+            ~m_bloodDrop: Integer
+            ~m_bones: Integer
+            ~m_costType: CostType
+            ~m_type: Typable
+            -NO_VALUE: Integer
+            #«create»(pv: Integer, attaque: Integer, bloodDrop: Integer, bones: Integer, type: Typable)
+            #«create»(pv: Integer)
+            #«create»()
+            #«create»(other: CardDonne)
+            +setPv(num: Integer): void
+            +getPv(): Optional<Integer>
+            +getCostType(): CostType
+            +setAttaque(num: Integer): void
+            +getAttaque(): Optional<Integer>
+            +setType(newType: Typable): void
+            +getType(): Typable
+            +setBloodDrop(bloodDrop: Integer): void
+            +getBloodDrops(): Optional<Integer>
+            +setBones(bones: Integer): void
+            +getBones(): Optional<Integer>
+            +toString(): String
+            +equals(obj: Object): Boolean
+        }
 
+        class DonneFactory{
+            +chat(): CardDonne
+            +grizzly(): CardDonne
+            +coyote(): CardDonne
+            +moineau(): CardDonne
+            +corbeau(): CardDonne
+            +ecureuil(): CardDonne
+            +hermine(): CardDonne
+            +louveteau(): CardDonne
+            +loup(): CardDonne
+            +punaise(): CardDonne
+            +rocher(): CardDonne
+            +sapin(): CardDonne
+            +elan(): CardDonne
+            +vipere(): CardDonne
+            +porcEpic(): CardDonne
+        }
+    }
 
+    package interfaces{
+        interface Attacker{
+            +attack(board: Board, card: Card): void
+        }
+        interface Nommable{
+            +getName(): String
+        }
+    }
+
+    package obstacles{
+        abstract class ObstacleCard extends cards.Card{
+            +«create»(donne: CardDonne)
+        }
+        class Pin extends ObstacleCard{
+            +«create»()
+            +getName(): String
+        }
+        class Rock extends ObstacleCard{
+            +«create»()
+            +getName(): String
+        }
+    }
+
+    package types{
+        interface Typable{
+            +getType(): String
+            +isNotRegular(): Boolean
+        }
+        class Regular implements Typable{
+            -CLASS_NAME: String
+            +«create»()
+            +getType(): String
+            +isNotRegular(): Boolean
+            +toString(): String
+            +equals(obj: Object): Boolean
+        }
+        class Volant implements Typable{
+            -CLASS_NAME: String
+            +«create»()
+            +getType(): String
+            +isNotRegular(): Boolean
+            +toString(): String
+            +equals(obj: Object): Boolean
+        }
+    }
+
+    package pouvoir{
+        abstract class Pouvoir{
+            +getNom(): String
+            +getDescription(): String
+            +onTurnStart(board: Board, card: Card, row: Integer, col: Integer): void
+            +onAfterAttack(board: Board, card: Card, row: Integer, col: Integer): void
+            +onSacrifice(board: Board, card: Card, row: Integer, col: Integer): Boolean
+            +modifyDamageDealt(originalDamage: Integer, victim: Card): Integer
+            +modifyDamageReceived(originalDamage: Integer, attacker: Card): Integer
+            +modifyAttackValue(originalAttack: Integer): Integer
+        }
+        class NombreusesVies extends Pouvoir{
+            +getNom(): String
+            +getDescription(): String
+            +onTurnStart(board: Board, card: Card, row: Integer, col: Integer): void
+            +onAfterAttack(board: Board, card: Card, row: Integer, col: Integer): void
+            +onSacrifice(board: Board, card: Card, row: Integer, col: Integer): Boolean
+            +modifyDamageDealt(originalDamage: Integer, victim: Card): Integer
+            +modifyDamageReceived(originalDamage: Integer, attacker: Card): Integer
+            +modifyAttackValue(originalAttack: Integer): Integer
+        }
+        class Croissance extends Pouvoir{
+            -turnsOnBoard: Integer
+            +getNom(): String
+            +getDescription(): String
+            +onTurnStart(board: Board, card: Card, row: Integer, col: Integer): void
+            +onAfterAttack(board: Board, card: Card, row: Integer, col: Integer): void
+            +onSacrifice(board: Board, card: Card, row: Integer, col: Integer): Boolean
+            +modifyDamageDealt(originalDamage: Integer, victim: Card): Integer
+            +modifyDamageReceived(originalDamage: Integer, attacker: Card): Integer
+            +modifyAttackValue(originalAttack: Integer): Integer
+        }
+        class Puant extends Pouvoir{
+            +getNom(): String
+            +getDescription(): String
+            +onTurnStart(board: Board, card: Card, row: Integer, col: Integer): void
+            +onAfterAttack(board: Board, card: Card, row: Integer, col: Integer): void
+            +onSacrifice(board: Board, card: Card, row: Integer, col: Integer): Boolean
+            +modifyDamageDealt(originalDamage: Integer, victim: Card): Integer
+            +modifyDamageReceived(originalDamage: Integer, attacker: Card): Integer
+            +modifyAttackValue(originalAttack: Integer): Integer
+        }
+        class Coureur extends Pouvoir{
+            +getNom(): String
+            +getDescription(): String
+            +onTurnStart(board: Board, card: Card, row: Integer, col: Integer): void
+            +onAfterAttack(board: Board, card: Card, row: Integer, col: Integer): void
+            +onSacrifice(board: Board, card: Card, row: Integer, col: Integer): Boolean
+            +modifyDamageDealt(originalDamage: Integer, victim: Card): Integer
+            +modifyDamageReceived(originalDamage: Integer, attacker: Card): Integer
+            +modifyAttackValue(originalAttack: Integer): Integer
+        }
+        class ContactMortel extends Pouvoir{
+            +getNom(): String
+            +getDescription(): String
+            +onTurnStart(board: Board, card: Card, row: Integer, col: Integer): void
+            +onAfterAttack(board: Board, card: Card, row: Integer, col: Integer): void
+            +onSacrifice(board: Board, card: Card, row: Integer, col: Integer): Boolean
+            +modifyDamageDealt(originalDamage: Integer, victim: Card): Integer
+            +modifyDamageReceived(originalDamage: Integer, attacker: Card): Integer
+            +modifyAttackValue(originalAttack: Integer): Integer
+        }
+        class PiquesPointues extends Pouvoir{
+            +getNom(): String
+            +getDescription(): String
+            +onTurnStart(board: Board, card: Card, row: Integer, col: Integer): void
+            +onAfterAttack(board: Board, card: Card, row: Integer, col: Integer): void
+            +onSacrifice(board: Board, card: Card, row: Integer, col: Integer): Boolean
+            +modifyDamageDealt(originalDamage: Integer, victim: Card): Integer
+            +modifyDamageReceived(originalDamage: Integer, attacker: Card): Integer
+            +modifyAttackValue(originalAttack: Integer): Integer
+        }
+    }
+
+    enum CostType{
+        BLOOD_DROPS
+        BONES
+        FREE
+        EMPTY_CARD
+    }
+
+    class CardNull implements cards.interfaces.Nommable, display.interfaces.Displayable{
+        +getName(): String
+        +getDisplayableForm(): Char[][]
+    }
+
+    abstract class Card implements cards.interfaces.Nommable, display.interfaces.Displayable{
+        -m_donnes: CardDonne
+        -m_pouvoirs: Pouvoir[*]
+        +s_HORIZONTAL_SIZE: Integer
+        +s_VERTICAL_SIZE: Integer
+        +«create»(donne: CardDonne)
+        +getLife(): Integer
+        +getCostType(): CostType
+        +receiveDamage(nbDamage: Integer): Integer
+        +getPV(): Optional<Integer>
+        +getAttaque(): Optional<Integer>
+        +getType(): Typable
+        +getBloodDrops(): Optional<Integer>
+        +getBones(): Optional<Integer>
+        +getPouvoirs(): Pouvoir[*]
+        +addPouvoir(p: Pouvoir): void
+        +isSacrifiable(): Boolean
+        +getDisplayableForm(): Char[][]
+        +getName(): String
+        +toString(): String
+    }
 }
+
 package display{
+    class BoardDisplayLogic{
+        -m_display: Display
+        -m_board: Board
+        -m_rival: Rival
+        -m_user: User
+        -colArr: Board.PositionsRow[]
+        +«create»(board: Board, user: User, rival: Rival)
+        +getOptionalValue(op: Optional): Object
+        -head(row: Integer): Integer
+        -cardRow(boardRow: Integer, rowCordName: Char, row: Integer): Integer
+        -hand(row: Integer, paddingLeft: Integer): Integer
+        -actions(row: Integer): Integer
+        -score(row: Integer, col: Integer): Integer
+        -pioche(displayable: display.interfaces.Displayable, row: Integer, col: Integer): Integer
+        +afficher(): void
+    }
 
-        class Score implements interfaces.Drawable{
-        }
+    class Display{
+        -m_numberOfRows: Integer
+        -m_sizeOfARow: Integer
+        -m_screenBuffer: Char[][]
+        +«create»(numberOfRows: Integer, sizeOfARow: Integer)
+        +«create»()
+        +printRow(string: String, row: Integer, start: Integer): void
+        +printRow(arr: Char[], row: Integer, start: Integer): void
+        +draw(displayable: display.interfaces.Displayable, row: Integer, column: Integer): void
+        +clearBuffer(): void
+        +printBufferToScreen(): void
+        +clearScreen(): void
+        +getRow(num: Integer): Char[]
+    }
 
-        class Display implements interfaces.Drawable{
-        }
-
-        class Board{
-            -m_round : Integer
-            +getCard() : Card
+    package interfaces{
+        interface Displayable{
+            +getDisplayableForm(): Char[][]
         }
     }
+}
+
+package logic{
+    class Board{
+        -m_nbPartie: Integer
+        -m_nbTour: Integer
+        -m_width: Integer
+        -m_height: Integer
+        -m_playerScore: Integer
+        -m_userBones: Integer
+        -m_rivalBones: Integer
+        -m_board: Card[][]
+        +«create»()
+        +getScore(): Integer
+        +getNbPartie(): Integer
+        +getNbTour(): Integer
+        +getCard(row: PositionsRow, column: Integer): Card
+        +isPlayerTurn(): Boolean
+        +placeCard(row: PositionsRow, column: Integer, cardToPlace: Card): Boolean
+        +passTurn(): void
+        +checkScore(): void
+        +getWidth(): Integer
+        +checkCardLife(): void
+        +isOccupied(row: PositionsRow, column: Integer): Boolean
+        +getHeight(): Integer
+        +attack(damage: Integer): void
+        +removeCard(row: PositionsRow, column: Integer): void
+        +isCardSacrifiable(row: PositionsRow, column: Integer): Boolean
+        +getNbSacrifiableCards(row: PositionsRow): Integer
+        +getRemainingBones(boneProperties: BoneProperties): Integer
+        +increasePartie(): void
+    }
+
+    class GameInit{
+        -m_defaultStack: AnimalCard[*]
+        -m_board: Board
+        -m_user: User
+        -m_rival: Rival
+        -m_userStack: CardStack
+        -m_rivalStack: CardStack
+        -m_input: Input
+        -m_controller: Controller
+        -m_display: BoardDisplayLogic
+        +«create»()
+        +getBoard(): Board
+        +getUserController(): Controller
+        +getUserStack(): CardStack
+        +getRivalStack(): CardStack
+        +getUser(): User
+        +getRival(): Rival
+        +getInput(): Input
+        +getDisplay(): BoardDisplayLogic
+    }
+
+    enum PositionsRow{
+        NextRivalRow
+        RivalRow
+        UserRow
+    }
+
+    enum BoneProperties{
+        USER
+        RIVAL
+    }
+
+    enum CantPlaceReason{
+        OK
+        NOT_ENOUGH_BLOOD
+        NOT_ENOUGH_BONES
+        EMPTY_CARD
+    }
+
+    enum DrawReason{
+        OK
+        ALREADY_DRAW
+    }
+
+    enum GameStatus{
+        OK
+        REFRESH
+        STOPPED
+        USER_WIN
+        RIVAL_WIN
+    }
+
+    package players{
+        abstract class Player{
+            -m_hand: AnimalCard[*]
+            -m_stack: CardStack
+            -m_board: Board
+            +«create»(stack: CardStack, board: Board)
+            +placeCard(column: Integer, indexCardInHand: Integer): Boolean
+            +drawCard(): void
+            +drawSquirrel(): void
+            +getHand(): AnimalCard[*]
+            +remainingSquirrels(): Integer
+            +remainingCards(): Integer
+            +getCardFromHand(index: Integer): Optional<AnimalCard>
+            +removeCardFromHand(card: AnimalCard): Boolean
+        }
+
+        class User extends Player{
+            +«create»(stack: CardStack, board: Board)
+        }
+
+        class Rival extends Player{
+            +«create»(stack: CardStack, board: Board)
+            +autoPlaceCard(): void
+        }
+
+        class CardStack{
+            -m_squirrels: Integer
+            -m_stackCards: AnimalCard[*]
+            +«create»(cards: AnimalCard[*])
+            +drawCard(): Optional<AnimalCard>
+            +drawSquirrel(): Optional<AnimalCard>
+            +getCards(): AnimalCard[*]
+            +getSquirrels(): Integer
+        }
+    }
+
+    package input{
+        class Controller{
+            -m_board: Board
+            -m_player: Player
+            -m_status: GameStatus
+            -m_alreadyDraw: Boolean
+            -m_placeReason: CantPlaceReason
+            +«create»(board: Board, player: Player)
+            +canPlace(cardToPlace: Integer): CantPlaceReason
+            +drawCard(): DrawReason
+            +drawSquirrel(): DrawReason
+            +placeCard(column: Integer, cardIndex: Integer): Boolean
+            +hasEnoughBlood(playerCard: AnimalCard): Boolean
+            +hasEnoughBone(card: AnimalCard): Boolean
+            +getBones(): Integer
+            +passTurn(): void
+            +getGameStatus(): GameStatus
+            +sacrificeCards(cardsColumns: Integer[*]): void
+            +canSacrifice(cardToPlace: Integer): CantPlaceReason
+            +isCardFree(cardToPlace: Integer): Boolean
+            +costOf(cardToPlace: Integer): Integer
+            +getCostType(cardToPlace: Integer): CostType
+            +isSacrifiable(column: Integer): Boolean
+            +getNbSacrifiableCards(): Integer
+            +endGame(): void
+            +hasAlreadyDraw(): Boolean
+        }
+
+        class Input{
+            -m_controller: Controller
+            -m_slot: Integer
+            -m_cardToPlace: Integer
+            +«create»(controller: Controller)
+            +promptAction(): void
+            +promptSacrifice(): void
+            +promptCardToPlace(): void
+            +promptDraw(): void
+            +promptSlotToPlace(hasSacrified: Boolean): void
+            +getUserInput(): String[]
+            +getNumberInput(): Integer
+        }
+    }
+}
+
+CardDonne *--> "1\n -m_type" Typable
+Card *--> "1\n -m_donnes" CardDonne
+Card *--> "*\n -m_pouvoirs" Pouvoir
 
 Display *--> "1\n -m_board" Board
-
 Board *--> "4\n -m_rowPlayer" Card
 Board *--> "4\n -m_rowEnnemyCurrent" Card
 Board *--> "4\n -m_rowEnnemyNext" Card
 
 Player *-up-> "*\n -m_deck" Card
 Player *--> "4\n -m_hand\n" Card
-
+Player *--> "1\n -m_stack" CardStack
+Player *--> "1\n -m_board" Board
 Player ..> CardStack
+
+CardStack *--> "*\n -m_stackCards" AnimalCard
+
+GameInit *--> "1\n -m_board" Board
+GameInit *--> "1\n -m_user" User
+GameInit *--> "1\n -m_rival" Rival
+GameInit *--> "1\n -m_userStack" CardStack
+GameInit *--> "1\n -m_rivalStack" CardStack
+GameInit *--> "1\n -m_input" Input
+GameInit *--> "1\n -m_controller" Controller
+GameInit *--> "1\n -m_display" BoardDisplayLogic
+
+Controller *--> "1\n -m_board" Board
+Controller *--> "1\n -m_player" Player
+
+Input *--> "1\n -m_controller" Controller
+
+BoardDisplayLogic *--> "1\n -m_display" Display
+BoardDisplayLogic *--> "1\n -m_board" Board
+BoardDisplayLogic *--> "1\n -m_rival" Rival
+BoardDisplayLogic *--> "1\n -m_user" User
 
 @enduml
