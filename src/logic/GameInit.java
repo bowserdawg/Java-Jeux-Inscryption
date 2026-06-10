@@ -38,7 +38,8 @@ public class GameInit {
      */
     public void newPartie()
     {
-        m_board = new Board();
+        int nbPartie = m_board.getNbPartie();
+        m_board = new Board(nbPartie);
     }
 
     public Board getBoard() {

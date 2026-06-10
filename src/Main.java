@@ -33,10 +33,7 @@ public class Main {
                 case RIVAL_WIN:
                     System.out.println("L'adversaire à gagner");
                     game.newPartie();
-                    break;
-                    // faire dans game init une methode restart qui va remettre la pioche du joueur et de l'adversaire à zero ainsi que le score et le plateau
-                    // s'il y a le temps ajouté une liste des cartes existante et choisir au hasard une carte à ajouter dans la pioche du joueur
-                    // pour cela ne pas donner directement la liste de cartes par defaut mais faire une copy et ajouter la carte à la copie de la liste
+                   
 
                 default:
                     System.out.println("Unreachable");
