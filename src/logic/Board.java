@@ -21,10 +21,16 @@ public class Board {
     }
 
     private final Card[][] m_board = new Card[m_height][m_width];
-
+    
     public Board() {
         m_nbPartie = 1;
         m_nbTour = -1;
+    }
+    
+    public Board(int nbPartie) {
+        m_nbPartie = nbPartie;
+        m_nbTour = -1;
+        
     }
 
     /**
@@ -175,9 +181,7 @@ public class Board {
                     nextRivalRow[i] = null;
                 }
             }
-        }
-        System.out.println(m_playerScore);
-    }
+        }}
 
     public void checkScore(){
 
