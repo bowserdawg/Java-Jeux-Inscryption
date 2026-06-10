@@ -44,8 +44,8 @@ public class Display {
             throw new IndexOutOfBoundsException("Il est impossible d'écrire ce string sur le tableau");
         if(row < 0 || start < 0)
             throw new IndexOutOfBoundsException("Les parametres 'row' ou 'start' ne peuvent pas etre negative");
-        if(row > m_numberOfRows)
-            throw new IndexOutOfBoundsException("Le parametre 'row' est beaucoup trop grand");;
+        if(row >= m_numberOfRows)
+            throw new IndexOutOfBoundsException("Le parametre 'row' est beaucoup trop grand");
 
         int i = 0;
         while(i < string.length())
@@ -64,8 +64,8 @@ public class Display {
             throw new IndexOutOfBoundsException("Il est impossible d'écrire ce string sur le tableau");
         if(row < 0 || start < 0)
             throw new NegativeArraySizeException("Les parametres 'row' ou 'start' ne peuvent pas etre negative");
-        if(row > m_numberOfRows)
-            throw new IndexOutOfBoundsException("Le parametre 'row' est beaucoup trop grand");;
+        if(row >= m_numberOfRows)
+            throw new IndexOutOfBoundsException("Le parametre 'row' est beaucoup trop grand");
 
         int i = 0;
         while(i < arr.length)

@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class Louveteau extends AnimalCard {
     public Louveteau(){
         super(DonneFactory.louveteau());
+        addPouvoir(new cards.pouvoir.Croissance());
     }
 
     @Override

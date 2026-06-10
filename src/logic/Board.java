@@ -101,10 +101,23 @@ public class Board {
      * @return Le nombre de cartes qui on était tué
      */
     public void passTurn() {
+        m_nbTour++;
+
+        // Déclencher le début du tour pour le joueur dont c'est le tour (ex: Croissance)
+        PositionsRow activeRow = isPlayerTurn() ? PositionsRow.UserRow : PositionsRow.RivalRow;
+        for (int i = 0; i < getWidth(); i++) {
+            Card card = getCard(activeRow, i);
+            if (card != null) {
+                var pouvoirsCopy = new java.util.ArrayList<>(card.getPouvoirs());
+                for (var p : pouvoirsCopy) {
+                    p.onTurnStart(this, card, activeRow.ordinal(), i);
+                }
+            }
+        }
+
         Card[] rivalRow = m_board[1];
         Card[] playerRow = m_board[2];
         Card[] nextRivalRow = m_board[0];
-        m_nbTour++;
 
         for (int i = 0; i < rivalRow.length; i++) {
             Card rivalCard = rivalRow[i];
@@ -121,11 +134,39 @@ public class Board {
                 victim = playerCard;
             }
 
+            // Volant : attaque directe du score (victim = null)
+            if (attacker != null && attacker.getType().getType().equals("Volant")) {
+                victim = null;
+            }
+
             if (attacker != null && attacker.getAttaque().isPresent()) {
                 ((AnimalCard) attacker).attack(this, victim);
             }
-                    checkCardLife();
+            checkCardLife();
+        }
+
+        // Actions de fin d'attaque (ex: Coureur)
+        java.util.Set<Card> processedCards = new java.util.HashSet<>();
+        for (int i = 0; i < rivalRow.length; i++) {
+            Card card = isPlayerTurn() ? playerRow[i] : rivalRow[i];
+            if (card != null && !processedCards.contains(card)) {
+                processedCards.add(card);
+                PositionsRow pRow = isPlayerTurn() ? PositionsRow.UserRow : PositionsRow.RivalRow;
+                int currentCol = -1;
+                for (int c = 0; c < getWidth(); c++) {
+                    if (getCard(pRow, c) == card) {
+                        currentCol = c;
+                        break;
+                    }
                 }
+                if (currentCol != -1) {
+                    var pouvoirsCopy = new java.util.ArrayList<>(card.getPouvoirs());
+                    for (var p : pouvoirsCopy) {
+                        p.onAfterAttack(this, card, pRow.ordinal(), currentCol);
+                    }
+                }
+            }
+        }
 
         if (!isPlayerTurn()) {
             for (int i = 0; i < nextRivalRow.length; i++) {
@@ -156,7 +197,7 @@ public class Board {
             for (int column = 0; column < getWidth(); column++) {
                 Card card = getCard(row, column);
                 if (card != null) {
-                    if (card.getLife() < 0) {
+                    if (card.getLife() <= 0) {
                         removeCard(row, column);
                     }
                 }
@@ -208,8 +249,24 @@ public class Board {
     }
 
     public boolean isCardSacrifiable(PositionsRow row, int column) {
-        if (getCard(row, column) != null) {
-            removeCard(row, column);
+        Card card = getCard(row, column);
+        if (card != null) {
+            boolean sacrificeHandled = false;
+            for (var p : card.getPouvoirs()) {
+                if (p.onSacrifice(this, card, row.ordinal(), column)) {
+                    sacrificeHandled = true;
+                }
+            }
+            if (!sacrificeHandled) {
+                removeCard(row, column);
+            } else {
+                // Si le sacrifice est géré (Nombreuses Vies), on gagne quand même l'os
+                if (row == PositionsRow.UserRow) {
+                    m_userBones++;
+                } else if (row == PositionsRow.RivalRow || row == PositionsRow.NextRivalRow) {
+                    m_rivalBones++;
+                }
+            }
             return true;
         } else return false;
     }
