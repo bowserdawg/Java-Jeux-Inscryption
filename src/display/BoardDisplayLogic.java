@@ -4,6 +4,7 @@ import cards.Card;
 import cards.CardNull;
 import display.interfaces.Displayable;
 import logic.Board;
+import logic.BoneProperties;
 import logic.players.Rival;
 import logic.players.User;
 
@@ -247,6 +248,18 @@ public class BoardDisplayLogic {
         return row;
     }
 
+    public int bones(int row, int col)
+    {
+        m_display.printRow(
+                "Quantité d'Os : " + m_board.getRemainingBones(BoneProperties.USER),
+                row,
+                col
+        );
+        row++;
+
+        return row;
+    }
+
     // Affiche l'instance actuelle du plateau
     public void afficher()
     {
@@ -283,6 +296,8 @@ public class BoardDisplayLogic {
         this.score(SCORE_ROW, SCORE_COL);
 
         this.pioche(nullCard, END_DISPLAY_CARD, 70);
+
+        this.bones(41, 0);
 
         m_display.printBufferToScreen();
     }

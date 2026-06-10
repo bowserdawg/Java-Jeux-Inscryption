@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class GameInit {
     private static final ArrayList<AnimalCard>  m_defaultStack = new ArrayList<>(Arrays.asList(new Loup(), new Hermine(), new Ecureuil(), new Punaise(), new Loup()));
 
-    private final Board m_board;
+    private Board m_board;
     private final User m_user;
     private final Rival m_rival;
     private final CardStack m_userStack;
@@ -31,6 +31,14 @@ public class GameInit {
         m_input = new Input(m_controller);
         m_display = new BoardDisplayLogic(m_board, m_user, m_rival);
 
+    }
+
+    /**
+     * Augmente le nombre de parties.
+     */
+    public void newPartie()
+    {
+        m_board = new Board();
     }
 
     public Board getBoard() {
